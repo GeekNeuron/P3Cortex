@@ -1,3 +1,9 @@
+// این تابع را به ابتدای فایل js/app.js اضافه کنید
+const toPersianDigits = (str) => {
+    const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+    return str.toString().replace(/\d/g, d => persianDigits[d]);
+};
+
 document.addEventListener('DOMContentLoaded', () => {
 
     // --- DOM Elements ---
@@ -276,7 +282,7 @@ const renderShowQuestionsButton = () => {
             currentQuiz.timeRemaining--;
             const minutes = Math.floor(currentQuiz.timeRemaining / 60);
             const seconds = currentQuiz.timeRemaining % 60;
-            timerElement.textContent = `زمان باقی‌مانده: ${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            timerElement.textContent = `زمان باقی‌مانده: ${toPersianDigits(String(minutes).padStart(2, '0'))}:${toPersianDigits(String(seconds).padStart(2, '0'))}`;
 
             if (currentQuiz.timeRemaining <= 0) {
                 endQuiz();
@@ -289,7 +295,7 @@ const renderShowQuestionsButton = () => {
         const question = currentQuiz.questions[currentQuiz.currentQuestionIndex];
         quizQuestionsContainer.appendChild(createQuestionCard(question, 'quiz'));
         
-        questionCounterElement.textContent = `سوال ${currentQuiz.currentQuestionIndex + 1} از ${currentQuiz.questions.length}`;
+        questionCounterElement.textContent = `سوال ${toPersianDigits(currentQuiz.currentQuestionIndex + 1)} از ${toPersianDigits(currentQuiz.questions.length)}`;
         prevQuestionBtn.disabled = currentQuiz.currentQuestionIndex === 0;
         nextQuestionBtn.disabled = currentQuiz.currentQuestionIndex === currentQuiz.questions.length - 1;
     };
@@ -326,7 +332,7 @@ const renderShowQuestionsButton = () => {
         if (total === 0) return;
 
         const percentage = Math.round((correct / total) * 100);
-        resultSummaryElement.textContent = `شما به ${correct} سوال از ${total} سوال پاسخ صحیح دادید.`;
+        resultSummaryElement.textContent = `شما به ${toPersianDigits(correct)} سوال از ${toPersianDigits(total)} سوال پاسخ صحیح دادید.`;
 
         if (resultsChart) {
             resultsChart.destroy();
@@ -355,7 +361,7 @@ const renderShowQuestionsButton = () => {
                 ctx.fillStyle = fontColor;
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
-                ctx.fillText(`${percentage}%`, canvas.width / 2, canvas.height / 2 - 10);
+                ctx.fillText(`${toPersianDigits(percentage)}%`, canvas.width / 2, canvas.height / 2 - 10);
                 
                 // نمایش کلمه "امتیاز"
                 ctx.font = '500 16px Vazirmatn';
@@ -444,7 +450,7 @@ const renderShowQuestionsButton = () => {
         card.innerHTML = `
             ${imageHtml}
             <div class="question-content">
-                <p class="question-text">${q.id}. ${q.question}</p>
+                <p class="question-text">${toPersianDigits(q.id)}. ${q.question}</p>
                 <ul class="${optionsListClass}">${optionsHtml}</ul>
                 ${(type === 'practice' || type === 'saved') ? footerHtml : ''}
             </div>
@@ -544,7 +550,7 @@ const renderShowQuestionsButton = () => {
                 <div class="date-time">
                     <span>${item.day}، ${item.date}</span> - <span>ساعت ${item.time}</span>
                 </div>
-                <div class="score">${item.score}</div>
+                <div class="score">${toPersianDigits(item.score)}</div>
             `;
             fragment.appendChild(historyDiv);
         });
