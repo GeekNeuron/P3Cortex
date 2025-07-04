@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>آزمون رانندگی گیک</title>
+    <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="light-mode">
+
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <img src="images/car-icon.svg" alt="لوگو">
+                <h1>آزمون رانندگی گیک</h1>
+            </div>
+        </div>
+    </header>
+
+<nav class="main-nav">
+    <button class="nav-btn active" data-section="practice">📝 نمونه سوالات</button>
+    <button class="nav-btn" data-section="saved">⭐ به حافظه سپرده شد</button>
+    <button class="nav-btn" data-section="quiz">⏱️ آزمون آنلاین</button>
+</nav>
+
+    <main>
+        <section id="practice-section" class="content-section active">
+            <div class="tabs-container" id="practice-tabs">
+                </div>
+            <div id="practice-questions-container" class="questions-list"></div>
+        </section>
+
+        <section id="quiz-section" class="content-section">
+            <div id="quiz-setup">
+                <h2>آزمون خود را انتخاب کنید</h2>
+                <div class="tabs-container" id="quiz-tabs">
+                     </div>
+                <button id="start-quiz-btn" class="start-btn">شروع آزمون</button>
+            </div>
+            <div id="quiz-live" class="hidden">
+                <div class="quiz-header">
+                    <span id="timer">زمان باقی‌مانده: ۲۰:۰۰</span>
+                    <span id="question-counter">سوال ۱ از ۳۰</span>
+                </div>
+                <div id="quiz-questions-container" class="questions-list"></div>
+                <div class="quiz-navigation">
+                    <button id="prev-question-btn">سوال قبلی</button>
+                    <button id="next-question-btn">سوال بعدی</button>
+                    <button id="finish-quiz-btn">پایان آزمون</button>
+                </div>
+            </div>
+            <div id="quiz-history-section" class="fade-in">
+    <h2>📜 سوابق آزمون‌ها</h2>
+    <div id="quiz-history-list">
+        </div>
+</div>
+        </section>
+        
+        <section id="saved-section" class="content-section">
+            <h2>⭐ سوالات ستاره‌دار</h2>
+            <div id="saved-questions-container" class="questions-list">
+                <p class="empty-message">هنوز سوالی را به این بخش اضافه نکرده‌اید.</p>
+            </div>
+        </section>
+
+    </main>
+    
+    <div id="results-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>نتایج آزمون</h2>
+            <div class="chart-container">
+                <canvas id="results-chart"></canvas>
+            </div>
+            <p id="result-summary"></p>
+        </div>
+    </div>
+
+    <footer>
+    <p>Created with ❤️ by GeekNeuron</p>
+</footer>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

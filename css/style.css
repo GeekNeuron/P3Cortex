@@ -1,0 +1,629 @@
+/* General Resets and Variables */
+:root {
+    --primary-color: #007BFF;
+    --primary-hover: #0056b3;
+    --background-light: #f4f7f9;
+    --foreground-light: #ffffff;
+    --text-light: #212529;
+    --border-light: #dee2e6;
+
+    --background-dark: #121212;
+    --foreground-dark: #1e1e1e;
+    --text-dark: #e0e0e0;
+    --border-dark: #333333;
+
+    --success-color: #28a745;
+    --error-color: #dc3545;
+    --star-color: #ffc107;
+
+    --border-radius: 12px;
+    --shadow: 0 4px 15px rgba(0, 0, 0, 0.07);
+    --transition-speed: 0.3s;
+}
+
+/* Base Styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent; /* غیرفعال کردن سایه کلیک */
+}
+
+button, input, select, textarea {
+    font-family: inherit; /* این خط باعث می‌شود فونت را از والد خود (body) به ارث ببرند */
+}
+
+body {
+    font-family: 'Vazirmatn', sans-serif;
+    direction: rtl;
+    transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
+}
+
+/* Light & Dark Mode */
+body.light-mode {
+    background-color: var(--background-light);
+    color: var(--text-light);
+}
+
+body.dark-mode {
+    background-color: var(--background-dark);
+    color: var(--text-dark);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease forwards;
+}
+
+/* Header */
+header {
+    background-color: var(--foreground-light);
+    box-shadow: var(--shadow);
+    padding: 1rem 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    transition: background-color var(--transition-speed) ease;
+    border-bottom: 1px solid var(--border-light);
+    cursor: pointer;
+}
+.dark-mode header {
+    background-color: var(--foreground-dark);
+    border-bottom: 1px solid var(--border-dark);
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.logo img {
+    width: 40px;
+    height: 40px;
+}
+
+#theme-switcher {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 50%;
+    transition: background-color var(--transition-speed) ease;
+}
+#theme-switcher:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+#theme-switcher img {
+    width: 24px;
+    height: 24px;
+}
+.dark-mode #theme-switcher:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Main Navigation */
+.main-nav {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    padding: 1.5rem 1rem;
+    background-color: var(--foreground-light);
+    border-bottom: 1px solid var(--border-light);
+}
+.dark-mode .main-nav {
+    background-color: var(--foreground-dark);
+    border-bottom-color: var(--border-dark);
+}
+
+.nav-btn {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    border: none;
+    background-color: transparent;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
+    color: inherit;
+}
+
+.nav-btn.active, .nav-btn:hover {
+    background-color: var(--primary-color);
+    color: white;
+}
+.dark-mode .nav-btn.active, .dark-mode .nav-btn:hover {
+    background-color: var(--primary-hover);
+}
+
+
+/* Content Sections */
+main {
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.content-section {
+    display: none;
+    animation: fadeIn 0.5s ease;
+}
+.content-section.active {
+    display: block;
+}
+
+/* Tabs */
+.tabs-container {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.tab-btn {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.9rem;
+    border: 1px solid var(--border-light);
+    background-color: var(--foreground-light);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+    color: inherit;
+}
+.dark-mode .tab-btn {
+    border-color: var(--border-dark);
+    background-color: var(--foreground-dark);
+}
+
+.tab-btn.active, .tab-btn:hover {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+/* Question Card Styles */
+.question-card {
+    background-color: var(--foreground-light);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid transparent;
+    box-shadow: var(--shadow);
+    transition: all var(--transition-speed) ease;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: stretch;
+}
+.dark-mode .question-card {
+    background-color: var(--foreground-dark);
+    border-color: var(--border-dark);
+}
+/* خط‌چین برای نمونه سوالات */
+#practice-questions-container .question-card {
+    border-style: dashed;
+    border-color: var(--border-light);
+}
+.dark-mode #practice-questions-container .question-card {
+    border-color: var(--border-dark);
+}
+
+.question-image {
+    flex-shrink: 0;
+    width: 120px;
+    height: auto;
+    border-radius: var(--border-radius);
+    object-fit: contain;
+    background-color: var(--background-light);
+    aspect-ratio: 16 / 9; /* نسبت تصویر ۱۶:۹ برای تصویر اصلی */
+}
+.dark-mode .question-image {
+    background-color: var(--background-dark);
+}
+
+.question-content {
+    flex-grow: 1;
+}
+
+.question-text {
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    line-height: 1.7;
+}
+
+/* --- شماره‌گذاری خودکار گزینه‌ها --- */
+.options-list {
+    list-style: none;
+    display: grid;
+    gap: 0.75rem;
+    counter-reset: option-counter; /* ریست کردن شمارنده */
+}
+
+.option {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--border-light);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+    gap: 0.75rem; /* فاصله بین شماره و محتوای گزینه */
+}
+.dark-mode .option {
+    border-color: var(--border-dark);
+}
+.option:hover {
+    border-color: var(--primary-color);
+    background-color: var(--primary-color);
+    color: white;
+}
+
+/* --- ایجاد شماره با استفاده از CSS Counters --- */
+.option::before {
+    counter-increment: option-counter;
+    content: counter(option-counter);
+    font-weight: 600;
+    color: var(--primary-color);
+    background-color: var(--background-light);
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    border: 1px solid var(--border-light);
+    transition: all var(--transition-speed) ease;
+}
+.dark-mode .option::before {
+    background-color: var(--background-dark);
+    border-color: var(--border-dark);
+}
+.option:hover::before, 
+.option.selected::before, 
+.option.correct::before, 
+.option.incorrect::before {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+.option.correct::before { background-color: var(--success-color); border-color: var(--success-color); }
+.option.incorrect::before { background-color: var(--error-color); border-color: var(--error-color); }
+
+/* --- استایل گزینه‌ها در آزمون و نمونه سوال --- */
+.option.selected {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+.option.correct {
+    background-color: var(--success-color);
+    color: white;
+    border-color: var(--success-color);
+}
+.option.incorrect {
+    background-color: var(--error-color);
+    color: white;
+    border-color: var(--error-color);
+}
+
+/* --- استایل برای گزینه‌های تصویری --- */
+.options-list.image-options-grid {
+    grid-template-columns: repeat(2, 1fr); /* نمایش دو ستونه */
+    gap: 1rem;
+}
+
+.image-options-grid .option {
+    padding: 0.5rem;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.image-options-grid .option-image {
+    width: 100%;
+    aspect-ratio: 1 / 1; /* نسبت تصویر ۱:۱ مربعی */
+    object-fit: contain;
+    margin-top: 0.5rem;
+    border-radius: calc(var(--border-radius) - 4px);
+}
+
+/* --- استایل فوتر کارت --- */
+.card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1.5rem;
+}
+
+.save-star {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+.save-star img {
+    width: 24px;
+    height: 24px;
+    transition: transform 0.2s ease;
+}
+.save-star:hover img {
+    transform: scale(1.2);
+}
+
+/* Quiz Section Specifics */
+#quiz-setup {
+    text-align: center;
+    padding: 2rem;
+    background: var(--foreground-light);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+}
+.dark-mode #quiz-setup {
+    background-color: var(--foreground-dark);
+}
+#quiz-setup h2 {
+    margin-bottom: 1.5rem;
+}
+.start-btn {
+    padding: 0.8rem 2rem;
+    font-size: 1.1rem;
+    background-color: var(--success-color);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    margin-top: 1rem;
+    transition: background-color var(--transition-speed) ease;
+}
+.start-btn:hover {
+    background-color: #218838;
+}
+
+#quiz-live .quiz-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background-color: var(--foreground-light);
+    border-radius: var(--border-radius);
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+}
+.dark-mode #quiz-live .quiz-header {
+    background-color: var(--foreground-dark);
+}
+
+.quiz-navigation {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+.quiz-navigation button {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    border: 1px solid var(--border-light);
+    background-color: var(--foreground-light);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+    color: inherit;
+}
+.dark-mode .quiz-navigation button {
+    background-color: var(--foreground-dark);
+    border-color: var(--border-dark);
+}
+.quiz-navigation button:hover {
+    background-color: var(--primary-color);
+    color: white;
+}
+#finish-quiz-btn {
+    background-color: var(--error-color);
+    color: white;
+    border: none;
+}
+#finish-quiz-btn:hover {
+    background-color: #c82333;
+}
+
+
+/* Modal Styles */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--transition-speed) ease, visibility var(--transition-speed) ease;
+}
+.modal-overlay:not(.hidden) {
+    opacity: 1;
+    visibility: visible;
+}
+.modal-content {
+    background-color: var(--foreground-light);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+    transform: scale(0.95);
+    transition: transform var(--transition-speed) ease;
+}
+.modal-overlay:not(.hidden) .modal-content {
+    transform: scale(1);
+}
+.dark-mode .modal-content {
+    background-color: var(--foreground-dark);
+}
+.close-modal {
+    position: absolute;
+    top: 1rem;
+    left: 1.5rem;
+    font-size: 2rem;
+    cursor: pointer;
+    font-weight: 300;
+}
+.modal-content h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+.chart-container {
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+}
+#result-summary {
+    text-align: center;
+    margin-top: 1.5rem;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.empty-message {
+    text-align: center;
+    padding: 3rem;
+    background: var(--foreground-light);
+    border-radius: var(--border-radius);
+    color: #6c757d;
+}
+.dark-mode .empty-message {
+    background: var(--foreground-dark);
+    color: #a0a0a0;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    header {
+        padding: 1rem;
+    }
+    .logo h1 {
+        font-size: 1.2rem;
+    }
+    .main-nav, .tabs-container {
+        gap: 0.5rem;
+    }
+    .nav-btn, .tab-btn {
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+    }
+    .question-card {
+        flex-direction: column;
+    }
+    .question-image {
+        width: 100%;
+        height: 150px;
+    }
+}
+
+/* استایل بخش سوابق آزمون */
+#quiz-history-section {
+    margin-top: 3rem;
+    background-color: var(--foreground-light);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    box-shadow: var(--shadow);
+}
+.dark-mode #quiz-history-section {
+     background-color: var(--foreground-dark);
+}
+#quiz-history-section h2 {
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-light);
+}
+.dark-mode #quiz-history-section h2 {
+    border-bottom-color: var(--border-dark);
+}
+
+.history-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border-radius: calc(var(--border-radius) - 4px);
+    transition: background-color var(--transition-speed) ease;
+}
+.history-item:not(:last-child) {
+    margin-bottom: 0.5rem;
+}
+.history-item:hover {
+    background-color: var(--background-light);
+}
+.dark-mode .history-item:hover {
+    background-color: var(--background-dark);
+}
+.history-item .date-time {
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+.dark-mode .history-item .date-time {
+    color: #a0a0a0;
+}
+.history-item .score {
+    font-weight: 600;
+    font-size: 1.1rem;
+    direction: ltr; /* برای نمایش صحیح عددها مثل 28/30 */
+}
+
+/* استایل فوتر */
+footer {
+    text-align: center;
+    padding: 2rem 1rem;
+    margin-top: 2rem;
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+.dark-mode footer {
+    color: #a0a0a0;
+}
+footer p {
+    direction: ltr; /* برای نمایش صحیح متن انگلیسی */
+}
+
+/* استایل دکمه نمایش سوالات */
+.show-questions-btn {
+    display: block;
+    padding: 0.8rem 1.5rem;
+    border: 1px solid var(--primary-color);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+    max-width: 350px;
+    margin: 3rem auto;
+    text-align: center;
+    font-weight: 600;
+    font-size: 1.1rem;
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.show-questions-btn:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+}

@@ -1,0 +1,106 @@
+[
+    {
+        "id": 1,
+        "question": "حداکثر سرعت مجاز در آزادراها برای سواری چند کیلومتر بر ساعت است؟",
+        "optionType": "text",
+        "options": [
+            "۱۱۰",
+            "۱۲۰",
+            "۱۰۰",
+            "۹۵"
+        ],
+        "answer": 1,
+        "image": null
+    },
+    {
+        "id": 2,
+        "question": "کدام گزینه در مورد حق تقدم تقاطع زیر صحیح است؟",
+        "optionType": "text",
+        "options": [
+            "خودروی زرد، آبی، قرمز",
+            "خودروی قرمز، آبی، زرد",
+            "خودروی آبی، زرد، قرمز",
+            "خودروی آبی، قرمز، زرد"
+        ],
+        "answer": 2,
+        "image": "images/q_img/q2_intersection.png"
+    },
+    {
+        "id": 3,
+        "question": "کدامیک از تابلوهای زیر به معنای «ورود ممنوع» است؟",
+        "optionType": "image",
+        "options": [
+            "images/ans_img/a3_no_entry.png",
+            "images/ans_img/a3_stop.png",
+            "images/ans_img/a3_one_way.png",
+            "images/ans_img/a3_no_overtaking.png"
+        ],
+        "answer": 0,
+        "image": null
+    },
+    {
+        "id": 4,
+        "question": "مفهوم این تابلو چیست؟",
+        "optionType": "text",
+        "options": [
+            "جاده دوطرفه می‌شود",
+            "فقط عبور به راست مجاز",
+            "به راست برانید",
+            "پیچ به راست"
+        ],
+        "answer": 0,
+        "image": "images/q_img/q4_two_way.png"
+    },
+    {
+        "id": 5,
+        "question": "کدام مورد از موارد آزمون عملی رانندگی *نیست*؟",
+        "optionType": "text",
+        "options": [
+            "دور دو فرمان",
+            "پارک دوبل",
+            "رانندگی با دنده عقب",
+            "سبقت در پیچ"
+        ],
+        "answer": 3,
+        "image": null
+    },
+    {
+        "id": 6,
+        "question": "کدامیک از تابلوهای زیر به معنای «پارک ممنوع» است؟",
+        "optionType": "image",
+        "options": [
+            "images/ans_img/a6_no_parking.png",
+            "images/ans_img/a6_no_stopping.png",
+            "images/ans_img/a6_parking_ok.png",
+            "images/ans_img/a6_end_of_prohibition.png"
+        ],
+        "answer": 0,
+        "image": null
+    },
+    {
+        "id": 7,
+        "question": "در هنگام رانندگی در شب و از فاصله ۱۵۰ متری، باید از چه نوری استفاده کرد؟",
+        "optionType": "text",
+        "options": [
+            "نور بالا",
+            "نور پایین",
+            "چراغ‌های مه‌شکن",
+            "فرقی نمی‌کند"
+        ],
+        "answer": 1,
+        "image": null
+    },
+    {
+        "id": 8,
+        "question": "مفهوم این تابلو چیست؟",
+        "optionType": "text",
+        "options": [
+            "حداقل سرعت ۳۰",
+            "حداکثر سرعت ۳۰",
+            "شماره جاده ۳۰",
+            "خط ویژه اتوبوس"
+        ],
+        "answer": 1,
+        "image": "images/q_img/q8_speed_limit.png"
+    }
+]
