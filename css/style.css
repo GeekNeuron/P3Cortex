@@ -141,6 +141,7 @@ header {
     justify-content: center;
     gap: 1rem;
     padding: 1.5rem 1rem;
+    flex-wrap: nowrap;
     background-color: var(--foreground-light);
     border-bottom: 1px solid var(--border-light);
 }
