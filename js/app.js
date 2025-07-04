@@ -1,10 +1,10 @@
-// این تابع را به ابتدای فایل js/app.js اضافه کنید
+document.addEventListener('DOMContentLoaded', () => {
+
+    // این تابع را به ابتدای فایل js/app.js اضافه کنید
 const toPersianDigits = (str) => {
     const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
     return str.toString().replace(/\d/g, d => persianDigits[d]);
 };
-
-document.addEventListener('DOMContentLoaded', () => {
 
     // --- DOM Elements ---
     const headerElement = document.querySelector('header');
