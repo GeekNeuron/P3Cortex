@@ -625,3 +625,9 @@ footer p {
     transform: translateY(-2px);
     box-shadow: var(--shadow);
 }
+
+/* --- همگام‌سازی رنگ آیکون‌ها با تم --- */
+.dark-mode .logo img,
+.dark-mode .save-star img {
+    filter: invert(1) brightness(1.5); /* رنگ آیکون را معکوس (سفید) و کمی روشن‌تر می‌کند */
+}
