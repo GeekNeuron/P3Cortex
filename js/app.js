@@ -220,7 +220,7 @@ const renderShowQuestionsButton = () => {
         const savedQuestions = allQuestions.filter(q => savedQuestionIds.includes(q.id));
 
         if (savedQuestions.length === 0) {
-            savedQuestionsContainer.innerHTML = '<p class="empty-message">هنوز سوالی برای مرور نشان نکرده‌اید.<br>از بخش <b>نمونه سوالات</b>، روی آیکون ⭐ کنار هر سوال کلیک کنید تا به اینجا اضافه شود.</p>';
+            savedQuestionsContainer.innerHTML = '<p class="empty-message">هنوز سوالی برای مرور نشان نکرده‌اید.<br>از بخش <b>نمونه سوالات</b>، روی آیکون ⭐ کنار هر سوال کلیک کنید تا به این بخش اضافه شود.</p>';
             return;
         }
         
