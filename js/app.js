@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    // این تابع را به ابتدای فایل js/app.js اضافه کنید
-const toPersianDigits = (str) => {
+    const toPersianDigits = (str) => {
     const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
     return str.toString().replace(/\d/g, d => persianDigits[d]);
 };
@@ -123,26 +122,28 @@ const handleTabClick = (clickedBtn, type) => {
 };
 
     const createTabs = (container, count, type) => {
-        container.innerHTML = '';
-        for (let i = 1; i <= count; i++) {
-            const btn = document.createElement('button');
-            btn.className = 'tab-btn';
-            btn.dataset.tabIndex = i;
+    container.innerHTML = '';
+    for (let i = 1; i <= count; i++) {
+        const btn = document.createElement('button');
+        btn.className = 'tab-btn';
+        btn.dataset.tabIndex = i;
 
-            if (type === 'quiz') {
-                if (i === 5) btn.textContent = 'همه سوالات';
-                else if (i === 6) btn.textContent = 'آزمون بدون ستاره‌دارها';
-                else btn.textContent = `آزمون ${i}`;
-            } else {
-                 btn.textContent = `بخش ${i}`;
-            }
-            
-            btn.addEventListener('click', () => handleTabClick(btn, type));
-            container.appendChild(btn);
+        if (type === 'quiz') {
+            if (i === 5) btn.textContent = 'همه سوالات';
+            else if (i === 6) btn.textContent = 'آزمون بدون ستاره‌دارها';
+            // اینجا اعداد فارسی می‌شوند
+            else btn.textContent = `آزمون ${toPersianDigits(i)}`;
+        } else {
+            // اینجا اعداد فارسی می‌شوند
+             btn.textContent = `بخش ${toPersianDigits(i)}`;
         }
-        // Activate the first tab by default
-        if(container.firstChild) container.firstChild.classList.add('active');
-    };
+        
+        btn.addEventListener('click', () => handleTabClick(btn, type));
+        container.appendChild(btn);
+    }
+    // Activate the first tab by default
+    if(container.firstChild) container.firstChild.classList.add('active');
+};
 
     // این تابع را به فایل js/app.js خود اضافه کنید
 const renderShowQuestionsButton = () => {
