@@ -382,38 +382,72 @@ const renderQuizHistory = () => {
     
     // --- Results Modal & Chart ---
 const showResults = (correct, incorrect, total) => {
-    // پاک کردن محتوای قبلی و نمایش خلاصه متنی
     const resultsChartContainer = document.getElementById('chart-container');
     resultsChartContainer.innerHTML = '';
     if (total === 0) return;
     resultSummaryElement.textContent = `شما به ${toPersianDigits(correct)} سوال از ${toPersianDigits(total)} سوال پاسخ صحیح دادید.`;
 
-    // تنظیمات نمودار جدید
+    // --- منطق اصلی برای ساخت سری‌های داده ---
+    const series = [];
+
+    // سری اول: آزمون فعلی
+    series.push({
+        name: 'آزمون فعلی',
+        data: [correct, incorrect],
+    });
+
+    // سری دوم: آزمون قبلی (اگر وجود داشته باشد)
+    // quizHistory[0] آزمون فعلی است که همین الان ذخیره شده
+    if (quizHistory[1]) {
+        const [prevCorrect, prevTotal] = quizHistory[1].score.split('/').map(Number);
+        const prevIncorrect = prevTotal - prevCorrect;
+        series.push({
+            name: 'آزمون قبلی',
+            data: [prevCorrect, prevIncorrect],
+        });
+    }
+
+    // سری سوم: آزمون دو مرحله قبل (اگر وجود داشته باشد)
+    if (quizHistory[2]) {
+        const [prev2Correct, prev2Total] = quizHistory[2].score.split('/').map(Number);
+        const prev2Incorrect = prev2Total - prev2Correct;
+        series.push({
+            name: 'دو آزمون قبل',
+            data: [prev2Correct, prev2Incorrect],
+        });
+    }
+    // --- پایان منطق ساخت سری‌ها ---
+
     const options = {
-        // داده‌های نمودار
-        series: [{
-            name: 'تعداد',
-            data: [correct, incorrect],
-        }],
-        // مشخصات کلی نمودار
+        series: series, // استفاده از سری‌های ساخته شده
         chart: {
-            height: 300,
+            height: 350,
             type: 'radar',
-            toolbar: {
-                show: false // حذف منوی ابزار
-            },
-            fontFamily: 'Vazirmatn, sans-serif' // تنظیم فونت
+            toolbar: { show: false },
+            fontFamily: 'Vazirmatn, sans-serif'
         },
-        // رنگ اصلی نمودار
-        colors: ['#007BFF'],
-        // استایل نقاط روی نمودار
+        // رنگ‌های متمایز برای هر آزمون
+        colors: ['#007BFF', '#28a745', '#ffc107'],
+        // خطوط متمایز (ممتد، خط‌چین، نقطه‌چین)
+        stroke: {
+            width: 2,
+            dashArray: [0, 4, 8] 
+        },
+        fill: {
+            opacity: 0.1
+        },
         markers: {
-            size: 5,
-            hover: {
-                size: 8
+            size: 4,
+            hover: { size: 7 }
+        },
+        // فعال کردن راهنمای نمودار (Legend)
+        legend: {
+            position: 'bottom',
+            horizontalAlign: 'center',
+            labels: {
+                colors: document.body.classList.contains('dark-mode') ? '#e0e0e0' : '#212529'
             }
         },
-        // تنظیمات محور افقی (دسته‌بندی‌ها)
         xaxis: {
             categories: ['پاسخ‌های صحیح', 'پاسخ‌های غلط'],
             labels: {
@@ -422,33 +456,20 @@ const showResults = (correct, incorrect, total) => {
                 }
             }
         },
-        // تنظیمات محور عمودی (مقادیر)
         yaxis: {
-            tickAmount: Math.min(total, 5), // تعداد خطوط راهنما
+            show: true, // نمایش محور عمودی
+            tickAmount: Math.min(total, 4),
             labels: {
-                formatter: function (val) {
-                    return toPersianDigits(Math.round(val)); // گرد کردن و فارسی‌سازی اعداد
-                },
+                formatter: (val) => toPersianDigits(Math.round(val)),
                 style: {
                      colors: [document.body.classList.contains('dark-mode') ? '#a0a0a0' : '#6c757d'],
                 }
             }
         },
-        // شفافیت سطح رنگی نمودار
-        fill: {
-            opacity: 0.2
-        },
-        // ضخامت خط نمودار
-        stroke: {
-            width: 2
-        },
     };
 
-    // ساخت و رندر کردن نمودار جدید
     const chart = new ApexCharts(resultsChartContainer, options);
     chart.render();
-
-    // نمایش مدال نتایج
     resultsModal.classList.remove('hidden');
 };
 
