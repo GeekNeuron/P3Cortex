@@ -31,7 +31,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const resultsModal = document.getElementById('results-modal');
     const closeModalBtn = document.querySelector('.close-modal');
-    const resultsChartCanvas = document.getElementById('results-chart').getContext('2d');
     const resultSummaryElement = document.getElementById('result-summary');
     
     // --- State Management ---
@@ -44,7 +43,6 @@ document.addEventListener('DOMContentLoaded', () => {
         timerInterval: null,
         timeRemaining: 0,
     };
-    let resultsChart = null;
 
     // --- Constants ---
     const QUESTIONS_PER_TAB = 30; // تعداد سوال در هر تب آزمون و نمونه سوال
