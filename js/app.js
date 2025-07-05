@@ -329,80 +329,76 @@ const renderShowQuestionsButton = () => {
     };
     
     // --- Results Modal & Chart ---
-    const showResults = (correct, incorrect, total) => {
-        if (total === 0) return;
+const showResults = (correct, incorrect, total) => {
+    // پاک کردن محتوای قبلی و نمایش خلاصه متنی
+    const resultsChartContainer = document.getElementById('chart-container');
+    resultsChartContainer.innerHTML = '';
+    if (total === 0) return;
+    resultSummaryElement.textContent = `شما به ${toPersianDigits(correct)} سوال از ${toPersianDigits(total)} سوال پاسخ صحیح دادید.`;
 
-        const percentage = Math.round((correct / total) * 100);
-        resultSummaryElement.textContent = `شما به ${toPersianDigits(correct)} سوال از ${toPersianDigits(total)} سوال پاسخ صحیح دادید.`;
-
-        if (resultsChart) {
-            resultsChart.destroy();
-        }
-
-        // --- ایجاد گرادینت‌های رنگی برای ظاهر حرفه‌ای ---
-        const correctGradient = resultsChartCanvas.createLinearGradient(0, 0, 0, 250);
-        correctGradient.addColorStop(0, '#4CAF50');
-        correctGradient.addColorStop(1, '#2E7D32');
-
-        const incorrectGradient = resultsChartCanvas.createLinearGradient(0, 0, 0, 250);
-        incorrectGradient.addColorStop(0, '#F44336');
-        incorrectGradient.addColorStop(1, '#C62828');
-        
-        // پلاگین برای نمایش متن در مرکز نمودار
-        const centerTextPlugin = {
-            id: 'centerText',
-            afterDraw: (chart) => {
-                const ctx = chart.ctx;
-                const canvas = chart.canvas;
-                const fontColor = document.body.classList.contains('dark-mode') ? '#e0e0e0' : '#212529';
-                
-                ctx.save();
-                // نمایش درصد
-                ctx.font = 'bold 36px Vazirmatn';
-                ctx.fillStyle = fontColor;
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'middle';
-                ctx.fillText(`${toPersianDigits(percentage)}%`, canvas.width / 2, canvas.height / 2 - 10);
-                
-                // نمایش کلمه "امتیاز"
-                ctx.font = '500 16px Vazirmatn';
-                ctx.fillStyle = fontColor === '#e0e0e0' ? '#a0a0a0' : '#6c757d';
-                ctx.fillText('امتیاز', canvas.width / 2, canvas.height / 2 + 20);
-
-                ctx.restore();
+    // تنظیمات نمودار جدید
+    const options = {
+        // داده‌های نمودار
+        series: [{
+            name: 'تعداد',
+            data: [correct, incorrect],
+        }],
+        // مشخصات کلی نمودار
+        chart: {
+            height: 300,
+            type: 'radar',
+            toolbar: {
+                show: false // حذف منوی ابزار
+            },
+            fontFamily: 'Vazirmatn, sans-serif' // تنظیم فونت
+        },
+        // رنگ اصلی نمودار
+        colors: ['#007BFF'],
+        // استایل نقاط روی نمودار
+        markers: {
+            size: 5,
+            hover: {
+                size: 8
             }
-        };
-
-        resultsChart = new Chart(resultsChartCanvas, {
-            type: 'doughnut',
-            data: {
-                labels: ['پاسخ‌های صحیح', 'پاسخ‌های غلط'],
-                datasets: [{
-                    data: [correct, incorrect],
-                    backgroundColor: [correctGradient, incorrectGradient], // استفاده از گرادینت
-                    borderColor: document.body.classList.contains('light-mode') ? '#fff' : '#1e1e1e',
-                    borderWidth: 6, // افزایش ضخامت برای زیبایی
-                    hoverOffset: 10,
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: true,
-                cutout: '80%', // افزایش فضای خالی وسط
-                animation: {
-                    animateScale: true,
-                    animateRotate: true
-                },
-                plugins: {
-                    legend: { display: false },
-                    tooltip: { enabled: true }
+        },
+        // تنظیمات محور افقی (دسته‌بندی‌ها)
+        xaxis: {
+            categories: ['پاسخ‌های صحیح', 'پاسخ‌های غلط'],
+            labels: {
+                style: {
+                    colors: [document.body.classList.contains('dark-mode') ? '#e0e0e0' : '#212529'],
                 }
-            },
-            plugins: [centerTextPlugin]
-        });
-        
-        resultsModal.classList.remove('hidden');
+            }
+        },
+        // تنظیمات محور عمودی (مقادیر)
+        yaxis: {
+            tickAmount: Math.min(total, 5), // تعداد خطوط راهنما
+            labels: {
+                formatter: function (val) {
+                    return toPersianDigits(Math.round(val)); // گرد کردن و فارسی‌سازی اعداد
+                },
+                style: {
+                     colors: [document.body.classList.contains('dark-mode') ? '#a0a0a0' : '#6c757d'],
+                }
+            }
+        },
+        // شفافیت سطح رنگی نمودار
+        fill: {
+            opacity: 0.2
+        },
+        // ضخامت خط نمودار
+        stroke: {
+            width: 2
+        },
     };
+
+    // ساخت و رندر کردن نمودار جدید
+    const chart = new ApexCharts(resultsChartContainer, options);
+    chart.render();
+
+    // نمایش مدال نتایج
+    resultsModal.classList.remove('hidden');
+};
 
 // --- Card Creation (Factory) ---
     const createQuestionCard = (q, type) => {
