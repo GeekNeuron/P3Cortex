@@ -103,7 +103,7 @@ const showSection = (sectionId) => {
         createTabs(practiceTabsContainer, 4, 'practice');
         renderShowQuestionsButton(); // نمایش دکمه "نمایش سوالات"
     } else if (sectionId === 'quiz') {
-        createTabs(quizTabsContainer, 30, 'quiz');
+        createTabs(quizTabsContainer, 6, 'quiz');
         quizSetupSection.classList.remove('hidden');
         quizLiveSection.classList.add('hidden');
         clearInterval(currentQuiz.timerInterval);
