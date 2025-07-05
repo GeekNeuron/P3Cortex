@@ -417,21 +417,20 @@ const showResults = (correct, incorrect, total) => {
         
         const optionsListClass = isImageOptions ? 'options-list image-options-grid' : 'options-list';
 
+        // در تابع createQuestionCard
         const optionsHtml = q.options.map((option, index) => {
-            let classes = 'option';
-            if (type === 'practice' || type === 'saved') {
-                if (index === q.answer) classes += ' correct';
-            } else if (type === 'quiz' && currentQuiz.userAnswers[q.id] === index) {
-                classes += ' selected';
-            }
+        let classes = 'option';
+        if ((type === 'practice' || type === 'saved') && index === q.answer) classes += ' correct';
+        else if (type === 'quiz' && currentQuiz.userAnswers[q.id] === index) classes += ' selected';
+    
+        // ساخت شماره گزینه در جاوا اسکریپت
+        const numberHtml = `<div class="option-number">${toPersianDigits(index + 1)}</div>`;
 
-            // اگر گزینه‌ها تصویری هستند، تگ img بساز، در غیر این صورت متن را قرار بده
-            const optionContent = isImageOptions
-                ? `<img src="${option}" alt="گزینه ${index + 1}" class="option-image">`
-                : `<span>${option}</span>`;
-
-            return `<li class="${classes}" data-option-index="${index}">${optionContent}</li>`;
-        }).join('');
+        const optionContent = isImageOptions ? `<img src="${option}" alt="گزینه ${toPersianDigits(index + 1)}" class="option-image">` : `<span>${option}</span>`;
+    
+        // ترکیب شماره و محتوای گزینه
+        return `<li class="${classes}" data-option-index="${index}">${numberHtml}${optionContent}</li>`;
+    }).join('');
         // **پایان تغییرات اصلی**
         
         const isSaved = savedQuestionIds.includes(q.id);
