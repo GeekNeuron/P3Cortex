@@ -4,8 +4,6 @@
 
 این پروژه کاملاً با جاوا اسکریپت خالص (Vanilla JS) ساخته شده و به راحتی روی GitHub Pages اجرا می‌شود.
 
-![دموی پروژه](https_place_holder_for_your_demo_image.png)
-
 ---
 
 ## ✨ ویژگی‌ها
@@ -28,7 +26,7 @@
 * **HTML5**
 * **CSS3** (Flexbox & Grid)
 * **JavaScript (Vanilla JS)**
-* **Chart.js** (برای نمایش نمودار نتایج)
+* **ApexCharts.js** (برای نمایش نمودار نتایج)
 
 ---
 
@@ -36,7 +34,7 @@
 
 این پروژه به صورت زنده روی گیت‌هاب پیجز اجرا شده و از طریق لینک زیر در دسترس است:
 
-[https://geekneuron.github.io/GeekDrivingQuiz/](https://geekneuron.github.io/GeekDrivingQuiz/)
+[https://geekneuron.github.io/P3Cortex/](https://geekneuron.github.io/P3Cortex/)
 
 برای اجرای پروژه به صورت محلی:
 1.  این ریپازیتوری را کلون کنید.
