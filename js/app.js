@@ -6,6 +6,9 @@ document.addEventListener('DOMContentLoaded', () => {
 };
 
     // --- DOM Elements ---
+    const confirmModal = document.getElementById('confirm-modal');
+    const confirmFinishBtn = document.getElementById('confirm-finish-btn');
+    const cancelFinishBtn = document.getElementById('cancel-finish-btn');
     const headerElement = document.querySelector('header');
     const mainNavButtons = document.querySelectorAll('.main-nav .nav-btn');
     const contentSections = document.querySelectorAll('.content-section');
@@ -495,9 +498,7 @@ const showResults = (correct, incorrect, total) => {
         prevQuestionBtn.addEventListener('click', () => navigateQuiz(-1));
         nextQuestionBtn.addEventListener('click', () => navigateQuiz(1));
         finishQuizBtn.addEventListener('click', () => {
-            if (confirm('آیا از پایان آزمون مطمئن هستید؟')) {
-                endQuiz();
-            }
+        confirmModal.classList.remove('hidden');
         });
         
         closeModalBtn.addEventListener('click', () => resultsModal.classList.add('hidden'));
@@ -506,6 +507,15 @@ const showResults = (correct, incorrect, total) => {
         });
     };
 
+    confirmFinishBtn.addEventListener('click', () => {
+        confirmModal.classList.add('hidden');
+        endQuiz();
+    });
+
+    cancelFinishBtn.addEventListener('click', () => {
+        confirmModal.classList.add('hidden');
+    });
+    
     // --- Run Application ---
     init();
 });
