@@ -267,11 +267,44 @@ main {
 }
 
 /* --- شماره‌گذاری خودکار گزینه‌ها --- */
-.options-list {
-    list-style: none;
-    display: grid;
-    gap: 0.75rem;
-    counter-reset: option-counter; /* ریست کردن شمارنده */
+/* استایل جدید برای شماره گزینه‌ها */
+.option-number {
+    font-weight: 600;
+    color: var(--primary-color);
+    background-color: var(--background-light);
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    border: 1px solid var(--border-light);
+    transition: all var(--transition-speed) ease;
+}
+
+.dark-mode .option-number {
+    background-color: var(--background-dark);
+    border-color: var(--border-dark);
+}
+
+.option:hover .option-number, 
+.option.selected .option-number, 
+.option.correct .option-number, 
+.option.incorrect .option-number {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+.option.correct .option-number { 
+    background-color: var(--success-color); 
+    border-color: var(--success-color); 
+}
+
+.option.incorrect .option-number { 
+    background-color: var(--error-color); 
+    border-color: var(--error-color); 
 }
 
 .option {
@@ -294,22 +327,6 @@ main {
 }
 
 /* --- ایجاد شماره با استفاده از CSS Counters --- */
-.option::before {
-    counter-increment: option-counter;
-    content: counter(option-counter);
-    font-weight: 600;
-    color: var(--primary-color);
-    background-color: var(--background-light);
-    border-radius: 50%;
-    width: 24px;
-    height: 24px;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    flex-shrink: 0;
-    border: 1px solid var(--border-light);
-    transition: all var(--transition-speed) ease;
-}
 .dark-mode .option::before {
     background-color: var(--background-dark);
     border-color: var(--border-dark);
