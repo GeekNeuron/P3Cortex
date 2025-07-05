@@ -28,6 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const finishQuizBtn = document.getElementById('finish-quiz-btn');
 
     const savedQuestionsContainer = document.getElementById('saved-questions-container');
+    const quizHistoryList = document.getElementById('quiz-history-list');
 
     const resultsModal = document.getElementById('results-modal');
     const closeModalBtn = document.querySelector('.close-modal');
@@ -36,6 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- State Management ---
     let allQuestions = [];
     let savedQuestionIds = JSON.parse(localStorage.getItem('savedQuestionIds')) || [];
+    let quizHistory = JSON.parse(localStorage.getItem('quizHistory')) || [];
     let currentQuiz = {
         questions: [],
         userAnswers: {},
@@ -50,8 +52,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Initialization ---
     const init = async () => {
         setupTheme();
-        await loadQuestions();
-        setupEventListeners();
+    await loadQuestions();
+    setupEventListeners();
+    renderQuizHistory();
         
         // Load initial section
         showSection('practice'); 
@@ -324,10 +327,58 @@ const renderShowQuestionsButton = () => {
         });
 
         const totalQuestions = currentQuiz.questions.length;
-        const incorrectAnswers = totalQuestions - correctAnswers;
-        
-        showResults(correctAnswers, incorrectAnswers, totalQuestions);
+    const incorrectAnswers = totalQuestions - correctAnswers;
+
+    // ✅ این خط برای ذخیره سابقه ضروری است
+    if (totalQuestions > 0) {
+        saveQuizHistory(correctAnswers, totalQuestions);
+    }
+    
+    showResults(correctAnswers, incorrectAnswers, totalQuestions);
+};
+
+    // --- History Logic ---
+const saveQuizHistory = (correct, total) => {
+    const now = new Date();
+    const newHistoryEntry = {
+        date: now.toLocaleDateString('fa-IR', { year: 'numeric', month: 'long', day: 'numeric' }),
+        time: now.toLocaleTimeString('fa-IR', { hour: '2-digit', minute: '2-digit' }),
+        day: now.toLocaleDateString('fa-IR', { weekday: 'long' }),
+        score: `${correct}/${total}`
     };
+    
+    quizHistory.unshift(newHistoryEntry);
+    if (quizHistory.length > 20) {
+        quizHistory.pop();
+    }
+    localStorage.setItem('quizHistory', JSON.stringify(quizHistory));
+
+    renderQuizHistory();
+};
+
+const renderQuizHistory = () => {
+    if (!quizHistoryList) return;
+    
+    quizHistoryList.innerHTML = '';
+    if (quizHistory.length === 0) {
+        quizHistoryList.innerHTML = `<p class="empty-message" style="border: none; padding: 1rem 0;">هنوز آزمونی را به پایان نرسانده‌اید.</p>`;
+        return;
+    }
+
+    const fragment = document.createDocumentFragment();
+    quizHistory.forEach(item => {
+        const historyDiv = document.createElement('div');
+        historyDiv.className = 'history-item';
+        historyDiv.innerHTML = `
+            <div class="date-time">
+                <span>${item.day}، ${item.date}</span> - <span>ساعت ${item.time}</span>
+            </div>
+            <div class="score">${toPersianDigits(item.score)}</div>
+        `;
+        fragment.appendChild(historyDiv);
+    });
+    quizHistoryList.appendChild(fragment);
+};
     
     // --- Results Modal & Chart ---
 const showResults = (correct, incorrect, total) => {
