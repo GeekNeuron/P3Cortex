@@ -244,13 +244,16 @@ main {
 }
 
 .question-image {
-    flex-shrink: 0;
-    width: 120px;
+    display: block; /* برای فعال شدن margin: auto */
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%; /* عرض کامل نسبت به نگهدارنده */
+    max-width: 450px; /* حداکثر عرض تصویر */
     height: auto;
     border-radius: var(--border-radius);
     object-fit: contain;
     background-color: var(--background-light);
-    aspect-ratio: 16 / 9; /* نسبت تصویر ۱۶:۹ برای تصویر اصلی */
+    aspect-ratio: 16 / 9;
 }
 .dark-mode .question-image {
     background-color: var(--background-dark);
@@ -281,6 +284,12 @@ main {
     flex-shrink: 0;
     border: 1px solid var(--border-light);
     transition: all var(--transition-speed) ease;
+}
+
+.options-list {
+    list-style: none;
+    display: grid;
+    gap: 1rem; /* افزایش فاصله به ۱rem */
 }
 
 .dark-mode .option-number {
@@ -361,8 +370,10 @@ main {
 
 /* --- استایل برای گزینه‌های تصویری --- */
 .options-list.image-options-grid {
-    grid-template-columns: repeat(2, 1fr); /* نمایش دو ستونه */
+    grid-template-columns: repeat(2, 1fr); /* چیدمان دو ستونه (پنجره‌ای) */
     gap: 1rem;
+    max-width: 320px; /* کاهش حداکثر عرض برای کوچک‌تر شدن تصاویر */
+    margin: 0 auto; /* وسط‌چین کردن کل گرید */
 }
 
 .image-options-grid .option {
