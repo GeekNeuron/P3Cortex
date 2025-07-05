@@ -4,10 +4,10 @@
         "question": "کدام تابلو درباره عبور عابر پیاده هشدار می‌دهد؟",
         "optionType": "image",
         "options": [
-            "images/ans_img/a3_no_entry.png",
-            "images/ans_img/a3_stop.png",
-            "images/ans_img/a3_one_way.png",
-            "images/ans_img/a3_no_overtaking.png"
+            "images/ans_img/1.1.png",
+            "images/ans_img/1.1.png",
+            "images/ans_img/1.1.png",
+            "images/ans_img/1.1.png"
         ],
         "answer": 1,
         "image": null
@@ -17,10 +17,10 @@
         "question": "کدام تابلو بیانگر کاهش خطوط عبور می‌باشد؟",
         "optionType": "image",
         "options": [
-            "images/ans_img/a3_no_entry.png",
-            "images/ans_img/a3_stop.png",
-            "images/ans_img/a3_one_way.png",
-            "images/ans_img/a3_no_overtaking.png"
+            "images/ans_img/1.1.png",
+            "images/ans_img/1.1.png",
+            "images/ans_img/1.1.png",
+            "images/ans_img/1.1.png"
         ],
         "answer": 3,
         "image": null
@@ -36,7 +36,7 @@
             "شروع محل پیاده‌روی"
         ],
         "answer": 3,
-        "image": "images/q_img/q2_intersection.png"
+        "image": "images/q_img/1.1.png"
     },
     {
         "id": 4,
@@ -49,7 +49,7 @@
             "هدایت مسیر با جداکننده"
         ],
         "answer": 0,
-        "image": "images/q_img/q2_intersection.png"
+        "image": "images/q_img/1.1.png"
     },
     {
         "id": 5,
@@ -62,7 +62,7 @@
             "عبور وسایل نقلیه با وزن بیش از ۲ تن ممنوع"
         ],
         "answer": 1,
-        "image": "images/q_img/q2_intersection.png"
+        "image": "images/q_img/1.1.png"
     },
     {
         "id": 6,
@@ -75,7 +75,7 @@
             "جهت عبور در میدان"
         ],
         "answer": 3,
-        "image": "images/q_img/q2_intersection.png"
+        "image": "images/q_img/1.1.png"
     },
     {
         "id": 7,
@@ -88,7 +88,7 @@
             "ورود سواری ممنوع"
         ],
         "answer": 1,
-        "image": "images/q_img/q2_intersection.png"
+        "image": "images/q_img/1.1.png"
     },
     {
         "id": 8,
@@ -101,7 +101,7 @@
             "ممنوعیت حرکت روی خطوط هاشور (اضطرار) در حاشیه راه‌ها"
         ],
         "answer": 3,
-        "image": "images/q_img/q2_intersection.png"
+        "image": "images/q_img/1.1.png"
     },
     {
         "id": 9,
@@ -140,7 +140,7 @@
             "صرفاً می‌توان به سمت راست حرکت نمود."
         ],
         "answer": 1,
-        "image": "images/q_img/q2_intersection.png"
+        "image": "images/q_img/1.1.png"
     },
     {
         "id": 12,
@@ -296,7 +296,7 @@
             "سبقت غیرمجاز"
         ],
         "answer": 1,
-        "image": "images/q_img/q2_intersection.png"
+        "image": "images/q_img/1.1.png"
     },
     {
         "id": 24,
@@ -309,7 +309,7 @@
             "در صورت لزوم می‌توان از روی آن سبقت گرفت."
         ],
         "answer": 0,
-        "image": "images/q_img/q2_intersection.png"
+        "image": "images/q_img/1.1.png"
     },
     {
         "id": 25,
@@ -374,7 +374,7 @@
             "با روشن نمودن چراغ خودرو از تقاطع عبور نمایند."
         ],
         "answer": 0,
-        "image": "images/q_img/q2_intersection.png"
+        "image": "images/q_img/1.1.png"
     },
     {
         "id": 30,
@@ -395,10 +395,10 @@
         "question": "کدام تابلو، ممنوعیت عبور وسایل نقلیه موتوری را اعلام می‌دارد؟",
         "optionType": "image",
         "options": [
-            "images/ans_img/a3_no_entry.png",
-            "images/ans_img/a3_stop.png",
-            "images/ans_img/a3_one_way.png",
-            "images/ans_img/a3_no_overtaking.png"
+            "images/ans_img/1.1.png",
+            "images/ans_img/1.1.png",
+            "images/ans_img/1.1.png",
+            "images/ans_img/1.1.png"
         ],
         "answer": 2,
         "image": null
@@ -408,10 +408,10 @@
         "question": "کدام تابلو بیانگر خط عبور برای گریز می‌باشد؟",
         "optionType": "image",
         "options": [
-            "images/ans_img/a3_no_entry.png",
-            "images/ans_img/a3_stop.png",
-            "images/ans_img/a3_one_way.png",
-            "images/ans_img/a3_no_overtaking.png"
+            "images/ans_img/1.1.png",
+            "images/ans_img/1.1.png",
+            "images/ans_img/1.1.png",
+            "images/ans_img/1.1.png"
         ],
         "answer": 3,
         "image": null
@@ -427,7 +427,7 @@
             "خطر پرتاب سنگ"
         ],
         "answer": 2,
-        "image": "images/q_img/q2_intersection.png"
+        "image": "images/q_img/1.1.png"
     },
     {
         "id": 4,
@@ -440,7 +440,7 @@
             "عبور عابر پیاده"
         ],
         "answer": 0,
-        "image": "images/q_img/q2_intersection.png"
+        "image": "images/q_img/1.1.png"
     },
     {
         "id": 5,
@@ -453,7 +453,7 @@
             "شیب سربالایی ده درصد"
         ],
         "answer": 1,
-        "image": "images/q_img/q2_intersection.png"
+        "image": "images/q_img/1.1.png"
     },
     {
         "id": 6,
@@ -466,7 +466,7 @@
             "هدایت مسیر با جداکننده"
         ],
         "answer": 0,
-        "image": "images/q_img/q2_intersection.png"
+        "image": "images/q_img/1.1.png"
     },
     {
         "id": 7,
@@ -479,7 +479,7 @@
             "عبور سواری از روی آن‌ها مجاز است."
         ],
         "answer": 2,
-        "image": "images/q_img/q2_intersection.png"
+        "image": "images/q_img/1.1.png"
     },
     {
         "id": 8,
@@ -492,7 +492,7 @@
             "شروع و پایان حق تقدم مسیر"
         ],
         "answer": 3,
-        "image": "images/q_img/q2_intersection.png"
+        "image": "images/q_img/1.1.png"
     },
     {
         "id": 9,
@@ -544,7 +544,7 @@
             "بستگی به مسیر نهایی خودرو دارد."
         ],
         "answer": 0,
-        "image": "images/q_img/q2_intersection.png"
+        "image": "images/q_img/1.1.png"
     },
     {
         "id": 13,
@@ -687,7 +687,7 @@
             "سطح روشنایی چراغ‌ها"
         ],
         "answer": 0,
-        "image": "images/q_img/q2_intersection.png"
+        "image": "images/q_img/1.1.png"
     },
     {
         "id": 24,
@@ -700,7 +700,7 @@
             "پای خود را بر روی ترمز قرار دهید."
         ],
         "answer": 2,
-        "image": "images/q_img/q2_intersection.png"
+        "image": "images/q_img/1.1.png"
     },
     {
         "id": 25,
@@ -752,7 +752,7 @@
             "نیازی به کنترل ندارد"
         ],
         "answer": 1,
-        "image": "images/q_img/q2_intersection.png"
+        "image": "images/q_img/1.1.png"
     },
     {
         "id": 29,
@@ -765,7 +765,7 @@
             "توقف در پشت تابلوی ایست در تقاطع"
         ],
         "answer": 1,
-        "image": "images/q_img/q2_intersection.png"
+        "image": "images/q_img/1.1.png"
     },
     {
         "id": 30,
@@ -778,6 +778,6 @@
             "نارنجی، سبز، آبی، زرد"
         ],
         "answer": 3,
-        "image": "images/q_img/q2_intersection.png"
+        "image": "images/q_img/1.1.png"
     }
 ]
