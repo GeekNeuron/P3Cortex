@@ -48,17 +48,9 @@ document.addEventListener('DOMContentLoaded', () => {
     setupTheme();
     await loadQuestions();
     setupEventListeners();
-    renderQuizHistory(); // فراخوانی برای نمایش اولیه
-    showSection('practice');
+    renderQuizHistory();
+    showSection('practice'); // این خط به تنهایی برای شروع کافی است
 };
-        
-        // Load initial section
-        showSection('practice'); 
-        createTabs(practiceTabsContainer, 4, 'practice');
-        if(practiceTabsContainer.querySelector('.tab-btn')) {
-            practiceTabsContainer.querySelector('.tab-btn').click();
-        }
-    };
 
     // --- Data Loading (New Logic) ---
     const loadQuestions = async () => {
@@ -165,21 +157,27 @@ const renderShowQuestionsButton = () => {
 };
     
     // --- Practice Section Logic ---
-    const renderPracticeQuestions = (questions) => {
-        practiceQuestionsContainer.innerHTML = '';
-        if (questions.length === 0) {
-            practiceQuestionsContainer.innerHTML = '<p class="empty-message">سوالی برای نمایش در این بخش وجود ندارد.</p>';
-            return;
+    const renderPracticeQuestions = (sessionQuestions, sectionIndex) => {
+    practiceQuestionsContainer.innerHTML = '';
+    if (!sessionQuestions || sessionQuestions.length === 0) {
+        practiceQuestionsContainer.innerHTML = '<p class="empty-message">سوالی برای نمایش در این بخش وجود ندارد.</p>';
+        return;
+    }
+    const fragment = document.createDocumentFragment();
+    sessionQuestions.forEach(q => {
+        // منطق صحیح برای بررسی سوالات ذخیره شده
+        const isSaved = savedQuestions.some(sq => sq.sectionIndex === sectionIndex && sq.questionId === q.id);
+        if (!isSaved) {
+            // ارسال شماره بخش به تابع ساخت کارت
+            fragment.appendChild(createQuestionCard(q, 'practice', sectionIndex));
         }
-
-        const fragment = document.createDocumentFragment();
-        questions.forEach(q => {
-             // Do not show saved questions in the practice list
-            if (savedQuestionIds.includes(q.id)) return;
-            fragment.appendChild(createQuestionCard(q, 'practice'));
-        });
+    });
+    if (fragment.children.length === 0) {
+        practiceQuestionsContainer.innerHTML = '<p class="empty-message">تمام سوالات این بخش را برای مرور انتخاب کرده‌اید.</p>';
+    } else {
         practiceQuestionsContainer.appendChild(fragment);
-    };
+    }
+};
 
     // --- Saved Questions Logic ---
     const toggleSaveQuestion = (sectionIndex, questionId) => {
