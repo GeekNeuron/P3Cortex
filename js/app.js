@@ -486,12 +486,10 @@ const createQuestionCard = (q, type, sectionIndex) => {
             ${sectionInfoHtml}
             ${imageHtml}
             <p class="question-text">
-                <%-- دکمه ستاره از اینجا حذف شد --%>
                 <span>${toPersianDigits(q.id)}. ${q.question}</span>
             </p>
             <ul class="${optionsListClass}">${optionsHtml}</ul>
         </div>
-        <%-- فوتر جدید به انتهای کارت اضافه شد --%>
         ${footerHtml}
     `;
     
