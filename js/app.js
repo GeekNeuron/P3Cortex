@@ -155,29 +155,6 @@ const renderShowQuestionsButton = () => {
     });
     practiceQuestionsContainer.appendChild(showBtn);
 };
-    
-    // --- Practice Section Logic ---
-    const renderPracticeQuestions = (sessionQuestions, sectionIndex) => {
-    practiceQuestionsContainer.innerHTML = '';
-    if (!sessionQuestions || sessionQuestions.length === 0) {
-        practiceQuestionsContainer.innerHTML = '<p class="empty-message">سوالی برای نمایش در این بخش وجود ندارد.</p>';
-        return;
-    }
-    const fragment = document.createDocumentFragment();
-    sessionQuestions.forEach(q => {
-        // منطق صحیح برای بررسی سوالات ذخیره شده
-        const isSaved = savedQuestions.some(sq => sq.sectionIndex === sectionIndex && sq.questionId === q.id);
-        if (!isSaved) {
-            // ارسال شماره بخش به تابع ساخت کارت
-            fragment.appendChild(createQuestionCard(q, 'practice', sectionIndex));
-        }
-    });
-    if (fragment.children.length === 0) {
-        practiceQuestionsContainer.innerHTML = '<p class="empty-message">تمام سوالات این بخش را برای مرور انتخاب کرده‌اید.</p>';
-    } else {
-        practiceQuestionsContainer.appendChild(fragment);
-    }
-};
 
     // --- Saved Questions Logic ---
     const toggleSaveQuestion = (sectionIndex, questionId) => {
@@ -360,9 +337,10 @@ const renderPracticeQuestions = (sessionQuestions, sectionIndex) => {
     }
     const fragment = document.createDocumentFragment();
     sessionQuestions.forEach(q => {
-        // این منطق اصلاح شده است
+        // منطق صحیح برای بررسی سوالات ذخیره شده
         const isSaved = savedQuestions.some(sq => sq.sectionIndex === sectionIndex && sq.questionId === q.id);
         if (!isSaved) {
+            // ارسال شماره بخش به تابع ساخت کارت
             fragment.appendChild(createQuestionCard(q, 'practice', sectionIndex));
         }
     });
