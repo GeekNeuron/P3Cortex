@@ -448,7 +448,7 @@ const createQuestionCard = (q, type, sectionIndex) => {
     const card = document.createElement('div');
     card.className = 'question-card fade-in';
 
-    const sessionInfoHtml = (type === 'saved') 
+    const sectionInfoHtml = (type === 'saved') 
         ? `<span class="section-source">از بخش ${toPersianDigits(sectionIndex + 1)}</span>` 
         : '';
 
@@ -464,28 +464,35 @@ const createQuestionCard = (q, type, sectionIndex) => {
         let classes = 'option';
         if ((type === 'practice' || type === 'saved') && index === q.answer) classes += ' correct';
         else if (type === 'quiz' && currentQuiz.userAnswers[q.id] === index) classes += ' selected';
+        
         const numberHtml = `<div class="option-number">${toPersianDigits(index + 1)}</div>`;
         const optionContent = isImageOptions ? `<img src="${option}" alt="گزینه" class="option-image">` : `<span>${option}</span>`;
         return `<li class="${classes}" data-option-index="${index}">${numberHtml}${optionContent}</li>`;
     }).join('');
     
+    // ساخت HTML دکمه ستاره
     let starButtonHtml = '';
     if (type === 'practice' || type === 'saved') {
         const isSaved = savedQuestions.some(sq => sq.sectionIndex === sectionIndex && sq.questionId === q.id);
         const starIconSrc = isSaved ? 'images/star-filled.svg' : 'images/star-outline.svg';
         starButtonHtml = `<button class="save-star"><img src="${starIconSrc}" alt="ذخیره"></button>`;
     }
+    
+    // ساخت فوتر کارت فقط در صورت وجود دکمه ستاره
+    const footerHtml = starButtonHtml ? `<div class="card-footer">${starButtonHtml}</div>` : '';
 
     card.innerHTML = `
         <div class="question-content">
-            ${sessionInfoHtml}
+            ${sectionInfoHtml}
             ${imageHtml}
             <p class="question-text">
-                ${starButtonHtml}
+                <%-- دکمه ستاره از اینجا حذف شد --%>
                 <span>${toPersianDigits(q.id)}. ${q.question}</span>
             </p>
             <ul class="${optionsListClass}">${optionsHtml}</ul>
         </div>
+        <%-- فوتر جدید به انتهای کارت اضافه شد --%>
+        ${footerHtml}
     `;
     
     const starButton = card.querySelector('.save-star');
