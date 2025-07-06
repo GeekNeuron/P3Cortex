@@ -35,16 +35,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const resultSummaryElement = document.getElementById('result-summary');
     
     // --- State Management ---
-    let allQuestions = [];
-    let savedQuestionIds = JSON.parse(localStorage.getItem('savedQuestionIds')) || [];
+    let allSections = []; // جایگزین allQuestions
+    let savedQuestions = JSON.parse(localStorage.getItem('savedQuestions')) || []; // ساختار جدید برای سوالات ذخیره شده
     let quizHistory = JSON.parse(localStorage.getItem('quizHistory')) || [];
-    let currentQuiz = {
-        questions: [],
-        userAnswers: {},
-        currentQuestionIndex: 0,
-        timerInterval: null,
-        timeRemaining: 0,
-    };
+    let currentQuiz = { questions: [], userAnswers: {}, currentQuestionIndex: 0, timerInterval: null, timeRemaining: 0 };
 
     // --- Constants ---
     const QUESTIONS_PER_TAB = 30; // تعداد سوال در هر تب آزمون و نمونه سوال
@@ -64,15 +58,15 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // --- Data Loading ---
+    // --- Data Loading (New Logic) ---
     const loadQuestions = async () => {
-        try {
-            const response = await fetch('data/questions.json');
-            if (!response.ok) throw new Error('Network response was not ok');
-            allQuestions = await response.json();
+    try {
+        const sectionFiles = ['section1.json', 'section2.json', 'section3.json', 'section4.json'];
+        const promises = sectionFiles.map(file => fetch(`data/${file}`).then(res => res.json()));
+        allSections = await Promise.all(promises);
         } catch (error) {
-            console.error('Failed to load questions:', error);
-            practiceQuestionsContainer.innerHTML = '<p class="empty-message">خطا در بارگذاری سوالات. لطفاً صفحه را رفرش کنید.</p>';
+        console.error('Failed to load questions:', error);
+        practiceQuestionsContainer.innerHTML = '<p class="empty-message">خطا در بارگذاری سوالات.</p>';
         }
     };
 
@@ -151,32 +145,20 @@ const handleTabClick = (clickedBtn, type) => {
 
     // این تابع را به فایل js/app.js خود اضافه کنید
 const renderShowQuestionsButton = () => {
-    practiceQuestionsContainer.innerHTML = ''; // پاک کردن محتوای قبلی
+    practiceQuestionsContainer.innerHTML = '';
     const showBtn = document.createElement('button');
     showBtn.className = 'show-questions-btn';
     showBtn.textContent = 'نمایش نمونه سوالات';
-    
     showBtn.addEventListener('click', () => {
         let activeTab = practiceTabsContainer.querySelector('.tab-btn.active');
-        
-        // اگر هیچ تبی فعال نبود، اولین تب را فعال کن
         if (!activeTab) {
             activeTab = practiceTabsContainer.querySelector('.tab-btn');
-            if (activeTab) {
-                activeTab.classList.add('active');
-            } else {
-                practiceQuestionsContainer.innerHTML = '<p class="empty-message">هیچ بخشی برای نمایش وجود ندارد.</p>';
-                return;
-            }
+            if(activeTab) activeTab.classList.add('active');
+            else { return; }
         }
-
-        const tabIndex = parseInt(activeTab.dataset.tabIndex);
-        const start = (tabIndex - 1) * QUESTIONS_PER_TAB;
-        const end = start + QUESTIONS_PER_TAB;
-        const questions = allQuestions.slice(start, end);
-        renderPracticeQuestions(questions);
+        const sectionIndex = parseInt(activeTab.dataset.tabIndex) - 1;
+        renderPracticeQuestions(allSections[sectionIndex], sectionIndex);
     });
-
     practiceQuestionsContainer.appendChild(showBtn);
 };
     
@@ -198,88 +180,81 @@ const renderShowQuestionsButton = () => {
     };
 
     // --- Saved Questions Logic ---
-    const toggleSaveQuestion = (questionId, starIcon) => {
-        const index = savedQuestionIds.indexOf(questionId);
-        if (index > -1) {
-            savedQuestionIds.splice(index, 1); // Unsave
-            starIcon.src = 'images/star-outline.svg';
-        } else {
-            savedQuestionIds.push(questionId); // Save
-            starIcon.src = 'images/star-filled.svg';
-        }
-        localStorage.setItem('savedQuestionIds', JSON.stringify(savedQuestionIds));
+    const toggleSaveQuestion = (sectionIndex, questionId) => {
+    const savedIndex = savedQuestions.findIndex(sq => sq.sectionIndex === sectionIndex && sq.questionId === questionId);
+    if (savedIndex > -1) {
+        savedQuestions.splice(savedIndex, 1);
+    } else {
+        savedQuestions.push({ sectionIndex, questionId });
+    }
+    localStorage.setItem('savedQuestions', JSON.stringify(savedQuestions));
 
-        // Instantly update UI
-        const activePracticeTab = practiceTabsContainer.querySelector('.tab-btn.active');
-        if (activePracticeTab) activePracticeTab.click(); // Re-render practice questions
-        
-        // If in saved questions section, re-render it
-        if(document.getElementById('saved-section').classList.contains('active')) {
-            renderSavedQuestions();
+    // آپدیت آنی رابط کاربری
+    if (document.getElementById('practice-section').classList.contains('active')) {
+        const activeTab = practiceTabsContainer.querySelector('.tab-btn.active');
+        if(activeTab) {
+            const currentSectionIndex = parseInt(activeTab.dataset.tabIndex) - 1;
+            renderPracticeQuestions(allSections[currentSectionIndex], currentSectionIndex);
         }
-    };
+    }
+    if (document.getElementById('saved-section').classList.contains('active')) {
+        renderSavedQuestions();
+    }
+};
     
     const renderSavedQuestions = () => {
-        savedQuestionsContainer.innerHTML = '';
-        const savedQuestions = allQuestions.filter(q => savedQuestionIds.includes(q.id));
-
-        if (savedQuestions.length === 0) {
-            savedQuestionsContainer.innerHTML = '<p class="empty-message">هنوز سوالی برای مرور نشان نکرده‌اید.<br>از بخش <b>نمونه سوالات</b>، روی آیکون ⭐ کنار هر سوال کلیک کنید تا به این بخش اضافه شود.</p>';
-            return;
+    savedQuestionsContainer.innerHTML = '';
+    if (savedQuestions.length === 0) {
+        savedQuestionsContainer.innerHTML = '<p class="empty-message">هنوز سوالی برای مرور نشان نکرده‌اید.<br>از بخش <b>نمونه سوالات</b>، روی آیکون ⭐ کنار هر سوال کلیک کنید تا به این بخش اضافه شود.</p>';
+        return;
+    }
+    const fragment = document.createDocumentFragment();
+    savedQuestions.forEach(savedItem => {
+        const question = allSections[savedItem.sectionIndex]?.find(q => q.id === savedItem.questionId);
+        if (question) {
+            fragment.appendChild(createQuestionCard(question, 'saved', savedItem.sectionIndex));
         }
-        
-        const fragment = document.createDocumentFragment();
-        savedQuestions.forEach(q => {
-            fragment.appendChild(createQuestionCard(q, 'saved'));
-        });
-        savedQuestionsContainer.appendChild(fragment);
-    };
+    });
+    savedQuestionsContainer.appendChild(fragment);
+};
 
 
     // --- Quiz Logic ---
     const startQuiz = () => {
-        const activeTab = quizTabsContainer.querySelector('.tab-btn.active');
-        if (!activeTab) {
-            alert('لطفا ابتدا یک نوع آزمون را انتخاب کنید.');
-            return;
-        }
-        
-        const tabIndex = parseInt(activeTab.dataset.tabIndex);
-        let duration = 20 * 60; // 20 minutes in seconds
-        
-        switch (tabIndex) {
-            case 1:
-            case 2:
-            case 3:
-            case 4:
-                const start = (tabIndex - 1) * QUESTIONS_PER_TAB;
-                const end = start + QUESTIONS_PER_TAB;
-                currentQuiz.questions = allQuestions.slice(start, end);
-                break;
-            case 5:
-                currentQuiz.questions = [...allQuestions];
-                duration = 60 * 60; // 1 hour for all questions
-                break;
-            case 6:
-                currentQuiz.questions = allQuestions.filter(q => !savedQuestionIds.includes(q.id));
-                break;
-        }
+    let activeTab = quizTabsContainer.querySelector('.tab-btn.active');
+    if (!activeTab) { activeTab = quizTabsContainer.querySelector('.tab-btn'); activeTab?.classList.add('active'); }
+    if (!activeTab) { alert('لطفا یک نوع آزمون را انتخاب کنید.'); return; }
+    
+    const tabIndex = parseInt(activeTab.dataset.tabIndex);
+    let duration = 20 * 60;
+    let questionsForQuiz = [];
 
-        if (currentQuiz.questions.length === 0) {
-             alert('سوالی برای این آزمون وجود ندارد.');
-             return;
-        }
+    if (tabIndex <= allSections.length) { // آزمون‌های استاندارد ۱ تا ۴
+        questionsForQuiz = allSections[tabIndex - 1] || [];
+    } else if (tabIndex === allSections.length + 1) { // دکمه همه سوالات
+        questionsForQuiz = allSections.flat(); // تمام سوالات در یک آرایه
+        duration = 60 * 60;
+    } else if (tabIndex === allSections.length + 2) { // آزمون بدون ستاره‌دارها
+        questionsForQuiz = [];
+        allSections.forEach((section, sectionIndex) => {
+            section.forEach(question => {
+                const isSaved = savedQuestions.some(sq => sq.sectionIndex === sectionIndex && sq.questionId === question.id);
+                if (!isSaved) {
+                    questionsForQuiz.push(question);
+                }
+            });
+        });
+        duration = 60 * 60;
+    }
 
-        currentQuiz.userAnswers = {};
-        currentQuiz.currentQuestionIndex = 0;
-        currentQuiz.timeRemaining = duration;
-
-        quizSetupSection.classList.add('hidden');
-        quizLiveSection.classList.remove('hidden');
-
-        renderQuizQuestion();
-        startTimer();
-    };
+    if (questionsForQuiz.length === 0) { alert('سوالی برای این آزمون وجود ندارد.'); return; }
+    
+    currentQuiz = { questions: questionsForQuiz, userAnswers: {}, currentQuestionIndex: 0, timeRemaining: duration };
+    quizSetupSection.classList.add('hidden');
+    quizLiveSection.classList.remove('hidden');
+    renderQuizQuestion();
+    startTimer();
+};
 
     const startTimer = () => {
         clearInterval(currentQuiz.timerInterval);
@@ -473,87 +448,70 @@ const showResults = (correct, incorrect, total) => {
     resultsModal.classList.remove('hidden');
 };
 
-// --- Card Creation (Factory) ---
-    const createQuestionCard = (q, type) => {
-        const card = document.createElement('div');
-        card.className = 'question-card fade-in';
-        card.dataset.questionId = q.id;
+const createQuestionCard = (q, type, sectionIndex) => {
+    const card = document.createElement('div');
+    card.className = 'question-card fade-in';
 
-        let imageHtml = '';
-        if (q.image) {
-            imageHtml = `<img src="${q.image}" alt="تصویر سوال" class="question-image">`;
-        }
+    const sessionInfoHtml = (type === 'saved') 
+        ? `<span class="section-source">از بخش ${toPersianDigits(sectionIndex + 1)}</span>` 
+        : '';
 
-        // **تغییر اصلی اینجا شروع می‌شود**
-        const isImageOptions = q.optionType === 'image';
-        
-        const optionsListClass = isImageOptions ? 'options-list image-options-grid' : 'options-list';
+    let imageHtml = '';
+    if (q.image) {
+        const style = q.aspectRatio ? `style="aspect-ratio: ${q.aspectRatio};"` : '';
+        imageHtml = `<img src="${q.image}" alt="تصویر سوال" class="question-image" ${style}>`;
+    }
 
-        // در تابع createQuestionCard
-        const optionsHtml = q.options.map((option, index) => {
+    const isImageOptions = q.optionType === 'image';
+    const optionsListClass = isImageOptions ? 'options-list image-options-grid' : 'options-list';
+    const optionsHtml = q.options.map((option, index) => {
         let classes = 'option';
         if ((type === 'practice' || type === 'saved') && index === q.answer) classes += ' correct';
         else if (type === 'quiz' && currentQuiz.userAnswers[q.id] === index) classes += ' selected';
-    
-        // ساخت شماره گزینه در جاوا اسکریپت
         const numberHtml = `<div class="option-number">${toPersianDigits(index + 1)}</div>`;
-
-        const optionContent = isImageOptions ? `<img src="${option}" alt="گزینه ${toPersianDigits(index + 1)}" class="option-image">` : `<span>${option}</span>`;
-    
-        // ترکیب شماره و محتوای گزینه
+        const optionContent = isImageOptions ? `<img src="${option}" alt="گزینه" class="option-image">` : `<span>${option}</span>`;
         return `<li class="${classes}" data-option-index="${index}">${numberHtml}${optionContent}</li>`;
     }).join('');
-        // **پایان تغییرات اصلی**
-        
-        const isSaved = savedQuestionIds.includes(q.id);
+    
+    let starButtonHtml = '';
+    if (type === 'practice' || type === 'saved') {
+        const isSaved = savedQuestions.some(sq => sq.sectionIndex === sectionIndex && sq.questionId === q.id);
         const starIconSrc = isSaved ? 'images/star-filled.svg' : 'images/star-outline.svg';
-        
-        const footerHtml = `
-            <div class="card-footer">
-                <button class="save-star">
-                    <img src="${starIconSrc}" alt="ذخیره سوال">
-                </button>
-            </div>
-        `;
+        starButtonHtml = `<button class="save-star"><img src="${starIconSrc}" alt="ذخیره"></button>`;
+    }
 
-        card.innerHTML = `
+    card.innerHTML = `
+        <div class="question-content">
+            ${sessionInfoHtml}
             ${imageHtml}
-            <div class="question-content">
-                <p class="question-text">${toPersianDigits(q.id)}. ${q.question}</p>
-                <ul class="${optionsListClass}">${optionsHtml}</ul>
-                ${(type === 'practice' || type === 'saved') ? footerHtml : ''}
-            </div>
-        `;
-
-        // Event Listeners for the card
-        if (type === 'quiz') {
-            card.querySelectorAll('.option').forEach(opt => {
-                opt.addEventListener('click', () => {
-                    const selectedIndex = parseInt(opt.dataset.optionIndex);
-                    currentQuiz.userAnswers[q.id] = selectedIndex;
-                    
-                    card.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
-                    opt.classList.add('selected');
-                });
+            <p class="question-text">
+                ${starButtonHtml}
+                <span>${toPersianDigits(q.id)}. ${q.question}</span>
+            </p>
+            <ul class="${optionsListClass}">${optionsHtml}</ul>
+        </div>
+    `;
+    
+    const starButton = card.querySelector('.save-star');
+    if (starButton) {
+        starButton.addEventListener('click', (e) => {
+            e.stopPropagation();
+            toggleSaveQuestion(sectionIndex, q.id);
+        });
+    }
+    
+    if (type === 'quiz') {
+        card.querySelectorAll('.option').forEach(opt => {
+            opt.addEventListener('click', () => {
+                const selectedIndex = parseInt(opt.dataset.optionIndex);
+                currentQuiz.userAnswers[q.id] = selectedIndex;
+                card.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+                opt.classList.add('selected');
             });
-        }
-        
-        const starButton = card.querySelector('.save-star');
-        if (starButton) {
-            starButton.addEventListener('click', (e) => {
-                e.stopPropagation();
-                toggleSaveQuestion(q.id, starButton.querySelector('img'));
-                if(type === 'saved' && !savedQuestionIds.includes(q.id)) {
-                    card.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
-                    card.style.opacity = '0';
-                    card.style.transform = 'scale(0.95)';
-                    setTimeout(() => card.remove(), 300);
-                }
-            });
-        }
-
-        return card;
-    };
+        });
+    }
+    return card;
+};
 
     // --- Event Listeners Setup ---
     const setupEventListeners = () => {
