@@ -353,7 +353,7 @@
     {
         "id": 28,
         "question": "در بحث مفهوم رنگ‌ها و علائم عبور و مرور، مفهوم کدام رنگ به معنی حرکات مجاز می‌باشد؟",
-        "optionType": "text",
+        "optionType": "image",
         "options": [
             "images/ans_img/1.1.png",
             "images/ans_img/1.1.png",
