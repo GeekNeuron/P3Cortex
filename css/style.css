@@ -691,3 +691,12 @@ footer p {
 .btn-cancel:hover {
     background-color: #5a6268;
 }
+
+.section-source {
+    display: block;
+    text-align: left;
+    font-size: 0.8rem;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
