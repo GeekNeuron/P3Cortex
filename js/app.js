@@ -45,10 +45,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Initialization ---
     const init = async () => {
-        setupTheme();
+    setupTheme();
     await loadQuestions();
     setupEventListeners();
-    renderQuizHistory();
+    renderQuizHistory(); // فراخوانی برای نمایش اولیه
+    showSection('practice');
+};
         
         // Load initial section
         showSection('practice'); 
@@ -289,22 +291,21 @@ const renderShowQuestionsButton = () => {
     };
     
     const endQuiz = () => {
-        clearInterval(currentQuiz.timerInterval);
-        quizLiveSection.classList.add('hidden');
-        quizSetupSection.classList.remove('hidden');
+    clearInterval(currentQuiz.timerInterval);
+    quizLiveSection.classList.add('hidden');
+    quizSetupSection.classList.remove('hidden');
 
-        // Calculate score
-        let correctAnswers = 0;
-        currentQuiz.questions.forEach(q => {
-            if (currentQuiz.userAnswers[q.id] === q.answer) {
-                correctAnswers++;
-            }
-        });
+    let correctAnswers = 0;
+    currentQuiz.questions.forEach(q => {
+        if (currentQuiz.userAnswers[q.id] === q.answer) {
+            correctAnswers++;
+        }
+    });
 
-        const totalQuestions = currentQuiz.questions.length;
+    const totalQuestions = currentQuiz.questions.length;
     const incorrectAnswers = totalQuestions - correctAnswers;
-
-    // ✅ این خط برای ذخیره سابقه ضروری است
+    
+    // فراخوانی برای ذخیره سابقه
     if (totalQuestions > 0) {
         saveQuizHistory(correctAnswers, totalQuestions);
     }
@@ -319,13 +320,12 @@ const saveQuizHistory = (correct, total) => {
         date: now.toLocaleDateString('fa-IR', { year: 'numeric', month: 'long', day: 'numeric' }),
         time: now.toLocaleTimeString('fa-IR', { hour: '2-digit', minute: '2-digit' }),
         day: now.toLocaleDateString('fa-IR', { weekday: 'long' }),
-        score: `${correct}/${total}`
+        score: `${correct}/${total}`,
+        timestamp: now.getTime() // برای قابلیت حذف در آینده
     };
     
     quizHistory.unshift(newHistoryEntry);
-    if (quizHistory.length > 20) {
-        quizHistory.pop();
-    }
+    if (quizHistory.length > 20) { quizHistory.pop(); }
     localStorage.setItem('quizHistory', JSON.stringify(quizHistory));
 
     renderQuizHistory();
@@ -333,13 +333,11 @@ const saveQuizHistory = (correct, total) => {
 
 const renderQuizHistory = () => {
     if (!quizHistoryList) return;
-    
     quizHistoryList.innerHTML = '';
     if (quizHistory.length === 0) {
         quizHistoryList.innerHTML = `<p class="empty-message" style="border: none; padding: 1rem 0;">هنوز آزمونی را به پایان نرسانده‌اید.</p>`;
         return;
     }
-
     const fragment = document.createDocumentFragment();
     quizHistory.forEach(item => {
         const historyDiv = document.createElement('div');
@@ -353,6 +351,28 @@ const renderQuizHistory = () => {
         fragment.appendChild(historyDiv);
     });
     quizHistoryList.appendChild(fragment);
+};
+
+// --- Practice Section Logic (Corrected Version) ---
+const renderPracticeQuestions = (sessionQuestions, sectionIndex) => {
+    practiceQuestionsContainer.innerHTML = '';
+    if (!sessionQuestions || sessionQuestions.length === 0) {
+        practiceQuestionsContainer.innerHTML = '<p class="empty-message">سوالی برای نمایش در این بخش وجود ندارد.</p>';
+        return;
+    }
+    const fragment = document.createDocumentFragment();
+    sessionQuestions.forEach(q => {
+        // این منطق اصلاح شده است
+        const isSaved = savedQuestions.some(sq => sq.sectionIndex === sectionIndex && sq.questionId === q.id);
+        if (!isSaved) {
+            fragment.appendChild(createQuestionCard(q, 'practice', sectionIndex));
+        }
+    });
+    if (fragment.children.length === 0) {
+        practiceQuestionsContainer.innerHTML = '<p class="empty-message">تمام سوالات این بخش را برای مرور انتخاب کرده‌اید.</p>';
+    } else {
+        practiceQuestionsContainer.appendChild(fragment);
+    }
 };
     
     // --- Results Modal & Chart ---
