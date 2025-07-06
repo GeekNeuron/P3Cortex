@@ -391,10 +391,9 @@ main {
 }
 
 /* --- استایل فوتر کارت --- */
-/* استایل جدید برای فوتر کارت سوال */
 .question-card .card-footer {
     display: flex;
-    justify-content: flex-start; /* آیکون را در سمت چپ قرار می‌دهد */
+    justify-content: flex-end;
     margin-top: 1.5rem;
     padding-top: 1rem;
     border-top: 1px solid var(--border-light);
