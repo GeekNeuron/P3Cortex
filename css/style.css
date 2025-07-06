@@ -700,3 +700,34 @@ footer p {
     margin-bottom: 0.5rem;
     font-weight: 500;
 }
+
+/* استایل جدید برای فوتر کارت سوال */
+.question-card .card-footer {
+    display: flex;
+    justify-content: flex-start; /* آیکون را در سمت چپ قرار می‌دهد */
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-light);
+}
+
+.dark-mode .question-card .card-footer {
+    border-top-color: var(--border-dark);
+}
+
+.card-footer .save-star {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1; 
+}
+
+.card-footer .save-star img {
+    width: 24px;
+    height: 24px;
+    transition: transform 0.2s ease;
+}
+
+.card-footer .save-star:hover img {
+    transform: scale(1.2);
+}
