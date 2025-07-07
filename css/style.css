@@ -155,13 +155,15 @@ header {
     font-size: 1rem;
     font-weight: 500;
     border: none;
-    background-color: transparent;
+    background-color: var(--background-light);
     border-radius: var(--border-radius);
     cursor: pointer;
     transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
     color: inherit;
 }
-
+.dark-mode .nav-btn {
+    background-color: var(--background-dark);
+}
 .nav-btn.active, .nav-btn:hover {
     background-color: var(--primary-color);
     color: white;
@@ -817,4 +819,39 @@ footer p {
 .dark-mode .quiz-navigation button:disabled {
     background-color: var(--background-dark);
     color: #495057;
+}
+
+.layout-switcher {
+    display: flex;
+    justify-content: flex-start;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+.layout-switcher button {
+    background-color: var(--background-light);
+    border: 1px solid var(--border-light);
+    border-radius: 8px;
+    padding: 0.5rem;
+    cursor: pointer;
+    line-height: 1;
+}
+.dark-mode .layout-switcher button {
+    background-color: var(--background-dark);
+    border-color: var(--border-dark);
+}
+.layout-switcher button.active {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+.layout-switcher button img {
+    width: 20px;
+    height: 20px;
+    display: block;
+    filter: invert(0.5); /* خاکستری کردن آیکون‌ها */
+}
+.dark-mode .layout-switcher button img {
+    filter: invert(0.8);
+}
+.layout-switcher button.active img {
+    filter: invert(1); /* سفید کردن آیکون فعال */
 }
