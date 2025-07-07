@@ -6,6 +6,9 @@ document.addEventListener('DOMContentLoaded', () => {
 };
 
     // --- DOM Elements ---
+    const deleteConfirmModal = document.getElementById('delete-confirm-modal');
+    const confirmDeleteBtn = document.getElementById('confirm-delete-btn');
+    const cancelDeleteBtn = document.getElementById('cancel-delete-btn');
     const confirmModal = document.getElementById('confirm-modal');
     const confirmFinishBtn = document.getElementById('confirm-finish-btn');
     const cancelFinishBtn = document.getElementById('cancel-finish-btn');
@@ -35,10 +38,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const resultSummaryElement = document.getElementById('result-summary');
     
     // --- State Management ---
-    let allSections = []; // جایگزین allQuestions
-    let savedQuestions = JSON.parse(localStorage.getItem('savedQuestions')) || []; // ساختار جدید برای سوالات ذخیره شده
+    let allSections = [];
+    let savedQuestions = JSON.parse(localStorage.getItem('savedQuestions')) || [];
     let quizHistory = JSON.parse(localStorage.getItem('quizHistory')) || [];
     let currentQuiz = { questions: [], userAnswers: {}, currentQuestionIndex: 0, timerInterval: null, timeRemaining: 0 };
+    let historyItemToDelete = null;
 
     // --- Constants ---
     const QUESTIONS_PER_TAB = 30; // تعداد سوال در هر تب آزمون و نمونه سوال
@@ -343,10 +347,8 @@ const deleteHistoryItem = (timestamp) => {
 quizHistoryList.addEventListener('click', (e) => {
     const deleteBtn = e.target.closest('.delete-history-btn');
     if (deleteBtn) {
-        const timestamp = Number(deleteBtn.dataset.timestamp);
-        if (confirm('آیا از حذف این سابقه مطمئن هستید؟')) {
-            deleteHistoryItem(timestamp);
-        }
+        historyItemToDelete = Number(deleteBtn.dataset.timestamp);
+        deleteConfirmModal.classList.remove('hidden');
     }
 });
     
@@ -613,3 +615,16 @@ const createQuestionCard = (q, type, sectionIndex) => {
         });
         quizHistoryList.appendChild(fragment);
     };
+
+confirmDeleteBtn.addEventListener('click', () => {
+    if (historyItemToDelete !== null) {
+        deleteHistoryItem(historyItemToDelete);
+        historyItemToDelete = null;
+    }
+    deleteConfirmModal.classList.add('hidden');
+});
+
+cancelDeleteBtn.addEventListener('click', () => {
+    historyItemToDelete = null;
+    deleteConfirmModal.classList.add('hidden');
+});
