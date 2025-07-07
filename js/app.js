@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- DOM Elements ---
     const headerElement = document.querySelector('header');
+    const TOTAL_SECTIONS = 20;
     const confirmModal = document.getElementById('confirm-modal');
     const confirmFinishBtn = document.getElementById('confirm-finish-btn');
     const cancelFinishBtn = document.getElementById('cancel-finish-btn');
@@ -59,14 +60,19 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Data Loading (New Logic) ---
     const loadQuestions = async () => {
     try {
-        const sectionFiles = ['section1.json', 'section2.json', 'section3.json', 'section4.json'];
+        // ساخت اتوماتیک لیست فایل‌ها بر اساس متغیر
+        const sectionFiles = [];
+        for (let i = 1; i <= TOTAL_SECTIONS; i++) {
+            sectionFiles.push(`section${i}.json`);
+        }
+        
         const promises = sectionFiles.map(file => fetch(`data/${file}`).then(res => res.json()));
         allSections = await Promise.all(promises);
-        } catch (error) {
+    } catch (error) {
         console.error('Failed to load questions:', error);
         practiceQuestionsContainer.innerHTML = '<p class="empty-message">خطا در بارگذاری سوالات.</p>';
-        }
-    };
+    }
+};
 
     // --- Theme Switcher ---
     const setupTheme = () => {
@@ -90,16 +96,17 @@ const showSection = (sectionId) => {
         btn.classList.toggle('active', btn.dataset.section === sectionId);
     });
 
-    // تغییر اصلی در این بخش
     if (sectionId === 'practice') {
-        createTabs(practiceTabsContainer, 4, 'practice');
-        renderShowQuestionsButton(); // نمایش دکمه "نمایش سوالات"
+        // ساخت تب‌ها بر اساس تعداد کل بخش‌ها
+        createTabs(practiceTabsContainer, TOTAL_SECTIONS, 'practice');
+        renderShowQuestionsButton();
     } else if (sectionId === 'quiz') {
-        createTabs(quizTabsContainer, 6, 'quiz');
+        // ساخت تب‌ها بر اساس تعداد کل بخش‌ها
+        createTabs(quizTabsContainer, TOTAL_SECTIONS, 'quiz');
         quizSetupSection.classList.remove('hidden');
         quizLiveSection.classList.add('hidden');
         clearInterval(currentQuiz.timerInterval);
-    } else if (sectionId === 'saved') {
+    } else if (sectionId === 'saved') { // همان بخش «مرور»
         renderSavedQuestions();
     }
 };
