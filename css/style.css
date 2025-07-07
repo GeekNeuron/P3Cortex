@@ -427,17 +427,18 @@ main {
 }
 
 /* Quiz Section Specifics */
-#quiz-setup {
+#quiz-setup, #practice-setup {
     text-align: center;
     padding: 2rem;
     background: var(--foreground-light);
     border-radius: var(--border-radius);
     box-shadow: var(--shadow);
+    margin-bottom: 2rem;
 }
-.dark-mode #quiz-setup {
+.dark-mode #quiz-setup, .dark-mode #practice-setup {
     background-color: var(--foreground-dark);
 }
-#quiz-setup h2 {
+#quiz-setup h2, #practice-setup h2 {
     margin-bottom: 1.5rem;
 }
 .start-btn {
