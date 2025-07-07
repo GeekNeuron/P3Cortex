@@ -543,7 +543,7 @@ main {
 }
 .close-modal {
     position: absolute;
-    top: 1rem;
+    top: 0.5rem;
     left: 1.5rem;
     font-size: 2rem;
     cursor: pointer;
