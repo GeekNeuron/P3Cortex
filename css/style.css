@@ -976,3 +976,61 @@ footer p {
     border-color: var(--border-dark);
     color: var(--text-dark);
 }
+
+/* استایل هدر بخش سوابق */
+.history-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-light);
+}
+.dark-mode .history-header {
+    border-bottom-color: var(--border-dark);
+}
+
+/* استایل دکمه راهنما */
+.help-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    opacity: 0.6;
+    transition: opacity 0.2s ease;
+}
+.help-btn:hover {
+    opacity: 1;
+}
+.help-btn svg {
+    width: 24px;
+    height: 24px;
+}
+.dark-mode .help-btn svg {
+    filter: invert(1) brightness(1.2);
+}
+
+/* استایل محتوای مودال راهنما */
+#help-modal .modal-content ul {
+    list-style: none;
+    margin: 1.5rem 0;
+    padding: 1rem;
+    background-color: var(--background-light);
+    border-radius: var(--border-radius);
+}
+.dark-mode #help-modal .modal-content ul {
+    background-color: var(--background-dark);
+}
+#help-modal .modal-content li {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.75rem 0;
+}
+#help-modal .modal-content li:not(:last-child) {
+    border-bottom: 1px solid var(--border-light);
+}
+.dark-mode #help-modal .modal-content li:not(:last-child) {
+    border-bottom-color: var(--border-dark);
+}
+#help-modal .modal-content p {
+    line-height: 1.8;
+}
