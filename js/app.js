@@ -162,7 +162,7 @@ const handleTabClick = (clickedBtn, type) => {
     if (container.children.length > 4) {
         const showMoreBtn = document.createElement('button');
         showMoreBtn.className = 'show-more-tabs-btn';
-        showMoreBtn.textContent = 'نمایش همه بخش‌ها...';
+        showMoreBtn.textContent = 'نمایش همه...';
         showMoreBtn.addEventListener('click', (e) => {
             container.classList.add('tabs-expanded');
             e.target.style.display = 'none';
