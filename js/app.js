@@ -124,28 +124,51 @@ const handleTabClick = (clickedBtn, type) => {
     }
 };
 
-    const createTabs = (container, count, type) => {
+    const createTabs = (container, standardTabCount, type) => {
     container.innerHTML = '';
-    for (let i = 1; i <= count; i++) {
+    container.classList.remove('tabs-expanded');
+
+    // مرحله ۱: ساخت زبانه‌های استاندارد
+    for (let i = 1; i <= standardTabCount; i++) {
         const btn = document.createElement('button');
         btn.className = 'tab-btn';
-        btn.dataset.tabIndex = i;
-
-        if (type === 'quiz') {
-            if (i === 5) btn.textContent = 'همه سوالات';
-            else if (i === 6) btn.textContent = 'آزمون بدون ستاره‌دارها';
-            // اینجا اعداد فارسی می‌شوند
-            else btn.textContent = `آزمون ${toPersianDigits(i)}`;
-        } else {
-            // اینجا اعداد فارسی می‌شوند
-             btn.textContent = `بخش ${toPersianDigits(i)}`;
+        if (i > 4) {
+            btn.classList.add('extra-tab');
         }
-        
+        btn.dataset.tabIndex = i;
+        btn.textContent = (type === 'quiz') ? `آزمون ${toPersianDigits(i)}` : `بخش ${toPersianDigits(i)}`;
         btn.addEventListener('click', () => handleTabClick(btn, type));
         container.appendChild(btn);
     }
-    // Activate the first tab by default
-    if(container.firstChild) container.firstChild.classList.add('active');
+
+    // مرحله ۲: افزودن زبانه‌های ویژه برای بخش آزمون (این بخش اصلاح شده است)
+    if (type === 'quiz') {
+        const specialTabs = [
+            { name: 'همه سوالات', index: standardTabCount + 1 },
+            { name: 'آزمون بدون ستاره‌دارها', index: standardTabCount + 2 }
+        ];
+        specialTabs.forEach(specialTab => {
+            const btn = document.createElement('button');
+            btn.className = 'tab-btn extra-tab'; // تب‌های ویژه هم در ابتدا مخفی هستند
+            btn.dataset.tabIndex = specialTab.index;
+            btn.textContent = specialTab.name;
+            btn.addEventListener('click', () => handleTabClick(btn, type));
+            container.appendChild(btn);
+        });
+    }
+
+    // مرحله ۳: ساخت دکمه "نمایش بیشتر" اگر تعداد کل تب‌ها بیشتر از ۴ بود
+    // این بخش به انتهای تابع منتقل شده تا بعد از همه تب‌ها ساخته شود
+    if (container.children.length > 4) {
+        const showMoreBtn = document.createElement('button');
+        showMoreBtn.className = 'show-more-tabs-btn';
+        showMoreBtn.textContent = 'نمایش همه بخش‌ها...';
+        showMoreBtn.addEventListener('click', (e) => {
+            container.classList.add('tabs-expanded');
+            e.target.style.display = 'none';
+        });
+        container.appendChild(showMoreBtn);
+    }
 };
 
     // این تابع را به فایل js/app.js خود اضافه کنید
