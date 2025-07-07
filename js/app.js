@@ -567,6 +567,19 @@ const createQuestionCard = (q, type, sectionIndex) => {
     cancelFinishBtn.addEventListener('click', () => {
         confirmModal.classList.add('hidden');
     });
+
+    confirmDeleteBtn.addEventListener('click', () => {
+    if (historyItemToDelete !== null) {
+        deleteHistoryItem(historyItemToDelete);
+        historyItemToDelete = null;
+    }
+    deleteConfirmModal.classList.add('hidden');
+     });
+
+    cancelDeleteBtn.addEventListener('click', () => {
+    historyItemToDelete = null;
+    deleteConfirmModal.classList.add('hidden');
+     });
     
     // --- Run Application ---
     init();
@@ -615,16 +628,3 @@ const createQuestionCard = (q, type, sectionIndex) => {
         });
         quizHistoryList.appendChild(fragment);
     };
-
-confirmDeleteBtn.addEventListener('click', () => {
-    if (historyItemToDelete !== null) {
-        deleteHistoryItem(historyItemToDelete);
-        historyItemToDelete = null;
-    }
-    deleteConfirmModal.classList.add('hidden');
-});
-
-cancelDeleteBtn.addEventListener('click', () => {
-    historyItemToDelete = null;
-    deleteConfirmModal.classList.add('hidden');
-});
