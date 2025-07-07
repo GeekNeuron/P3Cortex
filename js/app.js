@@ -366,6 +366,14 @@ const renderQuizHistory = () => {
     quizHistory.forEach(item => {
         const historyDiv = document.createElement('div');
         historyDiv.className = 'history-item';
+
+        const [correct, total] = item.score.split('/').map(Number);
+        const incorrect = total - correct;
+        
+        // تعیین وضعیت قبولی یا مردودی
+        const statusClass = incorrect <= 4 ? 'status-pass' : 'status-fail';
+        const statusText = incorrect <= 4 ? 'قبول' : 'مردود';
+
         historyDiv.innerHTML = `
             <button class="delete-history-btn" data-timestamp="${item.timestamp}" title="حذف این سابقه">
                 <img src="images/trash-icon.svg" alt="حذف">
@@ -374,7 +382,10 @@ const renderQuizHistory = () => {
                 <span class="history-quiz-name">${item.quizName || 'آزمون'}</span>
                 <span class="history-date-time">${item.day}، ${item.date}</span>
             </div>
-            <div class="score">${toPersianDigits(item.score)}</div>
+            <div class="history-result">
+                <span class="history-status ${statusClass}">${statusText}</span>
+                <div class="score">${toPersianDigits(item.score)}</div>
+            </div>
         `;
         quizHistoryList.appendChild(historyDiv);
     });
@@ -676,20 +687,25 @@ const setupLayoutSwitcher = (containerSelector) => {
 };
 
 main.addEventListener('click', (e) => {
-    const layoutBtn = e.target.closest('.layout-switcher button');
-    if (!layoutBtn) return;
+    const layoutToggleBtn = e.target.closest('.layout-toggle-btn');
+    const layoutOptionBtn = e.target.closest('.layout-options button');
 
-    const layout = layoutBtn.dataset.layout;
-    const questionsContainer = layoutBtn.closest('.content-section').querySelector('.questions-list');
+    // منطق باز و بسته کردن منوی چیدمان
+    if (layoutToggleBtn) {
+        layoutToggleBtn.parentElement.classList.toggle('switcher-expanded');
+    }
 
-    if (questionsContainer) {
-        // حذف کلاس‌های چیدمان قبلی
-        questionsContainer.className = 'questions-list'; 
-        // افزودن کلاس چیدمان جدید
-        questionsContainer.classList.add(`grid-${layout.replace('-', '_')}`);
-
-        // مدیریت حالت فعال دکمه‌ها
-        layoutBtn.parentElement.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
-        layoutBtn.classList.add('active');
+    // منطق انتخاب چیدمان
+    if (layoutOptionBtn) {
+        const layout = layoutOptionBtn.dataset.layout;
+        const questionsContainer = layoutOptionBtn.closest('.content-section').querySelector('.questions-list');
+        
+        if (questionsContainer) {
+            questionsContainer.className = 'questions-list'; // ریست کردن کلاس‌ها
+            questionsContainer.classList.add(`grid-${layout}`);
+            
+            layoutOptionBtn.parentElement.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
+            layoutOptionBtn.classList.add('active');
+        }
     }
 });
