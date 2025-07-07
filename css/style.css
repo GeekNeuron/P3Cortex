@@ -792,3 +792,20 @@ footer p {
 .tabs-container.tabs-expanded .tab-btn.extra-tab {
     display: inline-flex; /* این خط برای نمایش تب‌های مخفی ضروری است */
 }
+
+#result-message {
+    padding: 1rem;
+    border-radius: var(--border-radius);
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+    color: white;
+    text-align: center;
+}
+
+#result-message.pass {
+    background-color: var(--success-color);
+}
+
+#result-message.fail {
+    background-color: var(--error-color);
+}
