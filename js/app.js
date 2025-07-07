@@ -446,7 +446,7 @@ const showResults = (correct, incorrect, unanswered, total) => {
         resultMessageEl.textContent = 'تبریک! شما در آزمون قبول شدید. با این تعداد اشتباه، آمادگی لازم برای آزمون اصلی را دارید.';
         resultMessageEl.className = 'pass';
     } else {
-        resultMessageEl.textContent = 'متاسفانه تعداد اشتباهات شما بیش از حد مجاز (۴) بود. برای آمادگی بیشتر، نقاط ضعف خود را در بخش «مرور» مطالعه کنید.';
+        resultMessageEl.textContent = 'متاسفانه تعداد اشتباهات شما بیش از حد مجاز بود. برای آمادگی بیشتر، نقاط ضعف خود را در بخش «مرور» مطالعه کنید.';
         resultMessageEl.className = 'fail';
     }
 
