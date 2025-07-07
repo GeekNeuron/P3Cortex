@@ -568,17 +568,20 @@ const createQuestionCard = (q, type, sectionIndex) => {
 
     // --- Event Listeners Setup ---
     const setupEventListeners = () => {
+    // رویداد تغییر تم
     headerElement.addEventListener('click', toggleTheme);
 
+    // رویداد دکمه‌های منوی اصلی
     mainNavButtons.forEach(btn => {
         btn.addEventListener('click', () => showSection(btn.dataset.section));
     });
 
+    // رویداد دکمه‌های شروع و حین آزمون
     startQuizBtn.addEventListener('click', startQuiz);
     prevQuestionBtn.addEventListener('click', () => navigateQuiz(-1));
     nextQuestionBtn.addEventListener('click', () => navigateQuiz(1));
     
-    // رویداد مودال پایان آزمون
+    // رویدادهای مودال‌ها
     finishQuizBtn.addEventListener('click', () => {
         confirmModal.classList.remove('hidden');
     });
@@ -589,14 +592,10 @@ const createQuestionCard = (q, type, sectionIndex) => {
     cancelFinishBtn.addEventListener('click', () => {
         confirmModal.classList.add('hidden');
     });
-
-    // رویدادهای مودال نتایج
     closeModalBtn.addEventListener('click', () => resultsModal.classList.add('hidden'));
     resultsModal.addEventListener('click', (e) => {
         if(e.target === resultsModal) resultsModal.classList.add('hidden');
     });
-
-    // رویدادهای مودال حذف سابقه
     quizHistoryList.addEventListener('click', (e) => {
         const deleteBtn = e.target.closest('.delete-history-btn');
         if (deleteBtn) {
@@ -616,7 +615,7 @@ const createQuestionCard = (q, type, sectionIndex) => {
         deleteConfirmModal.classList.add('hidden');
     });
 
-    // ✅ منطق صحیح و نهایی برای تغییر چیدمان
+    // ✅ منطق صحیح و نهایی برای تغییر چیدمان که باید اینجا باشد
     main.addEventListener('click', (e) => {
         const layoutToggleBtn = e.target.closest('.layout-toggle-btn');
         const layoutOptionBtn = e.target.closest('.layout-options button');
