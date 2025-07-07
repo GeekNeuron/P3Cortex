@@ -411,13 +411,13 @@ main {
     border-top-color: var(--border-dark);
 }
 
+/* استایل‌های گرید برای نمایش سوالات */
 .questions-list {
     display: grid;
     gap: 1.5rem;
-    /* حالت پیش‌فرض تک ستونی است */
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr; /* حالت پیش‌فرض همیشه تک ستونی */
 }
-.questions-list.grid_2_col {
+.questions-list.grid-2_col {
     grid-template-columns: repeat(2, 1fr);
 }
 
@@ -844,59 +844,77 @@ footer p {
     color: #495057;
 }
 
-/* استایل جدید برای کنترل‌کننده چیدمان */
+/* استایل جدید و اصلاح‌شده برای کنترل‌کننده چیدمان */
 .layout-switcher {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    position: absolute;
-    top: 1.5rem;
-    left: 1.5rem;
-    background-color: var(--foreground-light);
-    border-radius: var(--border-radius);
-    padding: 0.25rem;
-    box-shadow: var(--shadow);
-    overflow: hidden;
-}
-.dark-mode .layout-switcher {
-    background-color: var(--foreground-dark);
+    margin-bottom: 1.5rem; /* جایگزین position: absolute */
+    justify-content: flex-start; /* قرارگیری در سمت چپ */
 }
 
 .layout-toggle-btn {
     background: none;
-    border: none;
+    border: 1px solid var(--border-light);
+    border-radius: var(--border-radius);
     cursor: pointer;
     padding: 0.5rem;
+    line-height: 1;
+    transition: all var(--transition-speed) ease;
+}
+.dark-mode .layout-toggle-btn {
+    border-color: var(--border-dark);
+}
+.layout-toggle-btn:hover {
+    background-color: var(--background-light);
+}
+.dark-mode .layout-toggle-btn:hover {
+    background-color: var(--background-dark);
+}
+.layout-toggle-btn img {
+    width: 20px; /* کاهش اندازه آیکون */
+    height: 20px;
+    display: block;
+    transition: transform var(--transition-speed) ease;
 }
 
 .layout-options {
     display: flex;
-    max-width: 0; /* در حالت پیش‌فرض مخفی است */
+    max-width: 0;
     overflow: hidden;
-    transition: max-width 0.4s ease;
+    transition: max-width 0.4s ease, gap 0.4s ease;
+    gap: 0;
 }
 
-/* وقتی باز می‌شود، گزینه‌ها نمایش داده می‌شوند */
 .layout-switcher.switcher-expanded .layout-options {
-    max-width: 100px; /* یک عرض کافی برای نمایش دکمه‌ها */
+    max-width: 100px;
+    gap: 0.5rem; /* فاصله بین دکمه‌ها فقط در حالت باز */
 }
 
-/* چرخیدن فلش هنگام باز شدن */
 .layout-switcher.switcher-expanded .layout-toggle-btn img {
     transform: rotate(180deg);
 }
 
 .layout-options button {
     background: none;
-    border: none;
+    border: 1px solid var(--border-light);
     padding: 0.5rem;
     cursor: pointer;
-    border-radius: 8px;
+    border-radius: var(--border-radius);
+}
+.dark-mode .layout-options button {
+    border-color: var(--border-dark);
+}
+.layout-options button img {
+    width: 20px; /* کاهش اندازه آیکون */
+    height: 20px;
+    display: block;
+    filter: invert(0.5);
 }
 
-/* استایل حالت فعال */
 .layout-options button.active {
     background-color: var(--primary-color);
+    border-color: var(--primary-color);
 }
 .layout-options button.active img {
     filter: invert(1);
