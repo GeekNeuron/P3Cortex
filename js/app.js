@@ -702,6 +702,7 @@ const createQuestionCard = (q, type, sectionIndex) => {
                 
                 layoutContainer.querySelectorAll('button').forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
+              }
         });
     }
 };
