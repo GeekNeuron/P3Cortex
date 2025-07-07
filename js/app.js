@@ -577,42 +577,23 @@ const createQuestionCard = (q, type, sectionIndex) => {
     startQuizBtn.addEventListener('click', startQuiz);
     prevQuestionBtn.addEventListener('click', () => navigateQuiz(-1));
     nextQuestionBtn.addEventListener('click', () => navigateQuiz(1));
+    
+    // رویداد مودال پایان آزمون
     finishQuizBtn.addEventListener('click', () => {
         confirmModal.classList.remove('hidden');
     });
-
-    // رویداد چیدمان
-    main.addEventListener('click', (e) => {
-        const layoutToggleBtn = e.target.closest('.layout-toggle-btn');
-        const layoutOptionBtn = e.target.closest('.layout-options button');
-        if (layoutToggleBtn) {
-            layoutToggleBtn.closest('.layout-switcher').classList.toggle('switcher-expanded');
-        }
-        if (layoutOptionBtn) {
-            const layout = layoutOptionBtn.dataset.layout;
-            const questionsContainer = layoutOptionBtn.closest('.content-section').querySelector('.questions-list');
-            if (questionsContainer) {
-                questionsContainer.className = 'questions-list';
-                questionsContainer.classList.add(`grid-${layout}`);
-                layoutOptionBtn.closest('.layout-options').querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
-                layoutOptionBtn.classList.add('active');
-            }
-        }
-    });
-    
-    // رویدادهای مودال نتایج
-    closeModalBtn.addEventListener('click', () => resultsModal.classList.add('hidden'));
-    resultsModal.addEventListener('click', (e) => {
-        if(e.target === resultsModal) resultsModal.classList.add('hidden');
-    });
-
-    // رویدادهای مودال پایان آزمون
     confirmFinishBtn.addEventListener('click', () => {
         confirmModal.classList.add('hidden');
         endQuiz();
     });
     cancelFinishBtn.addEventListener('click', () => {
         confirmModal.classList.add('hidden');
+    });
+
+    // رویدادهای مودال نتایج
+    closeModalBtn.addEventListener('click', () => resultsModal.classList.add('hidden'));
+    resultsModal.addEventListener('click', (e) => {
+        if(e.target === resultsModal) resultsModal.classList.add('hidden');
     });
 
     // رویدادهای مودال حذف سابقه
@@ -633,6 +614,29 @@ const createQuestionCard = (q, type, sectionIndex) => {
     cancelDeleteBtn.addEventListener('click', () => {
         historyItemToDelete = null;
         deleteConfirmModal.classList.add('hidden');
+    });
+
+    // ✅ منطق صحیح و نهایی برای تغییر چیدمان
+    main.addEventListener('click', (e) => {
+        const layoutToggleBtn = e.target.closest('.layout-toggle-btn');
+        const layoutOptionBtn = e.target.closest('.layout-options button');
+
+        if (layoutToggleBtn) {
+            layoutToggleBtn.closest('.layout-switcher').classList.toggle('switcher-expanded');
+        }
+
+        if (layoutOptionBtn) {
+            const layout = layoutOptionBtn.dataset.layout;
+            const questionsContainer = layoutOptionBtn.closest('.content-section').querySelector('.questions-list');
+            
+            if (questionsContainer) {
+                questionsContainer.className = 'questions-list'; // ریست کردن کلاس‌ها
+                questionsContainer.classList.add(`grid-${layout}`);
+                
+                layoutOptionBtn.closest('.layout-options').querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
+                layoutOptionBtn.classList.add('active');
+            }
+        }
     });
 };
     
