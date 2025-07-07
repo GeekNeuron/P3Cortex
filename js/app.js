@@ -312,25 +312,29 @@ const renderShowQuestionsButton = () => {
     
     const endQuiz = () => {
     clearInterval(currentQuiz.timerInterval);
-    quizLiveSection.classList.add('hidden');
-    quizSetupSection.classList.remove('hidden');
+    
+    let correct = 0;
+    let incorrect = 0;
 
-    let correctAnswers = 0;
     currentQuiz.questions.forEach(q => {
-        if (currentQuiz.userAnswers[q.id] === q.answer) {
-            correctAnswers++;
+        const userAnswer = currentQuiz.userAnswers[q.id];
+        if (userAnswer !== undefined) {
+            if (userAnswer === q.answer) {
+                correct++;
+            } else {
+                incorrect++;
+            }
         }
     });
 
-    const totalQuestions = currentQuiz.questions.length;
-    const incorrectAnswers = totalQuestions - correctAnswers;
-    
-    // فراخوانی برای ذخیره سابقه
-    if (totalQuestions > 0) {
-        saveQuizHistory(correctAnswers, totalQuestions, currentQuiz.name);
+    const total = currentQuiz.questions.length;
+    const unanswered = total - correct - incorrect;
+
+    if (total > 0) {
+        saveQuizHistory(correct, total, currentQuiz.name);
     }
     
-    showResults(correctAnswers, incorrectAnswers, totalQuestions);
+    showResults(correct, incorrect, unanswered, total);
 };
 
     // --- History Logic ---
@@ -415,91 +419,66 @@ const renderPracticeQuestions = (sessionQuestions, sectionIndex) => {
 };
     
     // --- Results Modal & Chart ---
-const showResults = (correct, incorrect, total) => {
+const showResults = (correct, incorrect, unanswered, total) => {
     const resultsChartContainer = document.getElementById('chart-container');
+    const resultMessageEl = document.getElementById('result-message');
     resultsChartContainer.innerHTML = '';
+    quizLiveSection.classList.add('hidden');
+    quizSetupSection.classList.remove('hidden');
+
     if (total === 0) return;
-    resultSummaryElement.textContent = `شما به ${toPersianDigits(correct)} سوال از ${toPersianDigits(total)} سوال پاسخ صحیح دادید.`;
 
-    // --- منطق اصلی برای ساخت سری‌های داده ---
-    const series = [];
-
-    // سری اول: آزمون فعلی
-    series.push({
-        name: 'آزمون فعلی',
-        data: [correct, incorrect],
-    });
-
-    // سری دوم: آزمون قبلی (اگر وجود داشته باشد)
-    // quizHistory[0] آزمون فعلی است که همین الان ذخیره شده
-    if (quizHistory[1]) {
-        const [prevCorrect, prevTotal] = quizHistory[1].score.split('/').map(Number);
-        const prevIncorrect = prevTotal - prevCorrect;
-        series.push({
-            name: 'آزمون قبلی',
-            data: [prevCorrect, prevIncorrect],
-        });
+    // --- منطق نمایش پیام قبولی یا مردودی ---
+    if (incorrect <= 4) {
+        resultMessageEl.textContent = 'تبریک! شما در آزمون قبول شدید. با این تعداد اشتباه، آمادگی لازم برای آزمون اصلی را دارید.';
+        resultMessageEl.className = 'pass';
+    } else {
+        resultMessageEl.textContent = 'متاسفانه تعداد اشتباهات شما بیش از حد مجاز بود. برای آمادگی بیشتر، نقاط ضعف خود را در بخش «مرور» مطالعه کنید.';
+        resultMessageEl.className = 'fail';
     }
 
-    // سری سوم: آزمون دو مرحله قبل (اگر وجود داشته باشد)
-    if (quizHistory[2]) {
-        const [prev2Correct, prev2Total] = quizHistory[2].score.split('/').map(Number);
-        const prev2Incorrect = prev2Total - prev2Correct;
-        series.push({
-            name: 'دو آزمون قبل',
-            data: [prev2Correct, prev2Incorrect],
-        });
-    }
-    // --- پایان منطق ساخت سری‌ها ---
+    resultSummaryElement.textContent = `شما به ${toPersianDigits(correct)} سوال پاسخ صحیح، به ${toPersianDigits(incorrect)} سوال پاسخ غلط و ${toPersianDigits(unanswered)} سوال را بدون پاسخ گذاشته‌اید.`;
 
+    // --- تنظیمات نمودار ستونی جدید ---
     const options = {
-        series: series, // استفاده از سری‌های ساخته شده
+        series: [{
+            name: 'تعداد',
+            data: [correct, incorrect, unanswered]
+        }],
         chart: {
-            height: 350,
-            type: 'radar',
+            type: 'bar', // تغییر نوع نمودار به ستونی
+            height: 250,
             toolbar: { show: false },
             fontFamily: 'Vazirmatn, sans-serif'
         },
-        // رنگ‌های متمایز برای هر آزمون
-        colors: ['#007BFF', '#28a745', '#ffc107'],
-        // خطوط متمایز (ممتد، خط‌چین، نقطه‌چین)
-        stroke: {
-            width: 2,
-            dashArray: [0, 4, 8] 
-        },
-        fill: {
-            opacity: 0.1
-        },
-        markers: {
-            size: 4,
-            hover: { size: 7 }
-        },
-        // فعال کردن راهنمای نمودار (Legend)
-        legend: {
-            position: 'bottom',
-            horizontalAlign: 'center',
-            labels: {
-                colors: document.body.classList.contains('dark-mode') ? '#e0e0e0' : '#212529'
+        plotOptions: {
+            bar: {
+                distributed: true, // هر ستون رنگ متفاوتی می‌گیرد
+                borderRadius: 4,
+                horizontal: false,
             }
         },
+        colors: ['#28a745', '#dc3545', '#6c757d'], // سبز برای صحیح، قرمز برای غلط، خاکستری برای بی‌ پاسخ
+        dataLabels: {
+            enabled: true,
+            formatter: (val) => toPersianDigits(val),
+        },
+        legend: {
+            show: false
+        },
         xaxis: {
-            categories: ['پاسخ‌های صحیح', 'پاسخ‌های غلط'],
+            categories: ['پاسخ صحیح', 'پاسخ غلط', 'بدون پاسخ'],
             labels: {
                 style: {
-                    colors: [document.body.classList.contains('dark-mode') ? '#e0e0e0' : '#212529'],
+                    colors: document.body.classList.contains('dark-mode') ? '#e0e0e0' : '#212529',
                 }
             }
         },
         yaxis: {
-            show: true, // نمایش محور عمودی
-            tickAmount: Math.min(total, 4),
             labels: {
-                formatter: (val) => toPersianDigits(Math.round(val)),
-                style: {
-                     colors: [document.body.classList.contains('dark-mode') ? '#a0a0a0' : '#6c757d'],
-                }
+                show: false
             }
-        },
+        }
     };
 
     const chart = new ApexCharts(resultsChartContainer, options);
