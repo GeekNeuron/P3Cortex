@@ -198,13 +198,21 @@ main {
 .tab-btn {
     padding: 0.6rem 1.2rem;
     font-size: 0.9rem;
+    font-weight: 500;
     border: 1px solid var(--border-light);
     background-color: var(--foreground-light);
     border-radius: var(--border-radius);
     cursor: pointer;
     transition: all var(--transition-speed) ease;
     color: inherit;
+    box-shadow: var(--shadow);
+    
+    /* این سه خط برای تراز وسط اضافه شده‌اند */
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
 }
+
 .dark-mode .tab-btn {
     border-color: var(--border-dark);
     background-color: var(--foreground-dark);
@@ -780,4 +788,9 @@ footer p {
 /* حالت پیش‌فرض برای تب‌های اضافی (مخفی) */
 .tab-btn.extra-tab {
     display: none;
+}
+
+/* این کد را اضافه کنید */
+.tabs-container.tabs-expanded .tab-btn.extra-tab {
+    display: inline-flex; /* این خط برای نمایش تب‌های مخفی ضروری است */
 }
