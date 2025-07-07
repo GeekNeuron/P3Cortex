@@ -205,9 +205,6 @@ main {
     cursor: pointer;
     transition: all var(--transition-speed) ease;
     color: inherit;
-    box-shadow: var(--shadow);
-    
-    /* این سه خط برای تراز وسط اضافه شده‌اند */
     display: inline-flex;
     justify-content: center;
     align-items: center;
