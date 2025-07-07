@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- DOM Elements ---
     const headerElement = document.querySelector('header');
     const TOTAL_SECTIONS = 20;
+    const main = document.querySelector('main');
     const confirmModal = document.getElementById('confirm-modal');
     const confirmFinishBtn = document.getElementById('confirm-finish-btn');
     const cancelFinishBtn = document.getElementById('cancel-finish-btn');
@@ -99,7 +100,6 @@ const showSection = (sectionId) => {
     if (sectionId === 'practice') {
         createTabs(practiceTabsContainer, TOTAL_SECTIONS, 'practice');
         renderShowQuestionsButton();
-        setupLayoutSwitcher('#practice-section');
     } else if (sectionId === 'quiz') {
         createTabs(quizTabsContainer, TOTAL_SECTIONS, 'quiz');
         quizSetupSection.classList.remove('hidden');
@@ -107,7 +107,6 @@ const showSection = (sectionId) => {
         clearInterval(currentQuiz.timerInterval);
     } else if (sectionId === 'saved') {
         renderSavedQuestions();
-        setupLayoutSwitcher('#saved-section');
     }
 };
 
@@ -569,46 +568,73 @@ const createQuestionCard = (q, type, sectionIndex) => {
 
     // --- Event Listeners Setup ---
     const setupEventListeners = () => {
-        headerElement.addEventListener('click', toggleTheme);
+    headerElement.addEventListener('click', toggleTheme);
 
-        mainNavButtons.forEach(btn => {
-            btn.addEventListener('click', () => showSection(btn.dataset.section));
-        });
+    mainNavButtons.forEach(btn => {
+        btn.addEventListener('click', () => showSection(btn.dataset.section));
+    });
 
-        startQuizBtn.addEventListener('click', startQuiz);
-        prevQuestionBtn.addEventListener('click', () => navigateQuiz(-1));
-        nextQuestionBtn.addEventListener('click', () => navigateQuiz(1));
-        finishQuizBtn.addEventListener('click', () => {
+    startQuizBtn.addEventListener('click', startQuiz);
+    prevQuestionBtn.addEventListener('click', () => navigateQuiz(-1));
+    nextQuestionBtn.addEventListener('click', () => navigateQuiz(1));
+    finishQuizBtn.addEventListener('click', () => {
         confirmModal.classList.remove('hidden');
-        });
-        
-        closeModalBtn.addEventListener('click', () => resultsModal.classList.add('hidden'));
-        resultsModal.addEventListener('click', (e) => {
-            if(e.target === resultsModal) resultsModal.classList.add('hidden');
-        });
-    };
+    });
 
+    // رویداد چیدمان
+    main.addEventListener('click', (e) => {
+        const layoutToggleBtn = e.target.closest('.layout-toggle-btn');
+        const layoutOptionBtn = e.target.closest('.layout-options button');
+        if (layoutToggleBtn) {
+            layoutToggleBtn.closest('.layout-switcher').classList.toggle('switcher-expanded');
+        }
+        if (layoutOptionBtn) {
+            const layout = layoutOptionBtn.dataset.layout;
+            const questionsContainer = layoutOptionBtn.closest('.content-section').querySelector('.questions-list');
+            if (questionsContainer) {
+                questionsContainer.className = 'questions-list';
+                questionsContainer.classList.add(`grid-${layout}`);
+                layoutOptionBtn.closest('.layout-options').querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
+                layoutOptionBtn.classList.add('active');
+            }
+        }
+    });
+    
+    // رویدادهای مودال نتایج
+    closeModalBtn.addEventListener('click', () => resultsModal.classList.add('hidden'));
+    resultsModal.addEventListener('click', (e) => {
+        if(e.target === resultsModal) resultsModal.classList.add('hidden');
+    });
+
+    // رویدادهای مودال پایان آزمون
     confirmFinishBtn.addEventListener('click', () => {
         confirmModal.classList.add('hidden');
         endQuiz();
     });
-
     cancelFinishBtn.addEventListener('click', () => {
         confirmModal.classList.add('hidden');
     });
 
+    // رویدادهای مودال حذف سابقه
+    quizHistoryList.addEventListener('click', (e) => {
+        const deleteBtn = e.target.closest('.delete-history-btn');
+        if (deleteBtn) {
+            historyItemToDelete = Number(deleteBtn.dataset.timestamp);
+            deleteConfirmModal.classList.remove('hidden');
+        }
+    });
     confirmDeleteBtn.addEventListener('click', () => {
-    if (historyItemToDelete !== null) {
-        deleteHistoryItem(historyItemToDelete);
-        historyItemToDelete = null;
-    }
-    deleteConfirmModal.classList.add('hidden');
-     });
-
+        if (historyItemToDelete !== null) {
+            deleteHistoryItem(historyItemToDelete);
+            historyItemToDelete = null;
+        }
+        deleteConfirmModal.classList.add('hidden');
+    });
     cancelDeleteBtn.addEventListener('click', () => {
-    historyItemToDelete = null;
-    deleteConfirmModal.classList.add('hidden');
-     });
+        historyItemToDelete = null;
+        deleteConfirmModal.classList.add('hidden');
+    });
+};
     
     // --- Run Application ---
     init();
@@ -657,15 +683,6 @@ const createQuestionCard = (q, type, sectionIndex) => {
         });
         quizHistoryList.appendChild(fragment);
     };
-
-const setupLayoutSwitcher = (containerSelector) => {
-    const layoutContainer = document.querySelector(`${containerSelector} .layout-switcher`);
-    const questionsContainer = document.querySelector(containerSelector === '#practice-setup' ? '#practice-questions-container' : '#saved-questions-container'); // This logic needs to be tied to the correct container
-
-    if (layoutContainer) {
-        layoutContainer.addEventListener('click', (e) => {
-            const btn = e.target.closest('button[data-layout]');
-            if (!btn) return;
             
             // This part is tricky as quiz questions are not grid-based
             // Focusing on practice and saved for now
@@ -685,25 +702,3 @@ const setupLayoutSwitcher = (containerSelector) => {
         });
     }
 };
-
-main.addEventListener('click', (e) => {
-    const layoutToggleBtn = e.target.closest('.layout-toggle-btn');
-    const layoutOptionBtn = e.target.closest('.layout-options button');
-
-    if (layoutToggleBtn) {
-        layoutToggleBtn.closest('.layout-switcher').classList.toggle('switcher-expanded');
-    }
-
-    if (layoutOptionBtn) {
-        const layout = layoutOptionBtn.dataset.layout;
-        const questionsContainer = layoutOptionBtn.closest('.content-section').querySelector('.questions-list');
-        
-        if (questionsContainer) {
-            questionsContainer.className = 'questions-list'; // ریست کردن کلاس‌ها
-            questionsContainer.classList.add(`grid-${layout}`);
-            
-            layoutOptionBtn.closest('.layout-options').querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
-            layoutOptionBtn.classList.add('active');
-        }
-    }
-});
