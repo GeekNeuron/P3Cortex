@@ -781,21 +781,3 @@ footer p {
 .tab-btn.extra-tab {
     display: none;
 }
-
-/* نمایش تب‌های اضافی وقتی کلاس .tabs-expanded اضافه می‌شود */
-.tabs-container.tabs-expanded .tab-btn.extra-tab {
-    display: inline-flex;
-    /* استایل ساده‌تر و بدون کاشی */
-    background-color: transparent;
-    box-shadow: none;
-    font-weight: 400;
-    border: 1px solid transparent;
-}
-.tabs-container.tabs-expanded .tab-btn.extra-tab:hover {
-    background-color: var(--background-light);
-    border-color: var(--border-light);
-}
-.dark-mode .tabs-container.tabs-expanded .tab-btn.extra-tab:hover {
-    background-color: var(--background-dark);
-    border-color: var(--border-dark);
-}
