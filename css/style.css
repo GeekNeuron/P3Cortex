@@ -248,21 +248,8 @@ main {
     border-color: var(--border-dark);
 }
 
-.question-image {
-    display: block; /* برای فعال شدن margin: auto */
-    margin-left: auto;
-    margin-right: auto;
-    width: 100%; /* عرض کامل نسبت به نگهدارنده */
-    max-width: 450px; /* حداکثر عرض تصویر */
-    height: auto;
-    border-radius: var(--border-radius);
-    object-fit: contain;
-    background-color: var(--background-light);
-    aspect-ratio: 16 / 9;
-    margin-bottom: 1.5rem;
-}
-.dark-mode .question-image {
-    background-color: var(--background-dark);
+.question-image, .option-image {
+    background-color: #E6E6E6;
 }
 
 .question-content {
