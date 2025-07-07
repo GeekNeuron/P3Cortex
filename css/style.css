@@ -959,3 +959,20 @@ footer p {
 .status-fail {
     background-color: var(--error-color);
 }
+
+/* غیرفعال کردن افکت هاور برای گزینه‌های غلط در بخش نمونه سوالات و مرور */
+#practice-questions-container .option:not(.correct):hover,
+#saved-questions-container .option:not(.correct):hover {
+    background-color: var(--foreground-light);
+    border-color: var(--border-light);
+    color: var(--text-light);
+    cursor: default;
+}
+
+/* حالت تاریک */
+.dark-mode #practice-questions-container .option:not(.correct):hover,
+.dark-mode #saved-questions-container .option:not(.correct):hover {
+    background-color: var(--foreground-dark);
+    border-color: var(--border-dark);
+    color: var(--text-dark);
+}
