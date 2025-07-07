@@ -201,6 +201,7 @@ const renderShowQuestionsButton = () => {
     let activeTab = quizTabsContainer.querySelector('.tab-btn.active');
     if (!activeTab) { activeTab = quizTabsContainer.querySelector('.tab-btn'); activeTab?.classList.add('active'); }
     if (!activeTab) { alert('لطفا یک نوع آزمون را انتخاب کنید.'); return; }
+        currentQuiz.name = activeTab.textContent;
     
     const tabIndex = parseInt(activeTab.dataset.tabIndex);
     let duration = 20 * 60;
@@ -282,7 +283,7 @@ const renderShowQuestionsButton = () => {
     
     // فراخوانی برای ذخیره سابقه
     if (totalQuestions > 0) {
-        saveQuizHistory(correctAnswers, totalQuestions);
+        saveQuizHistory(correctAnswers, totalQuestions, currentQuiz.name);
     }
     
     showResults(correctAnswers, incorrectAnswers, totalQuestions);
@@ -296,6 +297,7 @@ const saveQuizHistory = (correct, total) => {
         time: now.toLocaleTimeString('fa-IR', { hour: '2-digit', minute: '2-digit' }),
         day: now.toLocaleDateString('fa-IR', { weekday: 'long' }),
         score: `${correct}/${total}`,
+        quizName: quizName,
         timestamp: now.getTime() // برای قابلیت حذف در آینده
     };
     
@@ -313,21 +315,40 @@ const renderQuizHistory = () => {
         quizHistoryList.innerHTML = `<p class="empty-message" style="border: none; padding: 1rem 0;">هنوز آزمونی را به پایان نرسانده‌اید.</p>`;
         return;
     }
-    const fragment = document.createDocumentFragment();
     quizHistory.forEach(item => {
         const historyDiv = document.createElement('div');
         historyDiv.className = 'history-item';
         historyDiv.innerHTML = `
-            <div class="date-time">
-                <span>${item.day}، ${item.date}</span> - <span>ساعت ${item.time}</span>
+            <button class="delete-history-btn" data-timestamp="${item.timestamp}" title="حذف این سابقه">
+                <img src="images/trash-icon.svg" alt="حذف">
+            </button>
+            <div class="history-details">
+                <span class="history-quiz-name">${item.quizName || 'آزمون'}</span>
+                <span class="history-date-time">${item.day}، ${item.date}</span>
             </div>
             <div class="score">${toPersianDigits(item.score)}</div>
         `;
-        fragment.appendChild(historyDiv);
+        quizHistoryList.appendChild(historyDiv);
     });
-    quizHistoryList.appendChild(fragment);
 };
 
+const deleteHistoryItem = (timestamp) => {
+    quizHistory = quizHistory.filter(item => item.timestamp !== timestamp);
+    localStorage.setItem('quizHistory', JSON.stringify(quizHistory));
+    renderQuizHistory();
+};
+
+// این کد را به تابع setupEventListeners اضافه کنید
+quizHistoryList.addEventListener('click', (e) => {
+    const deleteBtn = e.target.closest('.delete-history-btn');
+    if (deleteBtn) {
+        const timestamp = Number(deleteBtn.dataset.timestamp);
+        if (confirm('آیا از حذف این سابقه مطمئن هستید؟')) {
+            deleteHistoryItem(timestamp);
+        }
+    }
+});
+    
 // --- Practice Section Logic (Corrected Version) ---
 const renderPracticeQuestions = (sessionQuestions, sectionIndex) => {
     practiceQuestionsContainer.innerHTML = '';
