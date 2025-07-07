@@ -259,6 +259,7 @@ main {
     object-fit: contain;
     background-color: var(--background-light);
     aspect-ratio: 16 / 9;
+    margin-bottom: 1.5rem;
 }
 .dark-mode .question-image {
     background-color: var(--background-dark);
