@@ -6,13 +6,13 @@ document.addEventListener('DOMContentLoaded', () => {
 };
 
     // --- DOM Elements ---
-    const deleteConfirmModal = document.getElementById('delete-confirm-modal');
-    const confirmDeleteBtn = document.getElementById('confirm-delete-btn');
-    const cancelDeleteBtn = document.getElementById('cancel-delete-btn');
+    const headerElement = document.querySelector('header');
     const confirmModal = document.getElementById('confirm-modal');
     const confirmFinishBtn = document.getElementById('confirm-finish-btn');
     const cancelFinishBtn = document.getElementById('cancel-finish-btn');
-    const headerElement = document.querySelector('header');
+    const deleteConfirmModal = document.getElementById('delete-confirm-modal');
+    const confirmDeleteBtn = document.getElementById('confirm-delete-btn');
+    const cancelDeleteBtn = document.getElementById('cancel-delete-btn');
     const mainNavButtons = document.querySelectorAll('.main-nav .nav-btn');
     const contentSections = document.querySelectorAll('.content-section');
     
@@ -295,7 +295,7 @@ const renderShowQuestionsButton = () => {
 };
 
     // --- History Logic ---
-const saveQuizHistory = (correct, total) => {
+const saveQuizHistory = (correct, total, quizName) => {
     const now = new Date();
     const newHistoryEntry = {
         date: now.toLocaleDateString('fa-IR', { year: 'numeric', month: 'long', day: 'numeric' }),
