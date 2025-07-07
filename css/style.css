@@ -844,13 +844,13 @@ footer p {
     color: #495057;
 }
 
-/* استایل جدید و اصلاح‌شده برای کنترل‌کننده چیدمان */
+/* استایل نهایی و صحیح برای کنترل‌کننده چیدمان */
 .layout-switcher {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    margin-bottom: 1.5rem; /* جایگزین position: absolute */
-    justify-content: flex-start; /* قرارگیری در سمت چپ */
+    margin-bottom: 1.5rem;
+    justify-content: flex-start;
 }
 
 .layout-toggle-btn {
