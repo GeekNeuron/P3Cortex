@@ -420,9 +420,6 @@ main {
 .questions-list.grid_2_col {
     grid-template-columns: repeat(2, 1fr);
 }
-.questions-list.grid_3_col {
-    grid-template-columns: repeat(3, 1fr);
-}
 
 .card-footer .save-star {
     background: none;
@@ -847,39 +844,62 @@ footer p {
     color: #495057;
 }
 
+/* استایل جدید برای کنترل‌کننده چیدمان */
 .layout-switcher {
     display: flex;
-    justify-content: flex-start;
+    align-items: center;
     gap: 0.5rem;
-    margin-bottom: 1rem;
+    position: absolute;
+    top: 1.5rem;
+    left: 1.5rem;
+    background-color: var(--foreground-light);
+    border-radius: var(--border-radius);
+    padding: 0.25rem;
+    box-shadow: var(--shadow);
+    overflow: hidden;
 }
-.layout-switcher button {
-    background-color: var(--background-light);
-    border: 1px solid var(--border-light);
-    border-radius: 8px;
+.dark-mode .layout-switcher {
+    background-color: var(--foreground-dark);
+}
+
+.layout-toggle-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+}
+
+.layout-options {
+    display: flex;
+    max-width: 0; /* در حالت پیش‌فرض مخفی است */
+    overflow: hidden;
+    transition: max-width 0.4s ease;
+}
+
+/* وقتی باز می‌شود، گزینه‌ها نمایش داده می‌شوند */
+.layout-switcher.switcher-expanded .layout-options {
+    max-width: 100px; /* یک عرض کافی برای نمایش دکمه‌ها */
+}
+
+/* چرخیدن فلش هنگام باز شدن */
+.layout-switcher.switcher-expanded .layout-toggle-btn img {
+    transform: rotate(180deg);
+}
+
+.layout-options button {
+    background: none;
+    border: none;
     padding: 0.5rem;
     cursor: pointer;
-    line-height: 1;
+    border-radius: 8px;
 }
-.dark-mode .layout-switcher button {
-    background-color: var(--background-dark);
-    border-color: var(--border-dark);
-}
-.layout-switcher button.active {
+
+/* استایل حالت فعال */
+.layout-options button.active {
     background-color: var(--primary-color);
-    border-color: var(--primary-color);
 }
-.layout-switcher button img {
-    width: 20px;
-    height: 20px;
-    display: block;
-    filter: invert(0.5); /* خاکستری کردن آیکون‌ها */
-}
-.dark-mode .layout-switcher button img {
-    filter: invert(0.8);
-}
-.layout-switcher button.active img {
-    filter: invert(1); /* سفید کردن آیکون فعال */
+.layout-options button.active img {
+    filter: invert(1);
 }
 
 #practice-questions-container, #saved-questions-container {
@@ -897,4 +917,27 @@ footer p {
 /* 3 columns */
 #practice-questions-container.grid-3-col, #saved-questions-container.grid-3-col {
     grid-template-columns: repeat(3, 1fr);
+}
+
+/* استایل جدید برای بخش نتایج در سوابق */
+.history-result {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.history-status {
+    padding: 0.2rem 0.6rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    border-radius: 6px;
+    color: white;
+}
+
+.status-pass {
+    background-color: var(--success-color);
+}
+
+.status-fail {
+    background-color: var(--error-color);
 }
