@@ -708,3 +708,54 @@ footer p {
     margin-bottom: 0.5rem;
     font-weight: 500;
 }
+
+.history-item {
+    /* تغییر در این بخش برای جای دادن دکمه حذف */
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.history-details {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; /* باعث می‌شود این بخش فضای خالی را پر کند */
+}
+
+.history-quiz-name {
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.history-date-time {
+    font-size: 0.85rem;
+    color: #6c757d;
+}
+
+.dark-mode .history-date-time {
+    color: #a0a0a0;
+}
+
+.delete-history-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    opacity: 0.4;
+    transition: opacity 0.2s ease;
+}
+
+.delete-history-btn:hover {
+    opacity: 1;
+}
+
+.delete-history-btn img {
+    width: 18px;
+    height: 18px;
+    display: block;
+}
+
+/* هماهنگی آیکون سطل زباله با تم تاریک */
+.dark-mode .delete-history-btn img {
+    filter: invert(1) brightness(1.2);
+}
