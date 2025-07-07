@@ -201,33 +201,34 @@ const renderShowQuestionsButton = () => {
     let activeTab = quizTabsContainer.querySelector('.tab-btn.active');
     if (!activeTab) { activeTab = quizTabsContainer.querySelector('.tab-btn'); activeTab?.classList.add('active'); }
     if (!activeTab) { alert('لطفا یک نوع آزمون را انتخاب کنید.'); return; }
-        currentQuiz.name = activeTab.textContent;
     
     const tabIndex = parseInt(activeTab.dataset.tabIndex);
     let duration = 20 * 60;
     let questionsForQuiz = [];
+    let quizName = activeTab.textContent; // نام پیش‌فرض
 
-    if (tabIndex <= allSections.length) { // آزمون‌های استاندارد ۱ تا ۴
+    if (tabIndex <= allSections.length) {
         questionsForQuiz = allSections[tabIndex - 1] || [];
-    } else if (tabIndex === allSections.length + 1) { // دکمه همه سوالات
-        questionsForQuiz = allSections.flat(); // تمام سوالات در یک آرایه
+        quizName = `آزمون بخش ${toPersianDigits(tabIndex)}`; // نام دقیق
+    } else if (tabIndex === allSections.length + 1) {
+        questionsForQuiz = allSections.flat();
+        quizName = 'آزمون جامع (همه سوالات)'; // نام دقیق
         duration = 60 * 60;
-    } else if (tabIndex === allSections.length + 2) { // آزمون بدون ستاره‌دارها
+    } else if (tabIndex === allSections.length + 2) {
         questionsForQuiz = [];
         allSections.forEach((section, sectionIndex) => {
             section.forEach(question => {
-                const isSaved = savedQuestions.some(sq => sq.sectionIndex === sectionIndex && sq.questionId === question.id);
-                if (!isSaved) {
-                    questionsForQuiz.push(question);
-                }
+                const isSaved = savedQuestions.some(sq => sq.sessionIndex === sectionIndex && sq.questionId === question.id);
+                if (!isSaved) questionsForQuiz.push(question);
             });
         });
+        quizName = 'آزمون سوالات ستاره‌دار نشده'; // نام دقیق
         duration = 60 * 60;
     }
 
     if (questionsForQuiz.length === 0) { alert('سوالی برای این آزمون وجود ندارد.'); return; }
     
-    currentQuiz = { questions: questionsForQuiz, userAnswers: {}, currentQuestionIndex: 0, timeRemaining: duration };
+    currentQuiz = { questions: questionsForQuiz, userAnswers: {}, currentQuestionIndex: 0, timeRemaining: duration, name: quizName };
     quizSetupSection.classList.add('hidden');
     quizLiveSection.classList.remove('hidden');
     renderQuizQuestion();
