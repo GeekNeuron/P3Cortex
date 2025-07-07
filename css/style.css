@@ -250,6 +250,19 @@ main {
     border-color: var(--border-dark);
 }
 
+.question-image {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%; 
+    max-width: 450px;
+    height: auto;
+    border-radius: var(--border-radius);
+    object-fit: contain;
+    aspect-ratio: 16 / 9;
+    margin-bottom: 1.5rem;
+}
+
 .question-image, .option-image {
     background-color: #E6E6E6;
 }
@@ -396,6 +409,19 @@ main {
 
 .dark-mode .question-card .card-footer {
     border-top-color: var(--border-dark);
+}
+
+.questions-list {
+    display: grid;
+    gap: 1.5rem;
+    /* حالت پیش‌فرض تک ستونی است */
+    grid-template-columns: 1fr;
+}
+.questions-list.grid_2_col {
+    grid-template-columns: repeat(2, 1fr);
+}
+.questions-list.grid_3_col {
+    grid-template-columns: repeat(3, 1fr);
 }
 
 .card-footer .save-star {
@@ -854,4 +880,21 @@ footer p {
 }
 .layout-switcher button.active img {
     filter: invert(1); /* سفید کردن آیکون فعال */
+}
+
+#practice-questions-container, #saved-questions-container {
+    display: grid;
+    gap: 1.5rem;
+}
+/* Default to 1 column */
+#practice-questions-container.grid-1-col, #saved-questions-container.grid-1-col {
+    grid-template-columns: 1fr;
+}
+/* 2 columns */
+#practice-questions-container.grid-2-col, #saved-questions-container.grid-2-col {
+    grid-template-columns: repeat(2, 1fr);
+}
+/* 3 columns */
+#practice-questions-container.grid-3-col, #saved-questions-container.grid-3-col {
+    grid-template-columns: repeat(3, 1fr);
 }
