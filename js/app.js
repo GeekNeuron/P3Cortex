@@ -9,6 +9,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const headerElement = document.querySelector('header');
     const TOTAL_SECTIONS = 20;
     const main = document.querySelector('main');
+    const helpModal = document.getElementById('help-modal');
+    const showHelpModalBtn = document.getElementById('show-help-modal-btn');
+    const closeHelpModalBtn = helpModal.querySelector('.close-modal');
     const confirmModal = document.getElementById('confirm-modal');
     const confirmFinishBtn = document.getElementById('confirm-finish-btn');
     const cancelFinishBtn = document.getElementById('cancel-finish-btn');
@@ -567,7 +570,7 @@ const createQuestionCard = (q, type, sectionIndex) => {
 };
 
     // --- Event Listeners Setup ---
-    const setupEventListeners = () => {
+const setupEventListeners = () => {
     // رویداد تغییر تم
     headerElement.addEventListener('click', toggleTheme);
 
@@ -581,7 +584,9 @@ const createQuestionCard = (q, type, sectionIndex) => {
     prevQuestionBtn.addEventListener('click', () => navigateQuiz(-1));
     nextQuestionBtn.addEventListener('click', () => navigateQuiz(1));
     
-    // رویدادهای مودال‌ها
+    // --- رویدادهای مودال‌ها ---
+    
+    // مودال پایان آزمون
     finishQuizBtn.addEventListener('click', () => {
         confirmModal.classList.remove('hidden');
     });
@@ -592,10 +597,27 @@ const createQuestionCard = (q, type, sectionIndex) => {
     cancelFinishBtn.addEventListener('click', () => {
         confirmModal.classList.add('hidden');
     });
+
+    // مودال نتایج
     closeModalBtn.addEventListener('click', () => resultsModal.classList.add('hidden'));
     resultsModal.addEventListener('click', (e) => {
         if(e.target === resultsModal) resultsModal.classList.add('hidden');
     });
+
+    // مودال راهنما (کد جدید اینجا اضافه شده)
+    showHelpModalBtn.addEventListener('click', () => {
+        helpModal.classList.remove('hidden');
+    });
+    closeHelpModalBtn.addEventListener('click', () => {
+        helpModal.classList.add('hidden');
+    });
+    helpModal.addEventListener('click', (e) => {
+        if(e.target === helpModal) {
+            helpModal.classList.add('hidden');
+        }
+    });
+
+    // مودال حذف سابقه
     quizHistoryList.addEventListener('click', (e) => {
         const deleteBtn = e.target.closest('.delete-history-btn');
         if (deleteBtn) {
@@ -615,7 +637,7 @@ const createQuestionCard = (q, type, sectionIndex) => {
         deleteConfirmModal.classList.add('hidden');
     });
 
-    // ✅ منطق صحیح و نهایی برای تغییر چیدمان که باید اینجا باشد
+    // منطق تغییر چیدمان
     main.addEventListener('click', (e) => {
         const layoutToggleBtn = e.target.closest('.layout-toggle-btn');
         const layoutOptionBtn = e.target.closest('.layout-options button');
@@ -629,7 +651,7 @@ const createQuestionCard = (q, type, sectionIndex) => {
             const questionsContainer = layoutOptionBtn.closest('.content-section').querySelector('.questions-list');
             
             if (questionsContainer) {
-                questionsContainer.className = 'questions-list'; // ریست کردن کلاس‌ها
+                questionsContainer.className = 'questions-list';
                 questionsContainer.classList.add(`grid-${layout}`);
                 
                 layoutOptionBtn.closest('.layout-options').querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
