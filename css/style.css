@@ -759,3 +759,43 @@ footer p {
 .dark-mode .delete-history-btn img {
     filter: invert(1) brightness(1.2);
 }
+
+/* استایل دکمه "نمایش بیشتر" */
+.show-more-tabs-btn {
+    background: none;
+    border: none;
+    color: var(--primary-color);
+    cursor: pointer;
+    padding: 0.5rem;
+    margin-top: 0.75rem;
+    font-family: inherit;
+    font-size: 0.9rem;
+    width: 100%;
+    text-align: center;
+}
+.show-more-tabs-btn:hover {
+    text-decoration: underline;
+}
+
+/* حالت پیش‌فرض برای تب‌های اضافی (مخفی) */
+.tab-btn.extra-tab {
+    display: none;
+}
+
+/* نمایش تب‌های اضافی وقتی کلاس .tabs-expanded اضافه می‌شود */
+.tabs-container.tabs-expanded .tab-btn.extra-tab {
+    display: inline-flex;
+    /* استایل ساده‌تر و بدون کاشی */
+    background-color: transparent;
+    box-shadow: none;
+    font-weight: 400;
+    border: 1px solid transparent;
+}
+.tabs-container.tabs-expanded .tab-btn.extra-tab:hover {
+    background-color: var(--background-light);
+    border-color: var(--border-light);
+}
+.dark-mode .tabs-container.tabs-expanded .tab-btn.extra-tab:hover {
+    background-color: var(--background-dark);
+    border-color: var(--border-dark);
+}
