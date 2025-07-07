@@ -606,7 +606,6 @@ main {
 }
 #quiz-history-section h2 {
     margin-bottom: 1rem;
-    padding-bottom: 1rem;
 }
 .dark-mode #quiz-history-section h2 {
     border-bottom-color: var(--border-dark);
