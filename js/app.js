@@ -97,17 +97,17 @@ const showSection = (sectionId) => {
     });
 
     if (sectionId === 'practice') {
-        // ساخت تب‌ها بر اساس تعداد کل بخش‌ها
         createTabs(practiceTabsContainer, TOTAL_SECTIONS, 'practice');
         renderShowQuestionsButton();
+        setupLayoutSwitcher('#practice-section');
     } else if (sectionId === 'quiz') {
-        // ساخت تب‌ها بر اساس تعداد کل بخش‌ها
         createTabs(quizTabsContainer, TOTAL_SECTIONS, 'quiz');
         quizSetupSection.classList.remove('hidden');
         quizLiveSection.classList.add('hidden');
         clearInterval(currentQuiz.timerInterval);
-    } else if (sectionId === 'saved') { // همان بخش «مرور»
+    } else if (sectionId === 'saved') {
         renderSavedQuestions();
+        setupLayoutSwitcher('#saved-section');
     }
 };
 
@@ -646,3 +646,50 @@ const createQuestionCard = (q, type, sectionIndex) => {
         });
         quizHistoryList.appendChild(fragment);
     };
+
+const setupLayoutSwitcher = (containerSelector) => {
+    const layoutContainer = document.querySelector(`${containerSelector} .layout-switcher`);
+    const questionsContainer = document.querySelector(containerSelector === '#practice-setup' ? '#practice-questions-container' : '#saved-questions-container'); // This logic needs to be tied to the correct container
+
+    if (layoutContainer) {
+        layoutContainer.addEventListener('click', (e) => {
+            const btn = e.target.closest('button[data-layout]');
+            if (!btn) return;
+            
+            // This part is tricky as quiz questions are not grid-based
+            // Focusing on practice and saved for now
+            const targetContainerId = layoutContainer.closest('#practice-section') ? '#practice-questions-container' : '#saved-questions-container';
+            const targetContainer = document.getElementById(targetContainerId.substring(1));
+
+            if (targetContainer) {
+                targetContainer.classList.remove('grid-1-col', 'grid-2-col', 'grid-3-col');
+                const layout = btn.dataset.layout;
+                if (layout === '1-col') targetContainer.classList.add('grid-1-col');
+                else if (layout === '2-col') targetContainer.classList.add('grid-2-col');
+                else if (layout === '3-col') targetContainer.classList.add('grid-3-col');
+                
+                layoutContainer.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            }
+        });
+    }
+};
+
+main.addEventListener('click', (e) => {
+    const layoutBtn = e.target.closest('.layout-switcher button');
+    if (!layoutBtn) return;
+
+    const layout = layoutBtn.dataset.layout;
+    const questionsContainer = layoutBtn.closest('.content-section').querySelector('.questions-list');
+
+    if (questionsContainer) {
+        // حذف کلاس‌های چیدمان قبلی
+        questionsContainer.className = 'questions-list'; 
+        // افزودن کلاس چیدمان جدید
+        questionsContainer.classList.add(`grid-${layout.replace('-', '_')}`);
+
+        // مدیریت حالت فعال دکمه‌ها
+        layoutBtn.parentElement.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
+        layoutBtn.classList.add('active');
+    }
+});
