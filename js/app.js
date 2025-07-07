@@ -690,12 +690,10 @@ main.addEventListener('click', (e) => {
     const layoutToggleBtn = e.target.closest('.layout-toggle-btn');
     const layoutOptionBtn = e.target.closest('.layout-options button');
 
-    // منطق باز و بسته کردن منوی چیدمان
     if (layoutToggleBtn) {
-        layoutToggleBtn.parentElement.classList.toggle('switcher-expanded');
+        layoutToggleBtn.closest('.layout-switcher').classList.toggle('switcher-expanded');
     }
 
-    // منطق انتخاب چیدمان
     if (layoutOptionBtn) {
         const layout = layoutOptionBtn.dataset.layout;
         const questionsContainer = layoutOptionBtn.closest('.content-section').querySelector('.questions-list');
@@ -704,7 +702,7 @@ main.addEventListener('click', (e) => {
             questionsContainer.className = 'questions-list'; // ریست کردن کلاس‌ها
             questionsContainer.classList.add(`grid-${layout}`);
             
-            layoutOptionBtn.parentElement.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
+            layoutOptionBtn.closest('.layout-options').querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
             layoutOptionBtn.classList.add('active');
         }
     }
