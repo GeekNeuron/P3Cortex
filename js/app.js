@@ -173,11 +173,17 @@ const handleTabClick = (clickedBtn, type) => {
 
     // این تابع را به فایل js/app.js خود اضافه کنید
 const renderShowQuestionsButton = () => {
-    practiceQuestionsContainer.innerHTML = '';
+    practiceQuestionsContainer.innerHTML = ''; 
+
+    const setupContainer = document.getElementById('practice-setup');
+    const oldBtn = setupContainer.querySelector('.show-questions-btn');
+    if (oldBtn) oldBtn.remove();
+
     const showBtn = document.createElement('button');
     showBtn.className = 'show-questions-btn';
     showBtn.textContent = 'نمایش نمونه سوالات';
-    showBtn.addEventListener('click', () => {
+    
+    showBtn.addEventListener('click', (e) => {
         let activeTab = practiceTabsContainer.querySelector('.tab-btn.active');
         if (!activeTab) {
             activeTab = practiceTabsContainer.querySelector('.tab-btn');
@@ -186,8 +192,9 @@ const renderShowQuestionsButton = () => {
         }
         const sectionIndex = parseInt(activeTab.dataset.tabIndex) - 1;
         renderPracticeQuestions(allSections[sectionIndex], sectionIndex);
+        e.target.style.display = 'none'; 
     });
-    practiceQuestionsContainer.appendChild(showBtn);
+    setupContainer.appendChild(showBtn);
 };
 
     // --- Saved Questions Logic ---
@@ -284,14 +291,16 @@ const renderShowQuestionsButton = () => {
     };
 
     const renderQuizQuestion = () => {
-        quizQuestionsContainer.innerHTML = '';
-        const question = currentQuiz.questions[currentQuiz.currentQuestionIndex];
-        quizQuestionsContainer.appendChild(createQuestionCard(question, 'quiz'));
+    quizQuestionsContainer.innerHTML = '';
+    const question = currentQuiz.questions[currentQuiz.currentQuestionIndex];
         
-        questionCounterElement.textContent = `سوال ${toPersianDigits(currentQuiz.currentQuestionIndex + 1)} از ${toPersianDigits(currentQuiz.questions.length)}`;
-        prevQuestionBtn.disabled = currentQuiz.currentQuestionIndex === 0;
-        nextQuestionBtn.disabled = currentQuiz.currentQuestionIndex === currentQuiz.questions.length - 1;
-    };
+    quizQuestionsContainer.appendChild(createQuestionCard(question, 'quiz', -1));
+    
+    questionCounterElement.textContent = `سوال ${toPersianDigits(currentQuiz.currentQuestionIndex + 1)} از ${toPersianDigits(currentQuiz.questions.length)}`;
+
+    prevQuestionBtn.disabled = (currentQuiz.currentQuestionIndex === 0);
+    nextQuestionBtn.disabled = (currentQuiz.currentQuestionIndex === currentQuiz.questions.length - 1);
+};
     
     const navigateQuiz = (direction) => {
         const newIndex = currentQuiz.currentQuestionIndex + direction;
