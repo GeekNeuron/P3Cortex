@@ -189,17 +189,19 @@ main {
 }
 
 /* Tabs */
+/* استایل کلی برای نگهدارنده تب‌ها */
 .tabs-container {
+    position: relative; /* برای جای‌گیری صحیح منوی کشویی */
     display: flex;
     justify-content: center;
     gap: 0.5rem;
-    margin-bottom: 1.5rem;
     flex-wrap: wrap;
 }
 
-.tab-btn {
-    padding: 0.6rem 1.2rem;
-    font-size: 0.9rem;
+/* استایل دکمه بازکننده منوی کشویی */
+.dropdown-toggle {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
     font-weight: 500;
     border: 1px solid var(--border-light);
     background-color: var(--foreground-light);
@@ -207,20 +209,59 @@ main {
     cursor: pointer;
     transition: all var(--transition-speed) ease;
     color: inherit;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
+    box-shadow: var(--shadow);
 }
-
-.dark-mode .tab-btn {
+.dark-mode .dropdown-toggle {
     border-color: var(--border-dark);
     background-color: var(--foreground-dark);
 }
-
-.tab-btn.active, .tab-btn:hover {
-    background-color: var(--primary-color);
-    color: white;
+.dropdown-toggle:hover {
     border-color: var(--primary-color);
+}
+.dropdown-toggle::after {
+    content: ' ▼'; /* افزودن فلش کوچک */
+    font-size: 0.7em;
+}
+
+/* استایل منوی کشویی */
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    margin-top: 0.5rem;
+    background-color: var(--foreground-light);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    list-style: none;
+    padding: 0.5rem;
+    width: 200px;
+    z-index: 10;
+    
+    /* انیمیشن باز شدن */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+}
+.dark-mode .dropdown-menu {
+    background-color: var(--foreground-dark);
+    border: 1px solid var(--border-dark);
+}
+
+/* حالت نمایش منوی کشویی */
+.dropdown-menu.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* استایل آیتم‌های داخل منوی کشویی */
+.dropdown-menu .tab-btn {
+    display: block;
+    width: 100%;
+    text-align: right;
+    box-shadow: none; /* حذف ظاهر کاشی‌مانند */
+    background-color: transparent;
+    border: none;
 }
 
 /* Question Card Styles */
@@ -783,33 +824,6 @@ footer p {
 /* هماهنگی آیکون سطل زباله با تم تاریک */
 .dark-mode .delete-history-btn img {
     filter: invert(1) brightness(1.2);
-}
-
-/* استایل دکمه "نمایش بیشتر" */
-.show-more-tabs-btn {
-    background: none;
-    border: none;
-    color: var(--primary-color);
-    cursor: pointer;
-    padding: 0.5rem;
-    margin-top: 0.75rem;
-    font-family: inherit;
-    font-size: 0.9rem;
-    width: 100%;
-    text-align: center;
-}
-.show-more-tabs-btn:hover {
-    text-decoration: underline;
-}
-
-/* حالت پیش‌فرض برای تب‌های اضافی (مخفی) */
-.tab-btn.extra-tab {
-    display: none;
-}
-
-/* این کد را اضافه کنید */
-.tabs-container.tabs-expanded .tab-btn.extra-tab {
-    display: inline-flex; /* این خط برای نمایش تب‌های مخفی ضروری است */
 }
 
 #result-message {
