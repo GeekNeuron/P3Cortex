@@ -179,20 +179,6 @@ const handleTabClick = (clickedBtn, type) => {
     }
 };
 
-    // مرحله ۳: ساخت دکمه "نمایش بیشتر" اگر تعداد کل تب‌ها بیشتر از ۴ بود
-    // این بخش به انتهای تابع منتقل شده تا بعد از همه تب‌ها ساخته شود
-    if (container.children.length > 4) {
-        const showMoreBtn = document.createElement('button');
-        showMoreBtn.className = 'show-more-tabs-btn';
-        showMoreBtn.textContent = 'نمایش همه...';
-        showMoreBtn.addEventListener('click', (e) => {
-            container.classList.add('tabs-expanded');
-            e.target.style.display = 'none';
-        });
-        container.appendChild(showMoreBtn);
-    }
-};
-
     // این تابع را به فایل js/app.js خود اضافه کنید
 const renderShowQuestionsButton = () => {
     practiceQuestionsContainer.innerHTML = ''; 
