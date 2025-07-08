@@ -265,7 +265,7 @@ const renderShowQuestionsButton = () => {
                 if (!isSaved) questionsForQuiz.push(question);
             });
         });
-        quizName = 'آزمون سوالات ستاره‌دار نشده'; // نام دقیق
+        quizName = 'آزمون سوالات نشان‌نشده'; // ✅ متن تغییر کرد
         duration = 60 * 60;
     }
 
