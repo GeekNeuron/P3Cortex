@@ -271,15 +271,17 @@ main {
     box-shadow: var(--shadow);
     list-style: none;
     padding: 0.5rem;
-    width: 220px; /* عرض منو */
+    width: 190px; /* عرض منو */
     z-index: 1001;
     opacity: 0;
     visibility: hidden;
     transform: translateY(-10px);
     transition: all 0.2s ease;
-    display: flex; /* برای ایجاد فاصله بین آیتم‌ها */
+    display: flex;
     flex-direction: column;
     gap: 0.5rem;
+    max-height: 280px;
+    overflow-y: auto;
 }
 .dark-mode .dropdown-menu {
     background-color: var(--foreground-dark);
@@ -292,22 +294,20 @@ main {
     transform: translateY(0);
 }
 
-/* کد جدید آیتم‌های منو */
+/* کد جدید */
 .dropdown-menu .tab-btn {
     display: block;
     width: 100%;
-    text-align: center; /* متن وسط‌چین می‌شود */
-    background-color: var(--background-light); /* پس‌زمینه مجزا برای هر آیتم */
-    border: 1px solid var(--border-light);
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.04); /* پس‌زمینه محوتر در حالت روشن */
+    border: none; /* حذف خط دور */
     color: var(--text-light);
     border-radius: 8px;
     font-weight: 400;
     padding: 0.8rem 1rem;
-    box-shadow: none;
 }
 .dark-mode .dropdown-menu .tab-btn {
-    background-color: var(--background-dark);
-    border-color: var(--border-dark);
+    background-color: rgba(255, 255, 255, 0.05); /* پس‌زمینه محوتر در حالت تاریک */
     color: var(--text-dark);
 }
 .dropdown-menu .tab-btn:hover, .dropdown-menu .tab-btn.active {
