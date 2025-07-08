@@ -442,7 +442,7 @@ const showResults = (correct, incorrect, unanswered, total) => {
     if (total === 0) return;
 
     // --- منطق نمایش پیام قبولی یا مردودی ---
-    if (incorrect <= 4) {
+    if ((incorrect + unanswered) <= 4) {
         resultMessageEl.textContent = 'تبریک! شما در آزمون قبول شدید. با این تعداد اشتباه، آمادگی لازم برای آزمون اصلی را دارید.';
         resultMessageEl.className = 'pass';
     } else {
