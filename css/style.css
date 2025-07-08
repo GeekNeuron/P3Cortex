@@ -223,45 +223,83 @@ main {
     font-size: 0.7em;
 }
 
-/* استایل منوی کشویی */
+/* استایل جدید برای هدر بخش‌ها */
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+/* استایل نگهدارنده منوی کشویی */
+.tabs-container {
+    position: relative;
+}
+
+/* استایل دکمه اصلی منو */
+.dropdown-toggle {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    border: 1px solid var(--border-light);
+    background-color: var(--foreground-light);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+    min-width: 180px; /* حداقل عرض برای زیبایی */
+    text-align: right;
+}
+.dark-mode .dropdown-toggle {
+    border-color: var(--border-dark);
+    background-color: var(--foreground-dark);
+}
+.dropdown-toggle::after {
+    content: '▼';
+    font-size: 0.7em;
+    float: left; /* فلش را به سمت چپ منتقل می‌کند */
+    margin-right: 1rem; /* فاصله فلش از متن */
+}
+
+/* استایل لیست کشویی */
 .dropdown-menu {
     position: absolute;
     top: 100%;
+    right: 0;
     margin-top: 0.5rem;
-    background-color: var(--foreground-light);
+    background-color: var(--foreground-dark); /* پس‌زمینه تیره شبیه سایت مرجع */
     border-radius: var(--border-radius);
-    box-shadow: var(--shadow);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
     list-style: none;
     padding: 0.5rem;
-    width: 200px;
-    z-index: 10;
-    
-    /* انیمیشن باز شدن */
+    width: 100%;
+    z-index: 1001;
     opacity: 0;
     visibility: hidden;
     transform: translateY(-10px);
-    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+    transition: all 0.2s ease;
 }
-.dark-mode .dropdown-menu {
-    background-color: var(--foreground-dark);
-    border: 1px solid var(--border-dark);
-}
-
-/* حالت نمایش منوی کشویی */
+/* حالت نمایش منو */
 .dropdown-menu.show {
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
 }
 
-/* استایل آیتم‌های داخل منوی کشویی */
+/* استایل آیتم‌های داخل منو */
 .dropdown-menu .tab-btn {
     display: block;
     width: 100%;
+    padding: 0.8rem 1rem;
     text-align: right;
-    box-shadow: none; /* حذف ظاهر کاشی‌مانند */
     background-color: transparent;
     border: none;
+    color: var(--text-dark); /* رنگ متن روشن */
+    border-radius: 8px;
+    font-weight: 400;
+}
+.dropdown-menu .tab-btn:hover, .dropdown-menu .tab-btn.active {
+    background-color: var(--primary-color) !important;
+    color: white !important;
 }
 
 /* Question Card Styles */
