@@ -585,39 +585,14 @@ const setupEventListeners = () => {
     nextQuestionBtn.addEventListener('click', () => navigateQuiz(1));
     
     // --- رویدادهای مودال‌ها ---
-    
-    // مودال پایان آزمون
-    finishQuizBtn.addEventListener('click', () => {
-        confirmModal.classList.remove('hidden');
-    });
-    confirmFinishBtn.addEventListener('click', () => {
-        confirmModal.classList.add('hidden');
-        endQuiz();
-    });
-    cancelFinishBtn.addEventListener('click', () => {
-        confirmModal.classList.add('hidden');
-    });
-
-    // مودال نتایج
-    closeModalBtn.addEventListener('click', () => resultsModal.classList.add('hidden'));
-    resultsModal.addEventListener('click', (e) => {
-        if(e.target === resultsModal) resultsModal.classList.add('hidden');
-    });
-
-    // مودال راهنما (کد جدید اینجا اضافه شده)
-    showHelpModalBtn.addEventListener('click', () => {
-        helpModal.classList.remove('hidden');
-    });
-    closeHelpModalBtn.addEventListener('click', () => {
-        helpModal.classList.add('hidden');
-    });
-    helpModal.addEventListener('click', (e) => {
-        if(e.target === helpModal) {
-            helpModal.classList.add('hidden');
-        }
-    });
-
-    // مودال حذف سابقه
+    finishQuizBtn.addEventListener('click', () => confirmModal.classList.remove('hidden'));
+    confirmFinishBtn.addEventListener('click', () => { confirmModal.classList.add('hidden'); endQuiz(); });
+    cancelFinishBtn.addEventListener('click', () => confirmModal.classList.add('hidden'));
+    resultsModal.querySelector('.close-modal').addEventListener('click', () => resultsModal.classList.add('hidden'));
+    resultsModal.addEventListener('click', (e) => { if(e.target === resultsModal) resultsModal.classList.add('hidden'); });
+    showHelpModalBtn.addEventListener('click', () => helpModal.classList.remove('hidden'));
+    helpModal.querySelector('.close-modal').addEventListener('click', () => helpModal.classList.add('hidden'));
+    helpModal.addEventListener('click', (e) => { if(e.target === helpModal) helpModal.classList.add('hidden'); });
     quizHistoryList.addEventListener('click', (e) => {
         const deleteBtn = e.target.closest('.delete-history-btn');
         if (deleteBtn) {
@@ -626,10 +601,8 @@ const setupEventListeners = () => {
         }
     });
     confirmDeleteBtn.addEventListener('click', () => {
-        if (historyItemToDelete !== null) {
-            deleteHistoryItem(historyItemToDelete);
-            historyItemToDelete = null;
-        }
+        if (historyItemToDelete !== null) deleteHistoryItem(historyItemToDelete);
+        historyItemToDelete = null;
         deleteConfirmModal.classList.add('hidden');
     });
     cancelDeleteBtn.addEventListener('click', () => {
@@ -637,58 +610,41 @@ const setupEventListeners = () => {
         deleteConfirmModal.classList.add('hidden');
     });
 
-    // این کد را به setupEventListeners اضافه کنید
-document.addEventListener('click', (e) => {
-    const isDropdownButton = e.target.matches('.dropdown-toggle');
-    // اگر روی دکمه منو کلیک نشده، تمام منوهای باز را ببند
-    if (!isDropdownButton && e.target.closest('.dropdown-container') === null) {
-        document.querySelectorAll('.dropdown-menu.show').forEach(menu => {
-            menu.classList.remove('show');
-        });
-        return;
-    }
-    
-    // اگر روی دکمه منو کلیک شد، آن را باز یا بسته کن
-    if (isDropdownButton) {
-        const dropdownMenu = e.target.nextElementSibling;
-        dropdownMenu.classList.toggle('show');
-    }
-});
+    // --- رویداد کلی صفحه برای منوهای کشویی و چیدمان ---
+    document.addEventListener('click', (e) => {
+        const layoutToggleBtn = e.target.closest('.layout-toggle-btn');
+        const layoutOptionBtn = e.target.closest('.layout-options button');
+        const dropdownToggle = e.target.closest('.dropdown-toggle');
 
-    // منطق تغییر چیدمان
-    main.addEventListener('click', (e) => {
-    // --- منطق منوی کشویی ---
-    const dropdownToggle = e.target.closest('.dropdown-toggle');
-    if (dropdownToggle) {
-        const menu = dropdownToggle.nextElementSibling;
-        const allMenus = document.querySelectorAll('.dropdown-menu');
-        allMenus.forEach(m => {
-            if (m !== menu) m.classList.remove('show');
-        });
-        menu.classList.toggle('show');
-    } else if (!e.target.closest('.dropdown-menu')) {
-        document.querySelectorAll('.dropdown-menu.show').forEach(menu => {
-            menu.classList.remove('show');
-        });
-    }
-
-    // --- منطق چیدمان ---
-    const layoutToggleBtn = e.target.closest('.layout-toggle-btn');
-    const layoutOptionBtn = e.target.closest('.layout-options button');
-    if (layoutToggleBtn) {
-        layoutToggleBtn.closest('.layout-switcher').classList.toggle('switcher-expanded');
-    }
-    if (layoutOptionBtn) {
-        const layout = layoutOptionBtn.dataset.layout;
-        const questionsContainer = layoutOptionBtn.closest('.content-section').querySelector('.questions-list');
-        if (questionsContainer) {
-            questionsContainer.className = 'questions-list';
-            questionsContainer.classList.add(`grid-${layout}`);
-            layoutOptionBtn.closest('.layout-options').querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
-            layoutOptionBtn.classList.add('active');
+        // منطق منوی کشویی بخش‌ها
+        if (dropdownToggle) {
+            const menu = dropdownToggle.nextElementSibling;
+            // بستن بقیه منوها
+            document.querySelectorAll('.dropdown-menu.show').forEach(m => {
+                if (m !== menu) m.classList.remove('show');
+            });
+            menu.classList.toggle('show');
+        } else if (!e.target.closest('.dropdown-container')) {
+            // بستن منو با کلیک در جای دیگر
+            document.querySelectorAll('.dropdown-menu.show').forEach(menu => menu.classList.remove('show'));
         }
-    }
-});
+
+        // منطق منوی چیدمان
+        if (layoutToggleBtn) {
+            layoutToggleBtn.closest('.layout-switcher').classList.toggle('switcher-expanded');
+        }
+        if (layoutOptionBtn) {
+            const layout = layoutOptionBtn.dataset.layout;
+            const questionsContainer = layoutOptionBtn.closest('.content-section').querySelector('.questions-list');
+            if (questionsContainer) {
+                questionsContainer.className = 'questions-list';
+                questionsContainer.classList.add(`grid-${layout}`);
+                layoutOptionBtn.closest('.layout-options').querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
+                layoutOptionBtn.classList.add('active');
+            }
+        }
+    });
+};
     
     // --- Run Application ---
     init();
