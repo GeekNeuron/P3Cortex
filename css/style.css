@@ -210,7 +210,7 @@ main {
     transition: all var(--transition-speed) ease;
     color: inherit;
     box-shadow: var(--shadow);
-    width: 220px;
+    width: 190px;
 }
 .dark-mode .dropdown-toggle {
     border-color: var(--border-dark);
@@ -272,7 +272,7 @@ main {
     box-shadow: var(--shadow);
     list-style: none;
     padding: 0.5rem;
-    width: 220px; /* عرض منو */
+    width: 190px;
     z-index: 1001;
     opacity: 0;
     visibility: hidden;
