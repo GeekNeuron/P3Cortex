@@ -1123,3 +1123,14 @@ footer p {
 .dropdown-menu::-webkit-scrollbar-thumb:hover {
     background-color: var(--primary-color);
 }
+
+/* استایل برای قرارگیری آیکون کنار متن */
+.icon-text-container {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem; /* فاصله بین آیکون و متن */
+}
+.icon-text-container svg {
+    width: 22px;
+    height: 22px;
+}
