@@ -210,6 +210,7 @@ main {
     transition: all var(--transition-speed) ease;
     color: inherit;
     box-shadow: var(--shadow);
+    width: 220px;
 }
 .dark-mode .dropdown-toggle {
     border-color: var(--border-dark);
@@ -281,7 +282,7 @@ main {
     flex-direction: column;
     gap: 0.5rem;
     max-height: 280px;
-    overflow-y: auto;
+    overflow-y: scroll;
 }
 .dark-mode .dropdown-menu {
     background-color: var(--foreground-dark);
