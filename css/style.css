@@ -226,8 +226,9 @@ main {
 /* استایل جدید برای هدر بخش‌ها */
 .section-header {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column; /* چیدمان را عمودی می‌کند */
+    align-items: center;    /* آیتم‌ها را در مرکز قرار می‌دهد */
+    gap: 1rem;              /* فاصله بین عنوان و منو */
     margin-bottom: 1.5rem;
 }
 
@@ -260,23 +261,29 @@ main {
     margin-right: 1rem; /* فاصله فلش از متن */
 }
 
-/* استایل لیست کشویی */
+/* کد جدید منوی کشویی */
 .dropdown-menu {
     position: absolute;
     top: 100%;
-    right: 0;
     margin-top: 0.5rem;
-    background-color: var(--foreground-dark); /* پس‌زمینه تیره شبیه سایت مرجع */
+    background-color: var(--foreground-light);
     border-radius: var(--border-radius);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    box-shadow: var(--shadow);
     list-style: none;
     padding: 0.5rem;
-    width: 100%;
+    width: 220px; /* عرض منو */
     z-index: 1001;
     opacity: 0;
     visibility: hidden;
     transform: translateY(-10px);
     transition: all 0.2s ease;
+    display: flex; /* برای ایجاد فاصله بین آیتم‌ها */
+    flex-direction: column;
+    gap: 0.5rem;
+}
+.dark-mode .dropdown-menu {
+    background-color: var(--foreground-dark);
+    border: 1px solid var(--border-dark);
 }
 /* حالت نمایش منو */
 .dropdown-menu.show {
@@ -285,21 +292,28 @@ main {
     transform: translateY(0);
 }
 
-/* استایل آیتم‌های داخل منو */
+/* کد جدید آیتم‌های منو */
 .dropdown-menu .tab-btn {
     display: block;
     width: 100%;
-    padding: 0.8rem 1rem;
-    text-align: right;
-    background-color: transparent;
-    border: none;
-    color: var(--text-dark); /* رنگ متن روشن */
+    text-align: center; /* متن وسط‌چین می‌شود */
+    background-color: var(--background-light); /* پس‌زمینه مجزا برای هر آیتم */
+    border: 1px solid var(--border-light);
+    color: var(--text-light);
     border-radius: 8px;
     font-weight: 400;
+    padding: 0.8rem 1rem;
+    box-shadow: none;
+}
+.dark-mode .dropdown-menu .tab-btn {
+    background-color: var(--background-dark);
+    border-color: var(--border-dark);
+    color: var(--text-dark);
 }
 .dropdown-menu .tab-btn:hover, .dropdown-menu .tab-btn.active {
     background-color: var(--primary-color) !important;
     color: white !important;
+    border-color: var(--primary-color) !important;
 }
 
 /* Question Card Styles */
