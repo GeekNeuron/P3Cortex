@@ -127,56 +127,50 @@ const handleTabClick = (clickedBtn, type) => {
 };
 
     const createTabs = (container, standardTabCount, type) => {
-    container.innerHTML = '';
+    container.innerHTML = ''; // پاک کردن محتوای قبلی
 
-    const createTabButton = (text, index) => {
+    // ساخت دکمه اصلی منو
+    const toggleBtn = document.createElement('button');
+    toggleBtn.className = 'dropdown-toggle';
+    toggleBtn.textContent = 'انتخاب بخش';
+    
+    // ساخت لیست کشویی
+    const dropdownMenu = document.createElement('div');
+    dropdownMenu.className = 'dropdown-menu';
+
+    const createTabItem = (text, index) => {
         const btn = document.createElement('button');
         btn.className = 'tab-btn';
         btn.dataset.tabIndex = index;
         btn.textContent = text;
-        btn.addEventListener('click', () => handleTabClick(btn, type));
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation(); // جلوگیری از بسته شدن منو
+            toggleBtn.textContent = text; // آپدیت متن دکمه اصلی
+            handleTabClick(btn, type);
+            dropdownMenu.classList.remove('show');
+        });
         return btn;
     };
-    
-    // ۱. ساخت ۴ تب اول که همیشه نمایش داده می‌شوند
-    for (let i = 1; i <= Math.min(standardTabCount, 4); i++) {
+
+    // افزودن تب‌های استاندارد به لیست
+    for (let i = 1; i <= standardTabCount; i++) {
         const text = (type === 'quiz') ? `آزمون ${toPersianDigits(i)}` : `بخش ${toPersianDigits(i)}`;
-        container.appendChild(createTabButton(text, i));
+        dropdownMenu.appendChild(createTabItem(text, i));
     }
 
-    // ۲. اگر تب‌های بیشتری وجود داشت، منوی کشویی را بساز
-    if (standardTabCount > 4) {
-        const dropdownContainer = document.createElement('div');
-        dropdownContainer.className = 'dropdown-container';
-
-        const toggleBtn = document.createElement('button');
-        toggleBtn.className = 'dropdown-toggle';
-        toggleBtn.textContent = 'بخش‌های بیشتر';
-        
-        const dropdownMenu = document.createElement('div');
-        dropdownMenu.className = 'dropdown-menu';
-
-        // ساخت تب‌های باقی‌مانده (از ۵ به بعد)
-        for (let i = 5; i <= standardTabCount; i++) {
-            const text = (type === 'quiz') ? `آزمون ${toPersianDigits(i)}` : `بخش ${toPersianDigits(i)}`;
-            dropdownMenu.appendChild(createTabButton(text, i));
-        }
-
-        // افزودن تب‌های ویژه به منوی کشویی در بخش آزمون
-        if (type === 'quiz') {
-            const specialTabsData = [
-                { name: 'همه سوالات', index: standardTabCount + 1 },
-                { name: 'آزمون بدون ستاره‌دارها', index: standardTabCount + 2 }
-            ];
-            specialTabsData.forEach(tabData => {
-                dropdownMenu.appendChild(createTabButton(tabData.name, tabData.index));
-            });
-        }
-        
-        dropdownContainer.appendChild(toggleBtn);
-        dropdownContainer.appendChild(dropdownMenu);
-        container.appendChild(dropdownContainer);
+    // افزودن تب‌های ویژه برای بخش آزمون
+    if (type === 'quiz') {
+        const specialTabsData = [
+            { name: 'همه سوالات', index: standardTabCount + 1 },
+            { name: 'آزمون بدون ستاره‌دارها', index: standardTabCount + 2 }
+        ];
+        specialTabsData.forEach(tabData => {
+            dropdownMenu.appendChild(createTabItem(tabData.name, tabData.index));
+        });
     }
+
+    container.appendChild(toggleBtn);
+    container.appendChild(dropdownMenu);
 };
 
     // این تابع را به فایل js/app.js خود اضافه کنید
@@ -663,27 +657,38 @@ document.addEventListener('click', (e) => {
 
     // منطق تغییر چیدمان
     main.addEventListener('click', (e) => {
-        const layoutToggleBtn = e.target.closest('.layout-toggle-btn');
-        const layoutOptionBtn = e.target.closest('.layout-options button');
+    // --- منطق منوی کشویی ---
+    const dropdownToggle = e.target.closest('.dropdown-toggle');
+    if (dropdownToggle) {
+        const menu = dropdownToggle.nextElementSibling;
+        const allMenus = document.querySelectorAll('.dropdown-menu');
+        allMenus.forEach(m => {
+            if (m !== menu) m.classList.remove('show');
+        });
+        menu.classList.toggle('show');
+    } else if (!e.target.closest('.dropdown-menu')) {
+        document.querySelectorAll('.dropdown-menu.show').forEach(menu => {
+            menu.classList.remove('show');
+        });
+    }
 
-        if (layoutToggleBtn) {
-            layoutToggleBtn.closest('.layout-switcher').classList.toggle('switcher-expanded');
+    // --- منطق چیدمان ---
+    const layoutToggleBtn = e.target.closest('.layout-toggle-btn');
+    const layoutOptionBtn = e.target.closest('.layout-options button');
+    if (layoutToggleBtn) {
+        layoutToggleBtn.closest('.layout-switcher').classList.toggle('switcher-expanded');
+    }
+    if (layoutOptionBtn) {
+        const layout = layoutOptionBtn.dataset.layout;
+        const questionsContainer = layoutOptionBtn.closest('.content-section').querySelector('.questions-list');
+        if (questionsContainer) {
+            questionsContainer.className = 'questions-list';
+            questionsContainer.classList.add(`grid-${layout}`);
+            layoutOptionBtn.closest('.layout-options').querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
+            layoutOptionBtn.classList.add('active');
         }
-
-        if (layoutOptionBtn) {
-            const layout = layoutOptionBtn.dataset.layout;
-            const questionsContainer = layoutOptionBtn.closest('.content-section').querySelector('.questions-list');
-            
-            if (questionsContainer) {
-                questionsContainer.className = 'questions-list';
-                questionsContainer.classList.add(`grid-${layout}`);
-                
-                layoutOptionBtn.closest('.layout-options').querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
-                layoutOptionBtn.classList.add('active');
-            }
-        }
-    });
-};
+    }
+});
     
     // --- Run Application ---
     init();
