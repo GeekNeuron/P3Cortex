@@ -530,8 +530,15 @@ main {
 .dark-mode #quiz-setup, .dark-mode #practice-setup {
     background-color: var(--foreground-dark);
 }
-#quiz-setup h2, #practice-setup h2 {
-    margin-bottom: 1.5rem;
+/* استایل جدید برای عنوان بخش‌ها */
+.section-header h2 {
+    font-size: 1.2rem;
+    font-weight: 500; /* کاهش ضخامت فونت */
+    color: var(--text-light);
+    margin: 0;
+}
+.dark-mode .section-header h2 {
+    color: var(--text-dark);
 }
 .start-btn {
     padding: 0.8rem 2rem;
