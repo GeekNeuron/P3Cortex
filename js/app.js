@@ -128,36 +128,56 @@ const handleTabClick = (clickedBtn, type) => {
 
     const createTabs = (container, standardTabCount, type) => {
     container.innerHTML = '';
-    container.classList.remove('tabs-expanded');
 
-    // مرحله ۱: ساخت زبانه‌های استاندارد
-    for (let i = 1; i <= standardTabCount; i++) {
+    const createTabButton = (text, index) => {
         const btn = document.createElement('button');
         btn.className = 'tab-btn';
-        if (i > 4) {
-            btn.classList.add('extra-tab');
-        }
-        btn.dataset.tabIndex = i;
-        btn.textContent = (type === 'quiz') ? `آزمون ${toPersianDigits(i)}` : `بخش ${toPersianDigits(i)}`;
+        btn.dataset.tabIndex = index;
+        btn.textContent = text;
         btn.addEventListener('click', () => handleTabClick(btn, type));
-        container.appendChild(btn);
+        return btn;
+    };
+    
+    // ۱. ساخت ۴ تب اول که همیشه نمایش داده می‌شوند
+    for (let i = 1; i <= Math.min(standardTabCount, 4); i++) {
+        const text = (type === 'quiz') ? `آزمون ${toPersianDigits(i)}` : `بخش ${toPersianDigits(i)}`;
+        container.appendChild(createTabButton(text, i));
     }
 
-    // مرحله ۲: افزودن زبانه‌های ویژه برای بخش آزمون (این بخش اصلاح شده است)
-    if (type === 'quiz') {
-        const specialTabs = [
-            { name: 'همه سوالات', index: standardTabCount + 1 },
-            { name: 'آزمون بدون ستاره‌دارها', index: standardTabCount + 2 }
-        ];
-        specialTabs.forEach(specialTab => {
-            const btn = document.createElement('button');
-            btn.className = 'tab-btn extra-tab'; // تب‌های ویژه هم در ابتدا مخفی هستند
-            btn.dataset.tabIndex = specialTab.index;
-            btn.textContent = specialTab.name;
-            btn.addEventListener('click', () => handleTabClick(btn, type));
-            container.appendChild(btn);
-        });
+    // ۲. اگر تب‌های بیشتری وجود داشت، منوی کشویی را بساز
+    if (standardTabCount > 4) {
+        const dropdownContainer = document.createElement('div');
+        dropdownContainer.className = 'dropdown-container';
+
+        const toggleBtn = document.createElement('button');
+        toggleBtn.className = 'dropdown-toggle';
+        toggleBtn.textContent = 'بخش‌های بیشتر';
+        
+        const dropdownMenu = document.createElement('div');
+        dropdownMenu.className = 'dropdown-menu';
+
+        // ساخت تب‌های باقی‌مانده (از ۵ به بعد)
+        for (let i = 5; i <= standardTabCount; i++) {
+            const text = (type === 'quiz') ? `آزمون ${toPersianDigits(i)}` : `بخش ${toPersianDigits(i)}`;
+            dropdownMenu.appendChild(createTabButton(text, i));
+        }
+
+        // افزودن تب‌های ویژه به منوی کشویی در بخش آزمون
+        if (type === 'quiz') {
+            const specialTabsData = [
+                { name: 'همه سوالات', index: standardTabCount + 1 },
+                { name: 'آزمون بدون ستاره‌دارها', index: standardTabCount + 2 }
+            ];
+            specialTabsData.forEach(tabData => {
+                dropdownMenu.appendChild(createTabButton(tabData.name, tabData.index));
+            });
+        }
+        
+        dropdownContainer.appendChild(toggleBtn);
+        dropdownContainer.appendChild(dropdownMenu);
+        container.appendChild(dropdownContainer);
     }
+};
 
     // مرحله ۳: ساخت دکمه "نمایش بیشتر" اگر تعداد کل تب‌ها بیشتر از ۴ بود
     // این بخش به انتهای تابع منتقل شده تا بعد از همه تب‌ها ساخته شود
@@ -636,6 +656,24 @@ const setupEventListeners = () => {
         historyItemToDelete = null;
         deleteConfirmModal.classList.add('hidden');
     });
+
+    // این کد را به setupEventListeners اضافه کنید
+document.addEventListener('click', (e) => {
+    const isDropdownButton = e.target.matches('.dropdown-toggle');
+    // اگر روی دکمه منو کلیک نشده، تمام منوهای باز را ببند
+    if (!isDropdownButton && e.target.closest('.dropdown-container') === null) {
+        document.querySelectorAll('.dropdown-menu.show').forEach(menu => {
+            menu.classList.remove('show');
+        });
+        return;
+    }
+    
+    // اگر روی دکمه منو کلیک شد، آن را باز یا بسته کن
+    if (isDropdownButton) {
+        const dropdownMenu = e.target.nextElementSibling;
+        dropdownMenu.classList.toggle('show');
+    }
+});
 
     // منطق تغییر چیدمان
     main.addEventListener('click', (e) => {
