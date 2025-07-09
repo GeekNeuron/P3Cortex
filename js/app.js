@@ -163,7 +163,7 @@ const handleTabClick = (clickedBtn, type) => {
         const specialTabsData = [
             { name: 'آزمون نشان‌نشده‌ها', index: standardTabCount + 1 },
             { name: 'آزمون نشان‌شده‌ها', index: standardTabCount + 2 },
-            { name: 'آزمون جامع (همه سوالات)', index: standardTabCount + 3 }
+            { name: 'آزمون جامع (همه)', index: standardTabCount + 3 }
         ];
         specialTabsData.forEach(tabData => {
             dropdownMenu.appendChild(createTabItem(tabData.name, tabData.index));
@@ -278,7 +278,7 @@ const renderShowQuestionsButton = () => {
         quizName = 'آزمون نشان‌شده‌ها';
     } else if (tabIndex === allSections.length + 3) { // آزمون جامع
         questionsForQuiz = allSections.flat();
-        quizName = 'آزمون جامع (همه سوالات)';
+        quizName = 'آزمون جامع (همه)';
         duration = 60 * 60;
     }
 
