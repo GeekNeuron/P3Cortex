@@ -684,6 +684,7 @@ main {
     background: var(--foreground-light);
     border-radius: var(--border-radius);
     color: #6c757d;
+    grid-column: 1 / -1;
 }
 .dark-mode .empty-message {
     background: var(--foreground-dark);
