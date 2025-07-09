@@ -161,8 +161,9 @@ const handleTabClick = (clickedBtn, type) => {
     // افزودن تب‌های ویژه برای بخش آزمون
     if (type === 'quiz') {
         const specialTabsData = [
-            { name: 'همه سوالات', index: standardTabCount + 1 },
-            { name: 'آزمون بدون ستاره‌دارها', index: standardTabCount + 2 }
+            { name: 'آزمون نشان‌نشده‌ها', index: standardTabCount + 1 },
+            { name: 'آزمون نشان‌شده‌ها', index: standardTabCount + 2 },
+            { name: 'آزمون جامع (همه سوالات)', index: standardTabCount + 3 }
         ];
         specialTabsData.forEach(tabData => {
             dropdownMenu.appendChild(createTabItem(tabData.name, tabData.index));
@@ -225,7 +226,7 @@ const renderShowQuestionsButton = () => {
     const renderSavedQuestions = () => {
     savedQuestionsContainer.innerHTML = '';
     if (savedQuestions.length === 0) {
-        savedQuestionsContainer.innerHTML = '<p class="empty-message">هنوز سوالی برای مرور نشان نکرده‌اید.<br>از بخش <b>نمونه سوالات</b>، روی آیکون ⭐ کنار هر سوال کلیک کنید تا به این بخش اضافه شود.</p>';
+        savedQuestionsContainer.innerHTML = '<p class="empty-message">هنوز سوالی برای مرور نشان نکرده‌اید.<br>از بخش <b>نمونه سوالات</b>، روی آیکون نشان (bookmark) کنار هر سوال کلیک کنید تا به اینجا اضافه شود.</p>';
         return;
     }
     const fragment = document.createDocumentFragment();
@@ -248,24 +249,31 @@ const renderShowQuestionsButton = () => {
     const tabIndex = parseInt(activeTab.dataset.tabIndex);
     let duration = 20 * 60;
     let questionsForQuiz = [];
-    let quizName = activeTab.textContent; // نام پیش‌فرض
+    let quizName = activeTab.textContent;
 
-    if (tabIndex <= allSections.length) {
+    if (tabIndex <= allSections.length) { // آزمون‌های استاندارد
         questionsForQuiz = allSections[tabIndex - 1] || [];
-        quizName = `آزمون بخش ${toPersianDigits(tabIndex)}`; // نام دقیق
-    } else if (tabIndex === allSections.length + 1) {
-        questionsForQuiz = allSections.flat();
-        quizName = 'آزمون جامع (همه سوالات)'; // نام دقیق
-        duration = 60 * 60;
-    } else if (tabIndex === allSections.length + 2) {
+        quizName = `آزمون بخش ${toPersianDigits(tabIndex)}`;
+    } else if (tabIndex === allSections.length + 1) { // آزمون نشان‌نشده‌ها
         questionsForQuiz = [];
         allSections.forEach((section, sectionIndex) => {
             section.forEach(question => {
-                const isSaved = savedQuestions.some(sq => sq.sessionIndex === sectionIndex && sq.questionId === question.id);
+                const isSaved = savedQuestions.some(sq => sq.sectionIndex === sectionIndex && sq.questionId === question.id);
                 if (!isSaved) questionsForQuiz.push(question);
             });
         });
-        quizName = 'آزمون سوالات نشان‌نشده'; // ✅ متن تغییر کرد
+        quizName = 'آزمون نشان‌نشده‌ها';
+        duration = 60 * 60;
+    } else if (tabIndex === allSections.length + 2) { // ✅ آزمون نشان‌شده‌ها (گزینه جدید)
+        questionsForQuiz = [];
+        savedQuestions.forEach(savedItem => {
+            const question = allSections[savedItem.sectionIndex]?.find(q => q.id === savedItem.questionId);
+            if (question) questionsForQuiz.push(question);
+        });
+        quizName = 'آزمون نشان‌شده‌ها';
+    } else if (tabIndex === allSections.length + 3) { // آزمون جامع
+        questionsForQuiz = allSections.flat();
+        quizName = 'آزمون جامع (همه سوالات)';
         duration = 60 * 60;
     }
 
