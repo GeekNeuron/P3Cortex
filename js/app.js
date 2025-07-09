@@ -512,7 +512,7 @@ const showResults = (correct, incorrect, unanswered, total) => {
     resultsModal.classList.remove('hidden');
 };
 
-const createQuestionCard = (q, type, sectionIndex) => {
+const createQuestionCard = (q, type, sectionIndex = -1) => {
     const card = document.createElement('div');
     card.className = 'question-card fade-in';
 
@@ -538,29 +538,28 @@ const createQuestionCard = (q, type, sectionIndex) => {
         return `<li class="${classes}" data-option-index="${index}">${numberHtml}${optionContent}</li>`;
     }).join('');
     
-    // ساخت HTML دکمه ستاره
+    // ساخت دکمه نشان (bookmark) فقط در صورت نیاز
     let starButtonHtml = '';
     if (type === 'practice' || type === 'saved') {
         const isSaved = savedQuestions.some(sq => sq.sectionIndex === sectionIndex && sq.questionId === q.id);
-        const starIconSrc = isSaved ? 'images/bookmark_added.svg' : 'images/bookmark_add.svg';
-        starButtonHtml = `<button class="save-star"><img src="${starIconSrc}" alt="ذخیره"></button>`;
+        const starIconSrc = isSaved ? 'images/bookmark-filled.svg' : 'images/bookmark-outline.svg';
+        starButtonHtml = `<button class="save-star"><img src="${starIconSrc}" alt="نشان"></button>`;
     }
-    
-    // ساخت فوتر کارت فقط در صورت وجود دکمه ستاره
-    const footerHtml = starButtonHtml ? `<div class="card-footer">${starButtonHtml}</div>` : '';
 
+    // ساختار نهایی کارت
     card.innerHTML = `
         <div class="question-content">
             ${sectionInfoHtml}
             ${imageHtml}
             <p class="question-text">
+                ${starButtonHtml}
                 <span>${toPersianDigits(q.id)}. ${q.question}</span>
             </p>
             <ul class="${optionsListClass}">${optionsHtml}</ul>
         </div>
-        ${footerHtml}
     `;
     
+    // اتصال رویداد به دکمه نشان
     const starButton = card.querySelector('.save-star');
     if (starButton) {
         starButton.addEventListener('click', (e) => {
@@ -569,6 +568,7 @@ const createQuestionCard = (q, type, sectionIndex) => {
         });
     }
     
+    // منطق انتخاب گزینه در حالت آزمون
     if (type === 'quiz') {
         card.querySelectorAll('.option').forEach(opt => {
             opt.addEventListener('click', () => {
