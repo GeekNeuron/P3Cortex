@@ -1129,7 +1129,7 @@ footer p {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 0.75rem; /* فاصله استاندارد بین آیکون و متن */
+    gap: 0.4rem; /* فاصله استاندارد بین آیکون و متن */
 }
 
 /* سایزبندی تمام آیکون‌های متنی */
@@ -1152,4 +1152,10 @@ footer p {
 /* وقتی دکمه فعال است، آیکون داخل آن نیز سفید شود */
 .nav-btn.active .icon-text-container img {
     filter: invert(1);
+}
+
+/* سایز بزرگتر برای آیکون‌های داخل تگ h2 */
+h2 .icon-text-container img {
+    width: 28px;
+    height: 28px;
 }
