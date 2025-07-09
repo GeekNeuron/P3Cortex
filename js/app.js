@@ -226,7 +226,12 @@ const renderShowQuestionsButton = () => {
     const renderSavedQuestions = () => {
     savedQuestionsContainer.innerHTML = '';
     if (savedQuestions.length === 0) {
-        savedQuestionsContainer.innerHTML = '<p class="empty-message">هنوز سوالی برای مرور نشان نکرده‌اید.<br>از بخش <b>نمونه سوالات</b>، روی آیکون نشان (bookmark) کنار هر سوال کلیک کنید تا به اینجا اضافه شود.</p>';
+        <p class="empty-message">
+                هنوز سوالی برای مرور نشان نکرده‌اید.<br>
+                از بخش <b>نمونه سوالات</b>، روی آیکون 
+                <img src="images/bookmark-add.svg" alt="نشان" style="width:18px; height:18px; vertical-align:middle; filter:invert(0.5);">
+                زیر هر سوال کلیک کنید تا به این بخش اضافه شود.
+            </p>`;
         return;
     }
     const fragment = document.createDocumentFragment();
