@@ -539,7 +539,7 @@ const createQuestionCard = (q, type, sectionIndex = -1) => {
         return `<li class="${classes}" data-option-index="${index}">${numberHtml}${optionContent}</li>`;
     }).join('');
     
-    // ساخت دکمه نشان (bookmark) فقط در صورت نیاز
+    // ساخت HTML دکمه نشان
     let starButtonHtml = '';
     if (type === 'practice' || type === 'saved') {
         const isSaved = savedQuestions.some(sq => sq.sectionIndex === sectionIndex && sq.questionId === q.id);
@@ -547,17 +547,20 @@ const createQuestionCard = (q, type, sectionIndex = -1) => {
         starButtonHtml = `<button class="save-star"><img src="${starIconSrc}" alt="نشان"></button>`;
     }
 
-    // ساختار نهایی کارت
+    // ساخت فوتر کارت فقط در صورت وجود دکمه
+    const footerHtml = starButtonHtml ? `<div class="card-footer">${starButtonHtml}</div>` : '';
+
+    // ✅ ساختار صحیح نهایی کارت
     card.innerHTML = `
         <div class="question-content">
             ${sectionInfoHtml}
             ${imageHtml}
             <p class="question-text">
-                ${starButtonHtml}
                 <span>${toPersianDigits(q.id)}. ${q.question}</span>
             </p>
             <ul class="${optionsListClass}">${optionsHtml}</ul>
         </div>
+        ${footerHtml} 
     `;
     
     // اتصال رویداد به دکمه نشان
