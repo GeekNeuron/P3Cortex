@@ -543,7 +543,7 @@ const createQuestionCard = (q, type, sectionIndex = -1) => {
     let starButtonHtml = '';
     if (type === 'practice' || type === 'saved') {
         const isSaved = savedQuestions.some(sq => sq.sectionIndex === sectionIndex && sq.questionId === q.id);
-        const starIconSrc = isSaved ? 'images/bookmark-filled.svg' : 'images/bookmark-outline.svg';
+        const starIconSrc = isSaved ? 'images/bookmark-added.svg' : 'images/bookmark-add.svg';
         starButtonHtml = `<button class="save-star"><img src="${starIconSrc}" alt="نشان"></button>`;
     }
 
