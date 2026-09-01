@@ -174,7 +174,6 @@ const handleTabClick = (clickedBtn, type) => {
     container.appendChild(dropdownMenu);
 };
 
-    // این تابع را به فایل js/app.js خود اضافه کنید
 const renderShowQuestionsButton = () => {
     practiceQuestionsContainer.innerHTML = ''; 
 
@@ -230,7 +229,7 @@ const renderShowQuestionsButton = () => {
         <p class="empty-message">
             هنوز سوالی برای مرور نشان نکرده‌اید.<br>
             از بخش <b>نمونه سوالات</b>، روی آیکون 
-            <img src="images/bookmark-add.svg" alt="نشان" style="width:18px; height:18px; vertical-align:middle; filter:invert(0.5);">
+            <img src="images/bookmark_add.svg" alt="نشان" style="width:18px; height:18px; vertical-align:middle; filter:invert(0.5);">
             زیر هر سوال کلیک کنید تا به این بخش اضافه شود.
         </p>`;
     return;
@@ -413,15 +412,6 @@ const deleteHistoryItem = (timestamp) => {
     renderQuizHistory();
 };
 
-// این کد را به تابع setupEventListeners اضافه کنید
-quizHistoryList.addEventListener('click', (e) => {
-    const deleteBtn = e.target.closest('.delete-history-btn');
-    if (deleteBtn) {
-        historyItemToDelete = Number(deleteBtn.dataset.timestamp);
-        deleteConfirmModal.classList.remove('hidden');
-    }
-});
-    
 // --- Practice Section Logic (Corrected Version) ---
 const renderPracticeQuestions = (sessionQuestions, sectionIndex) => {
     practiceQuestionsContainer.innerHTML = '';
@@ -508,9 +498,16 @@ const showResults = (correct, incorrect, unanswered, total) => {
         }
     };
 
-    const chart = new ApexCharts(resultsChartContainer, options);
-    chart.render();
     resultsModal.classList.remove('hidden');
+
+    try {
+        const chart = new ApexCharts(resultsChartContainer, options);
+        chart.render();
+    } catch (err) {
+        // اگر کتابخانه نمودار (مثلاً بخاطر قطعی اینترنت یا مسدود بودن CDN) بار نشود،
+        // نتیجه آزمون (پیام و خلاصه متنی) باید همچنان نمایش داده شود.
+        console.error('ApexCharts failed to load/render; showing results without chart.', err);
+    }
 };
 
 const createQuestionCard = (q, type, sectionIndex = -1) => {
@@ -543,7 +540,7 @@ const createQuestionCard = (q, type, sectionIndex = -1) => {
     let starButtonHtml = '';
     if (type === 'practice' || type === 'saved') {
         const isSaved = savedQuestions.some(sq => sq.sectionIndex === sectionIndex && sq.questionId === q.id);
-        const starIconSrc = isSaved ? 'images/bookmark-added.svg' : 'images/bookmark-add.svg';
+        const starIconSrc = isSaved ? 'images/bookmark_added.svg' : 'images/bookmark_add.svg';
         starButtonHtml = `<button class="save-star"><img src="${starIconSrc}" alt="نشان"></button>`;
     }
 
