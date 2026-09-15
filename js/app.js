@@ -7,11 +7,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- DOM Elements ---
     const headerElement = document.querySelector('header');
+    const themeToggleBtn = document.getElementById('theme-toggle-btn');
+    const appLoader = document.getElementById('app-loader');
     const TOTAL_SECTIONS = 20;
     const main = document.querySelector('main');
     const helpModal = document.getElementById('help-modal');
     const showHelpModalBtn = document.getElementById('show-help-modal-btn');
-    const closeHelpModalBtn = helpModal.querySelector('.close-modal');
     const confirmModal = document.getElementById('confirm-modal');
     const confirmFinishBtn = document.getElementById('confirm-finish-btn');
     const cancelFinishBtn = document.getElementById('cancel-finish-btn');
@@ -39,8 +40,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const quizHistoryList = document.getElementById('quiz-history-list');
 
     const resultsModal = document.getElementById('results-modal');
-    const closeModalBtn = document.querySelector('.close-modal');
     const resultSummaryElement = document.getElementById('result-summary');
+    const timerBarFill = document.getElementById('timer-bar-fill');
     
     // --- State Management ---
     let allSections = [];
@@ -54,11 +55,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Initialization ---
     const init = async () => {
+    hydrateStaticIcons(); // جایگزینی نگه‌دارنده‌های data-icon با SVG واقعی
     setupTheme();
     await loadQuestions();
     setupEventListeners();
     renderQuizHistory();
     showSection('practice'); // این خط به تنهایی برای شروع کافی است
+    hideAppLoader();
+};
+
+// --- App Loader (لودر اولیه) ---
+const hideAppLoader = () => {
+    if (!appLoader) return;
+    appLoader.classList.add('is-hidden');
+    setTimeout(() => appLoader.remove(), 500);
 };
 
     // --- Data Loading (New Logic) ---
@@ -89,6 +99,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const newTheme = currentTheme === 'light' ? 'dark' : 'light';
         document.body.className = `${newTheme}-mode`;
         localStorage.setItem('theme', newTheme);
+    };
+
+    // کلیک روی دکمه اختصاصی تم؛ جلوگیری از دوبار اجرا شدن (چون هدر هم listener خودش را دارد)
+    const handleThemeToggleClick = (e) => {
+        e.stopPropagation();
+        toggleTheme();
     };
 
     // --- UI & Navigation ---
@@ -132,7 +148,7 @@ const handleTabClick = (clickedBtn, type) => {
     // ساخت دکمه اصلی منو
     const toggleBtn = document.createElement('button');
     toggleBtn.className = 'dropdown-toggle';
-    toggleBtn.textContent = 'انتخاب بخش';
+    toggleBtn.innerHTML = `<span class="dropdown-label">انتخاب بخش</span>${getIcon('chevronDown', 'dropdown-chevron')}`;
     
     // ساخت لیست کشویی
     const dropdownMenu = document.createElement('div');
@@ -145,9 +161,10 @@ const handleTabClick = (clickedBtn, type) => {
         btn.textContent = text;
         btn.addEventListener('click', (e) => {
             e.stopPropagation(); // جلوگیری از بسته شدن منو
-            toggleBtn.textContent = text; // آپدیت متن دکمه اصلی
+            toggleBtn.querySelector('.dropdown-label').textContent = text; // آپدیت متن دکمه اصلی
             handleTabClick(btn, type);
             dropdownMenu.classList.remove('show');
+            toggleBtn.classList.remove('open');
         });
         return btn;
     };
@@ -229,16 +246,16 @@ const renderShowQuestionsButton = () => {
         <p class="empty-message">
             هنوز سوالی برای مرور نشان نکرده‌اید.<br>
             از بخش <b>نمونه سوالات</b>، روی آیکون 
-            <img src="images/bookmark_add.svg" alt="نشان" style="width:18px; height:18px; vertical-align:middle; filter:invert(0.5);">
+            <span class="inline-icon">${getIcon('bookmarkAdd')}</span>
             زیر هر سوال کلیک کنید تا به این بخش اضافه شود.
         </p>`;
     return;
 }
     const fragment = document.createDocumentFragment();
-    savedQuestions.forEach(savedItem => {
+    savedQuestions.forEach((savedItem, i) => {
         const question = allSections[savedItem.sectionIndex]?.find(q => q.id === savedItem.questionId);
         if (question) {
-            fragment.appendChild(createQuestionCard(question, 'saved', savedItem.sectionIndex));
+            fragment.appendChild(createQuestionCard(question, 'saved', savedItem.sectionIndex, i));
         }
     });
     savedQuestionsContainer.appendChild(fragment);
@@ -284,9 +301,13 @@ const renderShowQuestionsButton = () => {
 
     if (questionsForQuiz.length === 0) { alert('سوالی برای این آزمون وجود ندارد.'); return; }
     
-    currentQuiz = { questions: questionsForQuiz, userAnswers: {}, currentQuestionIndex: 0, timeRemaining: duration, name: quizName };
+    currentQuiz = { questions: questionsForQuiz, userAnswers: {}, currentQuestionIndex: 0, timeRemaining: duration, totalDuration: duration, name: quizName };
     quizSetupSection.classList.add('hidden');
     quizLiveSection.classList.remove('hidden');
+    if (timerBarFill) {
+        timerBarFill.style.width = '100%';
+        timerBarFill.classList.remove('is-low');
+    }
     renderQuizQuestion();
     startTimer();
 };
@@ -298,6 +319,12 @@ const renderShowQuestionsButton = () => {
             const minutes = Math.floor(currentQuiz.timeRemaining / 60);
             const seconds = currentQuiz.timeRemaining % 60;
             timerElement.textContent = `زمان باقی‌مانده: ${toPersianDigits(String(minutes).padStart(2, '0'))}:${toPersianDigits(String(seconds).padStart(2, '0'))}`;
+
+            if (timerBarFill && currentQuiz.totalDuration) {
+                const percent = Math.max(0, (currentQuiz.timeRemaining / currentQuiz.totalDuration) * 100);
+                timerBarFill.style.width = `${percent}%`;
+                timerBarFill.classList.toggle('is-low', currentQuiz.timeRemaining <= 60);
+            }
 
             if (currentQuiz.timeRemaining <= 0) {
                 endQuiz();
@@ -378,9 +405,10 @@ const renderQuizHistory = () => {
         quizHistoryList.innerHTML = `<p class="empty-message" style="border: none; padding: 1rem 0;">هنوز آزمونی را به پایان نرسانده‌اید.</p>`;
         return;
     }
-    quizHistory.forEach(item => {
+    quizHistory.forEach((item, i) => {
         const historyDiv = document.createElement('div');
-        historyDiv.className = 'history-item';
+        historyDiv.className = 'history-item fade-in';
+        historyDiv.style.setProperty('--i', Math.min(i, 8));
 
         const [correct, total] = item.score.split('/').map(Number);
         const incorrect = total - correct;
@@ -391,7 +419,7 @@ const renderQuizHistory = () => {
 
         historyDiv.innerHTML = `
             <button class="delete-history-btn" data-timestamp="${item.timestamp}" title="حذف این سابقه">
-                <img src="images/trash-icon.svg" alt="حذف">
+                ${getIcon('trash')}
             </button>
             <div class="history-details">
                 <span class="history-quiz-name">${item.quizName || 'آزمون'}</span>
@@ -420,12 +448,14 @@ const renderPracticeQuestions = (sessionQuestions, sectionIndex) => {
         return;
     }
     const fragment = document.createDocumentFragment();
+    let visibleIndex = 0;
     sessionQuestions.forEach(q => {
         // منطق صحیح برای بررسی سوالات ذخیره شده
         const isSaved = savedQuestions.some(sq => sq.sectionIndex === sectionIndex && sq.questionId === q.id);
         if (!isSaved) {
             // ارسال شماره بخش به تابع ساخت کارت
-            fragment.appendChild(createQuestionCard(q, 'practice', sectionIndex));
+            fragment.appendChild(createQuestionCard(q, 'practice', sectionIndex, visibleIndex));
+            visibleIndex++;
         }
     });
     if (fragment.children.length === 0) {
@@ -510,9 +540,10 @@ const showResults = (correct, incorrect, unanswered, total) => {
     }
 };
 
-const createQuestionCard = (q, type, sectionIndex = -1) => {
+const createQuestionCard = (q, type, sectionIndex = -1, cardOrderIndex = 0) => {
     const card = document.createElement('div');
     card.className = 'question-card fade-in';
+    card.style.setProperty('--i', Math.min(cardOrderIndex, 8)); // برای انیمیشن پلکانی نرم کارت‌ها (سقف‌دار تا تاخیر زیاد نشود)
 
     const sectionInfoHtml = (type === 'saved') 
         ? `<span class="section-source">از بخش ${toPersianDigits(sectionIndex + 1)}</span>` 
@@ -533,15 +564,16 @@ const createQuestionCard = (q, type, sectionIndex = -1) => {
         
         const numberHtml = `<div class="option-number">${toPersianDigits(index + 1)}</div>`;
         const optionContent = isImageOptions ? `<img src="${option}" alt="گزینه" class="option-image">` : `<span>${option}</span>`;
-        return `<li class="${classes}" data-option-index="${index}">${numberHtml}${optionContent}</li>`;
+        return `<li class="${classes}" data-option-index="${index}" style="--i:${index}">${numberHtml}${optionContent}</li>`;
     }).join('');
     
     // ساخت HTML دکمه نشان
     let starButtonHtml = '';
+    let isSaved = false;
     if (type === 'practice' || type === 'saved') {
-        const isSaved = savedQuestions.some(sq => sq.sectionIndex === sectionIndex && sq.questionId === q.id);
-        const starIconSrc = isSaved ? 'images/bookmark_added.svg' : 'images/bookmark_add.svg';
-        starButtonHtml = `<button class="save-star"><img src="${starIconSrc}" alt="نشان"></button>`;
+        isSaved = savedQuestions.some(sq => sq.sectionIndex === sectionIndex && sq.questionId === q.id);
+        const starIconName = isSaved ? 'bookmarkAdded' : 'bookmarkAdd';
+        starButtonHtml = `<button class="save-star${isSaved ? ' is-saved' : ''}" title="نشان کردن سوال">${getIcon(starIconName)}</button>`;
     }
 
     // ساخت فوتر کارت فقط در صورت وجود دکمه
@@ -585,8 +617,9 @@ const createQuestionCard = (q, type, sectionIndex = -1) => {
 
     // --- Event Listeners Setup ---
 const setupEventListeners = () => {
-    // رویداد تغییر تم
+    // رویداد تغییر تم (کلیک روی هدر همچنان کار می‌کند + دکمه اختصاصی برای دسترسی بهتر)
     headerElement.addEventListener('click', toggleTheme);
+    if (themeToggleBtn) themeToggleBtn.addEventListener('click', handleThemeToggleClick);
 
     // رویداد دکمه‌های منوی اصلی
     mainNavButtons.forEach(btn => {
@@ -635,12 +668,19 @@ const setupEventListeners = () => {
             const menu = dropdownToggle.nextElementSibling;
             // بستن بقیه منوها
             document.querySelectorAll('.dropdown-menu.show').forEach(m => {
-                if (m !== menu) m.classList.remove('show');
+                if (m !== menu) {
+                    m.classList.remove('show');
+                    m.previousElementSibling?.classList.remove('open');
+                }
             });
             menu.classList.toggle('show');
+            dropdownToggle.classList.toggle('open', menu.classList.contains('show'));
         } else if (!e.target.closest('.dropdown-container')) {
             // بستن منو با کلیک در جای دیگر
-            document.querySelectorAll('.dropdown-menu.show').forEach(menu => menu.classList.remove('show'));
+            document.querySelectorAll('.dropdown-menu.show').forEach(menu => {
+                menu.classList.remove('show');
+                menu.previousElementSibling?.classList.remove('open');
+            });
         }
 
         // منطق منوی چیدمان

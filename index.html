@@ -11,34 +11,45 @@
 </head>
 <body class="light-mode">
 
+    <div id="app-loader" class="app-loader" aria-hidden="true">
+        <span class="app-loader-logo" data-icon="logo"></span>
+        <div class="app-loader-ring"></div>
+    </div>
+
+    <div class="bg-decor" aria-hidden="true"></div>
+
     <header>
         <div class="header-container">
             <div class="logo">
-    <img src="images/car-icon.png" alt="logo">
-    <div class="logo-text">
-        <h1>آزمون آیین‌نامه رانندگی</h1>
-        <p class="header-subtitle">کارتکس نمونه سوالات پایه سه - تضمین قبولی</p>
-    </div>
-</div>
+                <span class="logo-icon" data-icon="logo"></span>
+                <div class="logo-text">
+                    <h1>آزمون آیین‌نامه رانندگی</h1>
+                    <p class="header-subtitle">کارتکس نمونه سوالات پایه سه - تضمین قبولی</p>
+                </div>
+            </div>
+            <button id="theme-toggle-btn" class="theme-toggle-btn" title="تغییر تم روشن/تاریک" aria-label="تغییر تم">
+                <span class="theme-icon theme-icon-sun" data-icon="sun"></span>
+                <span class="theme-icon theme-icon-moon" data-icon="moon"></span>
+            </button>
         </div>
     </header>
 
 <nav class="main-nav">
-    <button class="nav-btn active" data-section="practice">
+    <button class="nav-btn active" data-section="practice" title="نمونه سوالات">
         <span class="icon-text-container">
-            <img src="images/practice-icon.svg" alt="نمونه سوالات">
+            <span class="icon-slot" data-icon="practice"></span>
             <span>نمونه سوالات</span>
         </span>
     </button>
-    <button class="nav-btn" data-section="saved">
+    <button class="nav-btn" data-section="saved" title="مرور">
          <span class="icon-text-container">
-            <img src="images/review-icon.svg" alt="مرور">
+            <span class="icon-slot" data-icon="review"></span>
             <span>مرور</span>
         </span>
     </button>
-    <button class="nav-btn" data-section="quiz">
+    <button class="nav-btn" data-section="quiz" title="آزمون">
         <span class="icon-text-container">
-            <img src="images/quiz-icon.svg" alt="آزمون">
+            <span class="icon-slot" data-icon="quiz"></span>
             <span>آزمون</span>
         </span>
     </button>
@@ -55,14 +66,14 @@
     </div>
 <div class="layout-switcher">
     <button class="layout-toggle-btn" title="تغییر چیدمان">
-        <img src="images/chevron-left.svg" alt="<">
+        <span class="icon-slot" data-icon="chevronLeft"></span>
     </button>
     <div class="layout-options">
         <button data-layout="1_col" title="تک ستونی" class="active">
-            <img src="images/layout-1.svg" alt="1">
+            <span class="icon-slot" data-icon="layout1"></span>
         </button>
         <button data-layout="2_col" title="دو ستونی">
-            <img src="images/layout-2.svg" alt="2">
+            <span class="icon-slot" data-icon="layout2"></span>
         </button>
     </div>
 </div>
@@ -83,6 +94,7 @@
                     <span id="timer">زمان باقی‌مانده: ۲۰:۰۰</span>
                     <span id="question-counter">سوال ۱ از ۳۰</span>
                 </div>
+                <div class="timer-bar-track"><div class="timer-bar-fill" id="timer-bar-fill"></div></div>
                 <div id="quiz-questions-container" class="questions-list"></div>
                 <div class="quiz-navigation">
                     <button id="prev-question-btn">سوال قبلی</button>
@@ -94,14 +106,12 @@
                 <div class="history-header">
            <h2>
         <span class="icon-text-container">
-            <img src="images/history-icon.svg" alt="سوابق">
+            <span class="icon-slot" data-icon="history"></span>
             <span>سوابق آزمون‌ها</span>
         </span>
     </h2>
                 <button id="show-help-modal-btn" class="help-btn" title="راهنمای قبولی">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-    </svg>
+        <span class="icon-slot" data-icon="help"></span>
     </button>
       </div>
     <div id="quiz-history-list">
@@ -112,20 +122,20 @@
         <section id="saved-section" class="content-section">
             <h2>
     <span class="icon-text-container">
-        <img src="images/saved-title-icon.svg" alt="نشان‌شده">
+        <span class="icon-slot" data-icon="savedTitle"></span>
         <span>سوالات نشان‌شده</span>
     </span>
 </h2>
 <div class="layout-switcher">
     <button class="layout-toggle-btn" title="تغییر چیدمان">
-        <img src="images/chevron-left.svg" alt="<">
+        <span class="icon-slot" data-icon="chevronLeft"></span>
     </button>
     <div class="layout-options">
         <button data-layout="1_col" title="تک ستونی" class="active">
-            <img src="images/layout-1.svg" alt="1">
+            <span class="icon-slot" data-icon="layout1"></span>
         </button>
         <button data-layout="2_col" title="دو ستونی">
-            <img src="images/layout-2.svg" alt="2">
+            <span class="icon-slot" data-icon="layout2"></span>
         </button>
     </div>
 </div>
@@ -148,7 +158,7 @@
     
     <div id="results-modal" class="modal-overlay hidden">
     <div class="modal-content">
-        <span class="close-modal">&times;</span>
+        <button class="close-modal" data-icon="close" aria-label="بستن"></button>
         
         <div id="result-message"></div>
 
@@ -175,7 +185,7 @@
 
 <div id="help-modal" class="modal-overlay hidden">
     <div class="modal-content">
-        <span class="close-modal">&times;</span>
+        <button class="close-modal" data-icon="close" aria-label="بستن"></button>
         <h2>راهنمای قبولی در آزمون</h2>
         <p>برای قبولی در آزمون اصلی آیین‌نامه راهنمایی و رانندگی، شما مجاز به داشتن حداکثر "<b>۴ پاسخ غلط</b>" هستید.</p>
         <ul>
@@ -192,6 +202,7 @@
     </div>
 </div>
     
+    <script src="js/icons.js"></script>
     <script src="js/app.js"></script>
 </body>
 </html>
