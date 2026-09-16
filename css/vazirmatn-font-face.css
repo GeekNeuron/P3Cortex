@@ -1,0 +1,10 @@
+/* فونت وزیرمتن به‌صورت کامل آفلاین — فایل Variable که تمام وزن‌های ۱۰۰ تا ۹۰۰ را
+   در یک فایل ۱۱۲ کیلوبایتی پوشش می‌دهد، بدون نیاز به اتصال اینترنت. */
+@font-face {
+    font-family: 'Vazirmatn';
+    src: url('fonts/Vazirmatn[wght].woff2') format('woff2 supports variations'),
+         url('fonts/Vazirmatn[wght].woff2') format('woff2-variations');
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+}

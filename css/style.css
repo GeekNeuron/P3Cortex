@@ -1,6 +1,3 @@
-/* ==========================================================================
-   متغیرها و پایه
-   ========================================================================== */
 :root {
     --primary: #4C6FFF;
     --primary-rgb: 76, 111, 255;
@@ -85,9 +82,6 @@ body {
     min-height: 100vh;
 }
 
-/* ==========================================================================
-   افکت‌های تزئینی پس‌زمینه
-   ========================================================================== */
 .bg-decor {
     position: fixed;
     inset: 0;
@@ -128,9 +122,6 @@ body {
     50% { transform: translate(3%, 4%) scale(1.08); }
 }
 
-/* ==========================================================================
-   لودر اولیه برنامه
-   ========================================================================== */
 .app-loader {
     position: fixed;
     inset: 0;
@@ -170,9 +161,6 @@ body {
     to { transform: rotate(360deg); }
 }
 
-/* ==========================================================================
-   انیمیشن‌های عمومی
-   ========================================================================== */
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(12px); }
     to { opacity: 1; transform: translateY(0); }
@@ -191,7 +179,6 @@ body {
     animation-delay: calc(min(var(--i, 0), 8) * 0.05s);
 }
 
-/* svg icon پایه */
 .icon {
     width: 22px;
     height: 22px;
@@ -206,9 +193,6 @@ body {
 }
 .inline-icon .icon { width: 18px; height: 18px; }
 
-/* ==========================================================================
-   هدر
-   ========================================================================== */
 header {
     background-color: rgba(var(--primary-rgb), 0.02);
     background-color: color-mix(in srgb, var(--bg-surface) 88%, transparent);
@@ -221,7 +205,6 @@ header {
     z-index: 1000;
     transition: background-color var(--transition-speed) var(--ease), border-color var(--transition-speed) var(--ease);
     border-bottom: 1px solid var(--border-color);
-    cursor: pointer;
 }
 
 .header-container {
@@ -278,7 +261,11 @@ header:hover .logo-icon {
     margin: 0;
 }
 
-/* دکمه اختصاصی تغییر تم */
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
 .theme-toggle-btn {
     position: relative;
     width: 46px;
@@ -292,14 +279,17 @@ header:hover .logo-icon {
     justify-content: center;
     transition: background-color var(--transition-speed) var(--ease), transform 0.2s var(--ease), border-color var(--transition-speed) var(--ease);
     flex-shrink: 0;
+    color: var(--text-secondary);
 }
 .theme-toggle-btn:hover {
     transform: translateY(-2px) rotate(8deg);
     border-color: var(--primary);
+    color: var(--primary);
 }
 .theme-toggle-btn:active {
     transform: scale(0.92);
 }
+#fee-toggle-btn .icon { width: 21px; height: 21px; }
 .theme-icon {
     position: absolute;
     inset: 0;
@@ -314,9 +304,6 @@ header:hover .logo-icon {
 .dark-mode .theme-icon-sun { opacity: 0; transform: rotate(-90deg) scale(0.5); }
 .dark-mode .theme-icon-moon { opacity: 1; transform: rotate(0) scale(1); }
 
-/* ==========================================================================
-   ناوبری اصلی
-   ========================================================================== */
 .main-nav {
     display: flex;
     justify-content: center;
@@ -361,9 +348,6 @@ header:hover .logo-icon {
     transform: scale(0.96);
 }
 
-/* ==========================================================================
-   بخش‌های محتوا
-   ========================================================================== */
 main {
     max-width: 900px;
     margin: 2rem auto;
@@ -378,24 +362,76 @@ main {
     animation: fadeIn 0.45s var(--ease);
 }
 
-/* عنوان بخش‌ها */
-.section-header {
+.setup-card {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
+    text-align: center;
+    gap: 0.5rem;
+    padding: 2.6rem 1.5rem 2.4rem;
+    background: var(--bg-surface);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    margin-bottom: 2rem;
+    border: 1px solid var(--border-color);
+    position: relative;
+    overflow: hidden;
+    transition: background-color var(--transition-speed) var(--ease), border-color var(--transition-speed) var(--ease);
 }
-.section-header h2, #quiz-history-section h2, #saved-section h2 {
+.setup-card::before {
+    content: '';
+    position: absolute;
+    top: -40%;
+    right: -20%;
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    background: var(--gradient-primary);
+    opacity: 0.08;
+    filter: blur(10px);
+    pointer-events: none;
+}
+.setup-icon-badge {
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--gradient-primary);
+    color: #fff;
+    box-shadow: var(--shadow-primary);
+    margin-bottom: 0.6rem;
+    animation: floatBadge 4.5s ease-in-out infinite;
+}
+.setup-icon-badge .icon { width: 34px; height: 34px; }
+@keyframes floatBadge {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-7px) rotate(-4deg); }
+}
+.setup-card h2 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0;
+}
+.setup-subtitle {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    max-width: 380px;
+    line-height: 1.8;
+    margin-bottom: 0.8rem;
+}
+.setup-card .tabs-container {
+    margin-top: 0.4rem;
+}
+#quiz-history-section h2, #saved-section h2 {
     font-size: 1.15rem;
     font-weight: 600;
     color: var(--text-primary);
     margin: 0;
 }
 
-/* ==========================================================================
-   منوی کشویی بخش‌ها/آزمون‌ها
-   ========================================================================== */
 .tabs-container {
     position: relative;
     display: flex;
@@ -498,52 +534,33 @@ main {
 }
 .dropdown-menu::-webkit-scrollbar-thumb:hover { background-color: var(--primary); }
 
-/* ==========================================================================
-   دکمه نمایش سوالات / شروع آزمون
-   ========================================================================== */
-#quiz-setup, #practice-setup {
-    text-align: center;
-    padding: 2.2rem 1.5rem;
-    background: var(--bg-surface);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-md);
-    margin-bottom: 2rem;
-    border: 1px solid var(--border-color);
-    transition: background-color var(--transition-speed) var(--ease), border-color var(--transition-speed) var(--ease);
-}
-
 .show-questions-btn, .start-btn {
-    display: inline-block;
-    padding: 0.85rem 2.2rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    padding: 0.85rem 1.8rem;
     border: none;
     border-radius: 999px;
     cursor: pointer;
     transition: all var(--transition-speed) var(--ease-spring);
     max-width: 350px;
-    margin: 2.4rem auto 0;
+    margin: 1.6rem auto 0;
     text-align: center;
     font-weight: 700;
     font-size: 1.05rem;
     color: #fff;
 }
-.show-questions-btn {
-    background: var(--gradient-primary);
-    box-shadow: var(--shadow-primary);
-}
-.start-btn {
-    background: linear-gradient(135deg, var(--success-color), #22C55E);
-    box-shadow: 0 10px 24px rgba(var(--success-rgb), 0.3);
-}
-.show-questions-btn:hover, .start-btn:hover {
-    transform: translateY(-3px) scale(1.02);
-}
-.show-questions-btn:active, .start-btn:active {
-    transform: translateY(0) scale(0.98);
-}
+.show-questions-btn { background: var(--gradient-primary); box-shadow: var(--shadow-primary); }
+.start-btn { background: linear-gradient(135deg, var(--success-color), #22C55E); box-shadow: 0 10px 24px rgba(var(--success-rgb), 0.3); }
+.show-questions-btn:hover, .start-btn:hover { transform: translateY(-3px) scale(1.02); }
+.show-questions-btn:active, .start-btn:active { transform: translateY(0) scale(0.98); }
+.show-questions-btn .icon-slot:first-child .icon,
+.start-btn .icon-slot:first-child .icon { width: 19px; height: 19px; }
+.btn-arrow .icon { width: 17px; height: 17px; transition: transform 0.3s var(--ease-spring); }
+.show-questions-btn:hover .btn-arrow .icon,
+.start-btn:hover .btn-arrow .icon { transform: translateX(-4px); }
 
-/* ==========================================================================
-   کارت سوال
-   ========================================================================== */
 .question-card {
     background-color: var(--bg-surface);
     border-radius: var(--radius-lg);
@@ -669,7 +686,6 @@ main {
     border-color: var(--error-color);
 }
 
-/* غیرفعال کردن افکت هاور برای گزینه‌های غلط در نمونه سوالات/مرور */
 #practice-questions-container .option:not(.correct):hover,
 #saved-questions-container .option:not(.correct):hover {
     background-color: transparent;
@@ -684,7 +700,6 @@ main {
     border-color: var(--border-color);
 }
 
-/* گزینه‌های تصویری */
 .options-list.image-options-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
@@ -705,7 +720,6 @@ main {
     border-radius: calc(var(--radius-md) - 6px);
 }
 
-/* فوتر کارت + دکمه نشان */
 .question-card .card-footer {
     display: flex;
     justify-content: flex-end;
@@ -743,9 +757,6 @@ main {
     font-weight: 600;
 }
 
-/* ==========================================================================
-   بخش زنده آزمون
-   ========================================================================== */
 #quiz-live .quiz-header {
     display: flex;
     justify-content: space-between;
@@ -822,9 +833,6 @@ main {
     opacity: 0.6;
 }
 
-/* ==========================================================================
-   مودال‌ها
-   ========================================================================== */
 .modal-overlay {
     position: fixed;
     inset: 0;
@@ -907,6 +915,13 @@ main {
 }
 #result-message.pass { background: linear-gradient(135deg, var(--success-color), #22C55E); }
 #result-message.fail { background: linear-gradient(135deg, var(--error-color), #F43F5E); }
+.result-meta {
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    margin-top: -1rem;
+    margin-bottom: 1rem;
+}
 
 .modal-actions {
     display: flex;
@@ -931,6 +946,9 @@ main {
 .btn-cancel:hover { background-color: #55606E; transform: translateY(-2px); }
 .modal-actions button:active { transform: translateY(0) scale(0.97); }
 
+.help-modal-badge {
+    margin: 0 auto 0.8rem;
+}
 #help-modal .modal-content ul {
     list-style: none;
     margin: 1.5rem 0;
@@ -942,15 +960,135 @@ main {
     display: flex;
     justify-content: space-between;
     padding: 0.75rem 0;
+    animation: fadeIn 0.4s var(--ease) both;
+    animation-delay: calc(var(--i, 0) * 0.08s);
 }
 #help-modal .modal-content li:not(:last-child) {
     border-bottom: 1px solid var(--border-color);
 }
 #help-modal .modal-content p { line-height: 1.85; }
 
-/* ==========================================================================
-   پیام‌های خالی
-   ========================================================================== */
+.fee-modal-content {
+    max-width: 460px;
+    text-align: center;
+}
+.fee-about {
+    color: var(--text-secondary);
+    font-size: 0.88rem;
+    line-height: 1.9;
+    margin-bottom: 1.4rem;
+}
+.fee-trend-note {
+    text-align: right;
+    background-color: rgba(var(--primary-rgb), 0.07);
+    border: 1px solid rgba(var(--primary-rgb), 0.2);
+    border-radius: var(--radius-md);
+    padding: 0.9rem 1.1rem;
+    font-size: 0.82rem;
+    line-height: 1.9;
+    color: var(--text-secondary);
+    margin-bottom: 1.4rem;
+}
+.fee-trend-note strong {
+    display: block;
+    color: var(--primary);
+    margin-bottom: 0.35rem;
+    font-size: 0.85rem;
+}
+.fee-trend-list {
+    list-style: none;
+    margin: 0.7rem 0;
+    padding: 0;
+    border-top: 1px solid rgba(var(--primary-rgb), 0.15);
+    border-bottom: 1px solid rgba(var(--primary-rgb), 0.15);
+}
+.fee-trend-list li {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.8rem;
+    padding: 0.5rem 0;
+    font-size: 0.8rem;
+}
+.fee-trend-list li:not(:last-child) {
+    border-bottom: 1px dashed rgba(var(--primary-rgb), 0.15);
+}
+.fee-trend-list li span:first-child {
+    color: var(--primary);
+    font-weight: 700;
+    flex-shrink: 0;
+}
+.fee-trend-list li span:last-child {
+    color: var(--text-secondary);
+    text-align: left;
+}
+.fee-years-list {
+    max-height: 320px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding-left: 0.3rem;
+    margin-right: -0.3rem;
+}
+.fee-years-list::-webkit-scrollbar { width: 7px; }
+.fee-years-list::-webkit-scrollbar-track { background: transparent; }
+.fee-years-list::-webkit-scrollbar-thumb {
+    background-color: var(--border-color);
+    border-radius: 10px;
+}
+.fee-year-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.7rem 1rem;
+    background-color: var(--bg-surface-2);
+    border-radius: var(--radius-md);
+    animation: fadeIn 0.4s var(--ease) both;
+    animation-delay: calc(min(var(--i, 0), 8) * 0.04s);
+}
+.fee-year-label {
+    font-weight: 700;
+    color: var(--primary);
+    min-width: 48px;
+    text-align: right;
+}
+.fee-year-input-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-grow: 1;
+    justify-content: flex-end;
+}
+.fee-year-input {
+    width: 100%;
+    max-width: 140px;
+    text-align: left;
+    direction: ltr;
+    padding: 0.5rem 0.7rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-surface);
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    transition: border-color 0.2s var(--ease), box-shadow 0.2s var(--ease);
+}
+.fee-year-input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.15);
+}
+.fee-year-input::-webkit-outer-spin-button,
+.fee-year-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+.fee-year-currency {
+    color: var(--text-secondary);
+    font-size: 0.82rem;
+    flex-shrink: 0;
+}
+
 .empty-message {
     text-align: center;
     padding: 3rem 1.5rem;
@@ -965,9 +1103,6 @@ main {
 
 .hidden { display: none !important; }
 
-/* ==========================================================================
-   سوابق آزمون
-   ========================================================================== */
 #quiz-history-section {
     margin-top: 3rem;
     background-color: var(--bg-surface);
@@ -996,12 +1131,19 @@ main {
     transition: all 0.25s var(--ease);
     display: flex;
     align-items: center;
+    border-radius: 50%;
+    animation: helpPulseRing 2.6s ease-in-out infinite;
 }
 .help-btn .icon { width: 24px; height: 24px; }
 .help-btn:hover {
     color: var(--primary);
     opacity: 1;
     transform: rotate(-8deg) scale(1.08);
+    animation-play-state: paused;
+}
+@keyframes helpPulseRing {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(var(--primary-rgb), 0.25); }
+    50% { box-shadow: 0 0 0 6px rgba(var(--primary-rgb), 0); }
 }
 
 .history-item {
@@ -1012,10 +1154,12 @@ main {
     border-radius: var(--radius-md);
     background-color: var(--bg-surface-2);
     transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease);
+    cursor: pointer;
 }
 .history-item:hover {
     transform: translateX(-3px);
-    box-shadow: var(--shadow-sm);
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--primary);
 }
 .history-item:not(:last-child) { margin-bottom: 0.75rem; }
 
@@ -1073,69 +1217,6 @@ main {
     transform: scale(1.1);
 }
 
-/* ==========================================================================
-   چیدمان تک/دوستونی
-   ========================================================================== */
-.layout-switcher {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin-bottom: 1.5rem;
-    justify-content: flex-start;
-}
-.layout-toggle-btn {
-    background: var(--bg-surface);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-md);
-    cursor: pointer;
-    padding: 0.55rem;
-    line-height: 1;
-    color: var(--text-secondary);
-    display: flex;
-    transition: all var(--transition-speed) var(--ease);
-}
-.layout-toggle-btn:hover {
-    border-color: var(--primary);
-    color: var(--primary);
-}
-.layout-toggle-btn .icon {
-    width: 20px;
-    height: 20px;
-    transition: transform 0.4s var(--ease-spring);
-}
-.layout-switcher.switcher-expanded .layout-toggle-btn .icon {
-    transform: rotate(180deg);
-}
-
-.layout-options {
-    display: flex;
-    max-width: 0;
-    overflow: hidden;
-    transition: max-width 0.4s var(--ease), gap 0.4s var(--ease);
-    gap: 0;
-}
-.layout-switcher.switcher-expanded .layout-options {
-    max-width: 110px;
-    gap: 0.5rem;
-}
-.layout-options button {
-    background: var(--bg-surface);
-    border: 1px solid var(--border-color);
-    padding: 0.55rem;
-    cursor: pointer;
-    border-radius: var(--radius-md);
-    color: var(--text-secondary);
-    display: flex;
-    transition: all var(--transition-speed) var(--ease);
-}
-.layout-options button:hover { color: var(--primary); border-color: var(--primary); }
-.layout-options button .icon { width: 20px; height: 20px; }
-.layout-options button.active {
-    background: var(--gradient-primary);
-    border-color: transparent;
-    color: #fff;
-}
-
 #practice-questions-container, #saved-questions-container {
     display: grid;
     gap: 1.5rem;
@@ -1145,16 +1226,12 @@ main {
     gap: 1.5rem;
     grid-template-columns: 1fr;
 }
-.questions-list.grid-2_col {
-    grid-template-columns: repeat(2, 1fr);
-}
-@media (max-width: 700px) {
-    .questions-list.grid-2_col { grid-template-columns: 1fr; }
+@media (min-width: 860px) {
+    .questions-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
-/* ==========================================================================
-   آیکون‌های متن‌دار (ناوبری/عناوین)
-   ========================================================================== */
 .icon-text-container {
     display: inline-flex;
     align-items: center;
@@ -1169,9 +1246,21 @@ main {
 .icon-text-container .icon { width: 22px; height: 22px; }
 h2 .icon-text-container .icon { width: 27px; height: 27px; color: var(--primary); }
 
-/* ==========================================================================
-   فوتر
-   ========================================================================== */
+.count-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 24px;
+    height: 24px;
+    padding: 0 0.4rem;
+    border-radius: 999px;
+    background: var(--gradient-primary);
+    color: #fff;
+    font-size: 0.78rem;
+    font-weight: 700;
+    animation: scaleIn 0.35s var(--ease-spring) both;
+}
+
 footer {
     text-align: center;
     padding: 2.2rem 1rem;
@@ -1181,9 +1270,6 @@ footer {
 }
 footer p { direction: ltr; }
 
-/* ==========================================================================
-   دسترسی‌پذیری و ریسپانسیو
-   ========================================================================== */
 :focus-visible {
     outline: 2px solid var(--primary);
     outline-offset: 2px;
