@@ -68,6 +68,10 @@ button, input, select, textarea {
     font-family: inherit;
 }
 
+.theme-switching *:not(.theme-icon):not(.theme-icon *) {
+    transition: none !important;
+}
+
 html {
     scroll-behavior: smooth;
 }
@@ -194,10 +198,10 @@ body {
 .inline-icon .icon { width: 18px; height: 18px; }
 
 header {
-    background-color: rgba(var(--primary-rgb), 0.02);
+    background-color: var(--bg-surface);
     background-color: color-mix(in srgb, var(--bg-surface) 88%, transparent);
-    backdrop-filter: blur(14px) saturate(1.4);
-    -webkit-backdrop-filter: blur(14px) saturate(1.4);
+    backdrop-filter: blur(8px) saturate(1.4);
+    -webkit-backdrop-filter: blur(8px) saturate(1.4);
     box-shadow: var(--shadow-sm);
     padding: 1rem 2rem;
     position: sticky;
@@ -311,7 +315,7 @@ header:hover .logo-icon {
     padding: 1.1rem 1rem;
     flex-wrap: nowrap;
     background-color: color-mix(in srgb, var(--bg-surface) 92%, transparent);
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(6px);
     border-bottom: 1px solid var(--border-color);
     position: sticky;
     top: 82px;
@@ -375,7 +379,6 @@ main {
     margin-bottom: 2rem;
     border: 1px solid var(--border-color);
     position: relative;
-    overflow: hidden;
     transition: background-color var(--transition-speed) var(--ease), border-color var(--transition-speed) var(--ease);
 }
 .setup-card::before {
@@ -851,12 +854,18 @@ main {
     opacity: 1;
     visibility: visible;
 }
+.modal-overlay.hidden {
+    display: flex !important;
+    pointer-events: none;
+}
 .modal-content {
     background-color: var(--bg-surface);
     padding: 2rem;
     border-radius: var(--radius-lg);
     width: 100%;
     max-width: 500px;
+    max-height: 85vh;
+    overflow-y: auto;
     position: relative;
     box-shadow: var(--shadow-lg);
     transform: scale(0.9) translateY(10px);
@@ -1022,17 +1031,15 @@ main {
     text-align: left;
 }
 .fee-years-list {
-    max-height: 320px;
-    overflow-y: auto;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
     padding-left: 0.3rem;
     margin-right: -0.3rem;
 }
-.fee-years-list::-webkit-scrollbar { width: 7px; }
-.fee-years-list::-webkit-scrollbar-track { background: transparent; }
-.fee-years-list::-webkit-scrollbar-thumb {
+.modal-content::-webkit-scrollbar { width: 7px; }
+.modal-content::-webkit-scrollbar-track { background: transparent; }
+.modal-content::-webkit-scrollbar-thumb {
     background-color: var(--border-color);
     border-radius: 10px;
 }
@@ -1086,6 +1093,15 @@ main {
 .fee-year-currency {
     color: var(--text-secondary);
     font-size: 0.82rem;
+    flex-shrink: 0;
+}
+.fee-year-approx-badge {
+    color: var(--star-color);
+    background-color: rgba(245, 165, 36, 0.12);
+    border-radius: 999px;
+    padding: 0.15rem 0.55rem;
+    font-size: 0.7rem;
+    font-weight: 700;
     flex-shrink: 0;
 }
 
