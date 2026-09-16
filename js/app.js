@@ -8,6 +8,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const FEE_YEAR_START = 1390;
     const FEE_YEAR_END = 1405;
 
+    const DEFAULT_FEES = {
+        1390: 350000,
+        1391: 250000,
+        1392: 450000,
+        1394: 500000,
+        1400: 2750000,
+        1401: 1850000,
+        1402: 2900000,
+        1403: 6885000,
+        1404: 9960000,
+        1405: 15920000
+    };
+
     const loadFees = () => {
         try {
             return JSON.parse(localStorage.getItem('registrationFees')) || {};
@@ -24,13 +37,16 @@ document.addEventListener('DOMContentLoaded', () => {
         const fees = loadFees();
         feeYearsList.innerHTML = '';
         for (let year = FEE_YEAR_END; year >= FEE_YEAR_START; year--) {
-            const value = fees[year] ?? 0;
+            const hasUserValue = Object.prototype.hasOwnProperty.call(fees, year);
+            const isApprox = !hasUserValue && DEFAULT_FEES[year] !== undefined;
+            const value = hasUserValue ? fees[year] : (DEFAULT_FEES[year] ?? 0);
             const row = document.createElement('div');
             row.className = 'fee-year-row';
             row.style.setProperty('--i', Math.min(FEE_YEAR_END - year, 8));
             row.innerHTML = `
                 <span class="fee-year-label">${toPersianDigits(year)}</span>
                 <div class="fee-year-input-wrap">
+                    ${isApprox ? '<span class="fee-year-approx-badge">تقریبی</span>' : ''}
                     <input type="number" class="fee-year-input" data-year="${year}" value="${value}" min="0" step="1000" inputmode="numeric">
                     <span class="fee-year-currency">تومان</span>
                 </div>
@@ -64,6 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const startQuizBtn = document.getElementById('start-quiz-btn');
     const quizSetupSection = document.getElementById('quiz-setup');
     const quizLiveSection = document.getElementById('quiz-live');
+    const quizHistorySection = document.getElementById('quiz-history-section');
     const quizQuestionsContainer = document.getElementById('quiz-questions-container');
     const timerElement = document.getElementById('timer');
     const questionCounterElement = document.getElementById('question-counter');
@@ -126,10 +143,17 @@ const hideAppLoader = () => {
     };
 
     const toggleTheme = () => {
+        const root = document.documentElement;
+        root.classList.add('theme-switching');
         const currentTheme = document.body.classList.contains('light-mode') ? 'light' : 'dark';
         const newTheme = currentTheme === 'light' ? 'dark' : 'light';
         document.body.className = `${newTheme}-mode`;
         localStorage.setItem('theme', newTheme);
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                root.classList.remove('theme-switching');
+            });
+        });
     };
 
 const showSection = (sectionId) => {
@@ -334,6 +358,7 @@ const renderShowQuestionsButton = () => {
     currentQuiz = { questions: questionsForQuiz, userAnswers: {}, currentQuestionIndex: 0, timeRemaining: duration, totalDuration: duration, name: quizName };
     quizSetupSection.classList.add('hidden');
     quizLiveSection.classList.remove('hidden');
+    if (quizHistorySection) quizHistorySection.classList.add('hidden');
     if (timerBarFill) {
         timerBarFill.style.width = '100%';
         timerBarFill.classList.remove('is-low');
@@ -628,6 +653,7 @@ const renderResultsModal = (correct, incorrect, unanswered, total, meta = {}) =>
 const showResults = (correct, incorrect, unanswered, total) => {
     quizLiveSection.classList.add('hidden');
     quizSetupSection.classList.remove('hidden');
+    if (quizHistorySection) quizHistorySection.classList.remove('hidden');
     renderResultsModal(correct, incorrect, unanswered, total);
 };
 
