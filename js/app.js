@@ -21,36 +21,27 @@ document.addEventListener('DOMContentLoaded', () => {
         1405: 15920000
     };
 
-    const loadFees = () => {
-        try {
-            return JSON.parse(localStorage.getItem('registrationFees')) || {};
-        } catch {
-            return {};
-        }
-    };
-
-    const saveFees = (fees) => {
-        localStorage.setItem('registrationFees', JSON.stringify(fees));
-    };
-
     const renderFeeYears = () => {
-        const fees = loadFees();
         feeYearsList.innerHTML = '';
         for (let year = FEE_YEAR_END; year >= FEE_YEAR_START; year--) {
-            const hasUserValue = Object.prototype.hasOwnProperty.call(fees, year);
-            const isApprox = !hasUserValue && DEFAULT_FEES[year] !== undefined;
-            const value = hasUserValue ? fees[year] : (DEFAULT_FEES[year] ?? 0);
+            const value = DEFAULT_FEES[year];
             const row = document.createElement('div');
             row.className = 'fee-year-row';
             row.style.setProperty('--i', Math.min(FEE_YEAR_END - year, 8));
-            row.innerHTML = `
-                <span class="fee-year-label">${toPersianDigits(year)}</span>
-                <div class="fee-year-input-wrap">
-                    ${isApprox ? '<span class="fee-year-approx-badge">تقریبی</span>' : ''}
-                    <input type="number" class="fee-year-input" data-year="${year}" value="${value}" min="0" step="1000" inputmode="numeric">
-                    <span class="fee-year-currency">تومان</span>
-                </div>
-            `;
+            if (value !== undefined) {
+                row.innerHTML = `
+                    <span class="fee-year-label">${toPersianDigits(year)}</span>
+                    <div class="fee-year-value-wrap">
+                        <span class="fee-year-approx-badge">تقریبی</span>
+                        <span class="fee-year-value">${toPersianDigits(value.toLocaleString('en-US'))} تومان</span>
+                    </div>
+                `;
+            } else {
+                row.innerHTML = `
+                    <span class="fee-year-label">${toPersianDigits(year)}</span>
+                    <span class="fee-year-unknown">آماری در دسترس نیست</span>
+                `;
+            }
             feeYearsList.appendChild(row);
         }
     };
@@ -59,6 +50,36 @@ document.addEventListener('DOMContentLoaded', () => {
     const appLoader = document.getElementById('app-loader');
     const TOTAL_SECTIONS = 20;
     const main = document.querySelector('main');
+    const practiceProgressText = document.getElementById('practice-progress-text');
+    const practiceProgressPercent = document.getElementById('practice-progress-percent');
+    const practiceProgressFill = document.getElementById('practice-progress-fill');
+
+    const getViewedSections = () => {
+        try {
+            const arr = JSON.parse(localStorage.getItem('viewedPracticeSections'));
+            return Array.isArray(arr) ? arr : [];
+        } catch {
+            return [];
+        }
+    };
+
+    const markSectionViewed = (sectionIndex) => {
+        const viewed = getViewedSections();
+        if (!viewed.includes(sectionIndex)) {
+            viewed.push(sectionIndex);
+            localStorage.setItem('viewedPracticeSections', JSON.stringify(viewed));
+        }
+    };
+
+    const renderPracticeProgress = () => {
+        if (!practiceProgressText) return;
+        const viewed = getViewedSections().filter(i => i >= 0 && i < TOTAL_SECTIONS);
+        const percent = Math.round((viewed.length / TOTAL_SECTIONS) * 100);
+        practiceProgressText.textContent = `${toPersianDigits(viewed.length)} از ${toPersianDigits(TOTAL_SECTIONS)} بخش مطالعه شده`;
+        practiceProgressPercent.textContent = `${toPersianDigits(percent)}٪`;
+        practiceProgressFill.style.width = `${percent}%`;
+    };
+
     const helpModal = document.getElementById('help-modal');
     const showHelpModalBtn = document.getElementById('show-help-modal-btn');
     const feeModal = document.getElementById('fee-modal');
@@ -100,7 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let allSections = [];
     let savedQuestions = JSON.parse(localStorage.getItem('savedQuestions')) || [];
     let quizHistory = JSON.parse(localStorage.getItem('quizHistory')) || [];
-    let currentQuiz = { questions: [], userAnswers: {}, currentQuestionIndex: 0, timerInterval: null, timeRemaining: 0 };
+    let currentQuiz = { questions: [], userAnswers: {}, currentQuestionIndex: 0, timerInterval: null, timeRemaining: 0, hasReachedEnd: false };
     let historyItemToDelete = null;
 
     const QUESTIONS_PER_TAB = 30;
@@ -166,7 +187,10 @@ const showSection = (sectionId) => {
 
     if (sectionId === 'practice') {
         createTabs(practiceTabsContainer, TOTAL_SECTIONS, 'practice');
-        renderShowQuestionsButton();
+        practiceQuestionsContainer.innerHTML = '';
+        const oldBtn = document.querySelector('#practice-setup .show-questions-btn');
+        if (oldBtn) oldBtn.remove();
+        renderPracticeProgress();
     } else if (sectionId === 'quiz') {
         createTabs(quizTabsContainer, TOTAL_SECTIONS, 'quiz');
         quizSetupSection.classList.remove('hidden');
@@ -199,11 +223,27 @@ const handleTabClick = (clickedBtn, type) => {
     const dropdownMenu = document.createElement('div');
     dropdownMenu.className = 'dropdown-menu';
 
+    const dropdownInner = document.createElement('div');
+    dropdownInner.className = 'dropdown-menu-inner';
+    dropdownMenu.appendChild(dropdownInner);
+
+    let scrollHideTimer;
+    dropdownInner.addEventListener('scroll', () => {
+        dropdownInner.classList.add('is-scrolling');
+        clearTimeout(scrollHideTimer);
+        scrollHideTimer = setTimeout(() => dropdownInner.classList.remove('is-scrolling'), 700);
+    });
+
+    let itemCounter = 0;
     const createTabItem = (text, index) => {
         const btn = document.createElement('button');
         btn.className = 'tab-btn';
         btn.dataset.tabIndex = index;
         btn.textContent = text;
+        btn.style.setProperty('--i', itemCounter++);
+        if (type === 'practice' && getViewedSections().includes(index - 1)) {
+            btn.classList.add('is-viewed');
+        }
         btn.addEventListener('click', (e) => {
             e.stopPropagation();
             toggleBtn.querySelector('.dropdown-label').textContent = text;
@@ -216,7 +256,7 @@ const handleTabClick = (clickedBtn, type) => {
 
     for (let i = 1; i <= standardTabCount; i++) {
         const text = (type === 'quiz') ? `آزمون ${toPersianDigits(i)}` : `بخش ${toPersianDigits(i)}`;
-        dropdownMenu.appendChild(createTabItem(text, i));
+        dropdownInner.appendChild(createTabItem(text, i));
     }
 
     if (type === 'quiz') {
@@ -226,7 +266,7 @@ const handleTabClick = (clickedBtn, type) => {
             { name: 'آزمون جامع (همه)', index: standardTabCount + 3 }
         ];
         specialTabsData.forEach(tabData => {
-            dropdownMenu.appendChild(createTabItem(tabData.name, tabData.index));
+            dropdownInner.appendChild(createTabItem(tabData.name, tabData.index));
         });
     }
 
@@ -259,7 +299,10 @@ const renderShowQuestionsButton = () => {
         }
         const sectionIndex = parseInt(activeTab.dataset.tabIndex) - 1;
         renderPracticeQuestions(allSections[sectionIndex], sectionIndex);
-        e.target.style.display = 'none';
+        markSectionViewed(sectionIndex);
+        renderPracticeProgress();
+        activeTab.classList.add('is-viewed');
+        e.currentTarget.style.display = 'none';
     });
     setupContainer.appendChild(showBtn);
 };
@@ -355,7 +398,7 @@ const renderShowQuestionsButton = () => {
 
     if (questionsForQuiz.length === 0) { alert('سوالی برای این آزمون وجود ندارد.'); return; }
 
-    currentQuiz = { questions: questionsForQuiz, userAnswers: {}, currentQuestionIndex: 0, timeRemaining: duration, totalDuration: duration, name: quizName };
+    currentQuiz = { questions: questionsForQuiz, userAnswers: {}, currentQuestionIndex: 0, timeRemaining: duration, totalDuration: duration, name: quizName, hasReachedEnd: false };
     quizSetupSection.classList.add('hidden');
     quizLiveSection.classList.remove('hidden');
     if (quizHistorySection) quizHistorySection.classList.add('hidden');
@@ -397,6 +440,10 @@ const renderShowQuestionsButton = () => {
 
     prevQuestionBtn.disabled = (currentQuiz.currentQuestionIndex === 0);
     nextQuestionBtn.disabled = (currentQuiz.currentQuestionIndex === currentQuiz.questions.length - 1);
+
+    if (currentQuiz.currentQuestionIndex === currentQuiz.questions.length - 1) {
+        currentQuiz.hasReachedEnd = true;
+    }
 };
 
     const navigateQuiz = (direction) => {
@@ -426,12 +473,13 @@ const renderShowQuestionsButton = () => {
 
     const total = currentQuiz.questions.length;
     const unanswered = total - correct - incorrect;
+    const reachedEnd = !!currentQuiz.hasReachedEnd;
 
-    if (total > 0) {
+    if (total > 0 && reachedEnd) {
         saveQuizHistory(correct, incorrect, unanswered, total, currentQuiz.name);
     }
 
-    showResults(correct, incorrect, unanswered, total);
+    showResults(correct, incorrect, unanswered, total, reachedEnd);
 };
 
 const saveQuizHistory = (correct, incorrect, unanswered, total, quizName) => {
@@ -568,7 +616,10 @@ const renderResultsModal = (correct, incorrect, unanswered, total, meta = {}) =>
     }
 
     if (resultMetaEl) {
-        if (meta.quizName) {
+        if (meta.notSaved) {
+            resultMetaEl.textContent = 'چون تا سوال آخر پیش نرفتید، این آزمون در سوابق ثبت نشد.';
+            resultMetaEl.classList.remove('hidden');
+        } else if (meta.quizName) {
             resultMetaEl.textContent = `${meta.quizName} — ${meta.day ? meta.day + '، ' : ''}${meta.date || ''}`;
             resultMetaEl.classList.remove('hidden');
         } else {
@@ -650,11 +701,11 @@ const renderResultsModal = (correct, incorrect, unanswered, total, meta = {}) =>
     }
 };
 
-const showResults = (correct, incorrect, unanswered, total) => {
+const showResults = (correct, incorrect, unanswered, total, reachedEnd = true) => {
     quizLiveSection.classList.add('hidden');
     quizSetupSection.classList.remove('hidden');
     if (quizHistorySection) quizHistorySection.classList.remove('hidden');
-    renderResultsModal(correct, incorrect, unanswered, total);
+    renderResultsModal(correct, incorrect, unanswered, total, reachedEnd ? {} : { notSaved: true });
 };
 
 const createQuestionCard = (q, type, sectionIndex = -1, cardOrderIndex = 0) => {
@@ -754,14 +805,6 @@ const setupEventListeners = () => {
     });
     feeModal.querySelector('.close-modal').addEventListener('click', () => feeModal.classList.add('hidden'));
     feeModal.addEventListener('click', (e) => { if(e.target === feeModal) feeModal.classList.add('hidden'); });
-    feeYearsList.addEventListener('input', (e) => {
-        const input = e.target.closest('.fee-year-input');
-        if (!input) return;
-        const year = input.dataset.year;
-        const fees = loadFees();
-        fees[year] = Number(input.value) || 0;
-        saveFees(fees);
-    });
     quizHistoryList.addEventListener('click', (e) => {
         const deleteBtn = e.target.closest('.delete-history-btn');
         if (deleteBtn) {
@@ -814,6 +857,13 @@ const setupEventListeners = () => {
             });
             menu.classList.toggle('show');
             dropdownToggle.classList.toggle('open', menu.classList.contains('show'));
+            if (menu.classList.contains('show')) {
+                menu.querySelectorAll('.tab-btn').forEach(btn => {
+                    btn.style.animation = 'none';
+                    void btn.offsetHeight;
+                    btn.style.animation = '';
+                });
+            }
         } else if (!e.target.closest('.dropdown-container')) {
 
             document.querySelectorAll('.dropdown-menu.show').forEach(menu => {
