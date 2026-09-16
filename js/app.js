@@ -85,6 +85,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const feeModal = document.getElementById('fee-modal');
     const feeToggleBtn = document.getElementById('fee-toggle-btn');
     const feeYearsList = document.getElementById('fee-years-list');
+    const feeModalBody = document.querySelector('.fee-modal-body');
+    if (feeModalBody) {
+        let feeScrollHideTimer;
+        feeModalBody.addEventListener('scroll', () => {
+            feeModalBody.classList.add('is-scrolling');
+            clearTimeout(feeScrollHideTimer);
+            feeScrollHideTimer = setTimeout(() => feeModalBody.classList.remove('is-scrolling'), 700);
+        });
+    }
     const confirmModal = document.getElementById('confirm-modal');
     const confirmFinishBtn = document.getElementById('confirm-finish-btn');
     const cancelFinishBtn = document.getElementById('cancel-finish-btn');
