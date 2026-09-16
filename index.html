@@ -6,8 +6,8 @@
     <title>آزمون آیین‌نامه رانندگی</title>
     <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <link rel="stylesheet" href="css/vazirmatn-font-face.css">
+    <script src="js/vendor/apexcharts.min.js"></script>
 </head>
 <body class="light-mode">
 
@@ -27,10 +27,15 @@
                     <p class="header-subtitle">کارتکس نمونه سوالات پایه سه - تضمین قبولی</p>
                 </div>
             </div>
-            <button id="theme-toggle-btn" class="theme-toggle-btn" title="تغییر تم روشن/تاریک" aria-label="تغییر تم">
-                <span class="theme-icon theme-icon-sun" data-icon="sun"></span>
-                <span class="theme-icon theme-icon-moon" data-icon="moon"></span>
-            </button>
+            <div class="header-actions">
+                <button id="fee-toggle-btn" class="theme-toggle-btn" title="هزینه سالانه ثبت‌نام" aria-label="هزینه سالانه ثبت‌نام">
+                    <span class="icon-slot" data-icon="wallet"></span>
+                </button>
+                <button id="theme-toggle-btn" class="theme-toggle-btn" title="تغییر تم روشن/تاریک" aria-label="تغییر تم">
+                    <span class="theme-icon theme-icon-sun" data-icon="sun"></span>
+                    <span class="theme-icon theme-icon-moon" data-icon="moon"></span>
+                </button>
+            </div>
         </div>
     </header>
 
@@ -57,38 +62,29 @@
 
     <main>
 <section id="practice-section" class="content-section active">
-    <div id="practice-setup">
-    <div class="section-header">
+    <div id="practice-setup" class="setup-card">
+        <span class="setup-icon-badge" data-icon="practice"></span>
         <h2>بخش مورد نظر خود را انتخاب کنید</h2>
+        <p class="setup-subtitle">۲۰ بخش، شامل ده‌ها نمونه سوال دفترچه آیین‌نامه راهنمایی و رانندگی</p>
         <div class="tabs-container" id="practice-tabs">
             </div>
     </div>
-    </div>
-<div class="layout-switcher">
-    <button class="layout-toggle-btn" title="تغییر چیدمان">
-        <span class="icon-slot" data-icon="chevronLeft"></span>
-    </button>
-    <div class="layout-options">
-        <button data-layout="1_col" title="تک ستونی" class="active">
-            <span class="icon-slot" data-icon="layout1"></span>
-        </button>
-        <button data-layout="2_col" title="دو ستونی">
-            <span class="icon-slot" data-icon="layout2"></span>
-        </button>
-    </div>
-</div>
     <div id="practice-questions-container" class="questions-list"></div>
 </section>
 
         <section id="quiz-section" class="content-section">
-            <div id="quiz-setup">
-    <div class="section-header">
-        <h2>آزمون مورد نظر خود را انتخاب کنید</h2>
-        <div class="tabs-container" id="quiz-tabs">
+            <div id="quiz-setup" class="setup-card">
+                <span class="setup-icon-badge" data-icon="quiz"></span>
+                <h2>آزمون مورد نظر خود را انتخاب کنید</h2>
+                <p class="setup-subtitle">۲۰ آزمون استاندارد به‌علاوه آزمون‌های نشان‌شده، نشان‌نشده و جامع</p>
+                <div class="tabs-container" id="quiz-tabs">
+                    </div>
+                <button id="start-quiz-btn" class="start-btn">
+                    <span class="icon-slot" data-icon="quiz"></span>
+                    <span>شروع آزمون</span>
+                    <span class="btn-arrow icon-slot" data-icon="chevronLeft"></span>
+                </button>
             </div>
-    </div>
-    <button id="start-quiz-btn" class="start-btn">شروع آزمون</button>
-</div>
             <div id="quiz-live" class="hidden">
                 <div class="quiz-header">
                     <span id="timer">زمان باقی‌مانده: ۲۰:۰۰</span>
@@ -108,6 +104,7 @@
         <span class="icon-text-container">
             <span class="icon-slot" data-icon="history"></span>
             <span>سوابق آزمون‌ها</span>
+            <span id="history-count-badge" class="count-badge hidden"></span>
         </span>
     </h2>
                 <button id="show-help-modal-btn" class="help-btn" title="راهنمای قبولی">
@@ -124,21 +121,9 @@
     <span class="icon-text-container">
         <span class="icon-slot" data-icon="savedTitle"></span>
         <span>سوالات نشان‌شده</span>
+        <span id="saved-count-badge" class="count-badge hidden"></span>
     </span>
 </h2>
-<div class="layout-switcher">
-    <button class="layout-toggle-btn" title="تغییر چیدمان">
-        <span class="icon-slot" data-icon="chevronLeft"></span>
-    </button>
-    <div class="layout-options">
-        <button data-layout="1_col" title="تک ستونی" class="active">
-            <span class="icon-slot" data-icon="layout1"></span>
-        </button>
-        <button data-layout="2_col" title="دو ستونی">
-            <span class="icon-slot" data-icon="layout2"></span>
-        </button>
-    </div>
-</div>
             <div id="saved-questions-container" class="questions-list">
             </div>
         </section>
@@ -163,6 +148,7 @@
         <div id="result-message"></div>
 
         <h2>نتایج آزمون</h2>
+        <p id="result-meta" class="result-meta hidden"></p>
         <div class="chart-container" id="chart-container"></div>
         <p id="result-summary"></p>
     </div>
@@ -183,17 +169,40 @@
     </div>
 </div>
 
+<div id="fee-modal" class="modal-overlay hidden">
+    <div class="modal-content fee-modal-content">
+        <button class="close-modal" data-icon="close" aria-label="بستن"></button>
+        <span class="setup-icon-badge help-modal-badge" data-icon="wallet"></span>
+        <h2>هزینه سالانه ثبت‌نام</h2>
+        <p class="fee-about">در این بخش می‌توانید هزینه ثبت‌نام آزمون آیین‌نامه را برای هر سال به‌صورت دستی یادداشت کنید. اعداد فقط روی همین مرورگر شما ذخیره می‌شوند و برای مقایسه هزینه سال‌به‌سال کاربرد دارند.</p>
+        <div class="fee-trend-note">
+            <strong>روند هزینه‌ها بر اساس بررسی انجام‌شده:</strong>
+            جدول رسمی و سراسری برای تک‌تک سال‌های ۱۳۹۰ تا ۱۴۰۵ منتشر نشده و برای بسیاری از سال‌های ۱۳۹۳ تا ۱۳۹۹ آمار معتبری در دسترس نبود؛ اما این جهش‌های قابل‌ردیابی ثبت شده‌اند:
+            <ul class="fee-trend-list">
+                <li><span>دی ۱۳۹۴</span><span>مجموع آموزش به حدود ۵۰۲ هزار تومان رسید</span></li>
+                <li><span>۱۴۰۲</span><span>هزینه کل حدود ۲.۸ تا ۳ میلیون تومان (نسبت به سقف ۲ میلیونی ۱۴۰۱)</span></li>
+                <li><span>۱۴۰۳</span><span>جهش حدود ۵۶٪؛ هزینه به حدود ۶.۹ میلیون تومان رسید</span></li>
+                <li><span>۱۴۰۴</span><span>ثبت‌نام نمونه تهران حدود ۹.۹۶ میلیون تومان</span></li>
+                <li><span>۱۴۰۵</span><span>ثبت‌نام تهران حدود ۱۵.۹۲ میلیون تومان (~۶۰٪ رشد)</span></li>
+            </ul>
+            در مجموع، از حدود ۴۵۰ هزار تومان (۱۳۹۲) تا حدود ۱۵ تا ۱۷ میلیون تومان (۱۴۰۵) یعنی تقریباً ۳۳ تا ۳۸ برابر در ۱۳ سال؛ چون رقم دقیق به شهر و آموزشگاه بستگی دارد، بهتر است اعداد واقعی خودتان را در جدول زیر ثبت کنید.
+        </div>
+        <div id="fee-years-list" class="fee-years-list"></div>
+    </div>
+</div>
+
 <div id="help-modal" class="modal-overlay hidden">
     <div class="modal-content">
         <button class="close-modal" data-icon="close" aria-label="بستن"></button>
+        <span class="setup-icon-badge help-modal-badge" data-icon="help"></span>
         <h2>راهنمای قبولی در آزمون</h2>
         <p>برای قبولی در آزمون اصلی آیین‌نامه راهنمایی و رانندگی، شما مجاز به داشتن حداکثر "<b>۴ پاسخ غلط</b>" هستید.</p>
         <ul>
-            <li>
+            <li style="--i:0">
                 <strong>قبولی:</strong>
                 <span>۴ اشتباه یا کمتر</span>
             </li>
-            <li>
+            <li style="--i:1">
                 <strong>مردودی:</strong>
                 <span>بیش از ۴ اشتباه</span>
             </li>
