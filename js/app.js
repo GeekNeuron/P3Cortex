@@ -50,50 +50,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const appLoader = document.getElementById('app-loader');
     const TOTAL_SECTIONS = 20;
     const main = document.querySelector('main');
-    const practiceProgressText = document.getElementById('practice-progress-text');
-    const practiceProgressPercent = document.getElementById('practice-progress-percent');
-    const practiceProgressFill = document.getElementById('practice-progress-fill');
-
-    const getViewedSections = () => {
-        try {
-            const arr = JSON.parse(localStorage.getItem('viewedPracticeSections'));
-            return Array.isArray(arr) ? arr : [];
-        } catch {
-            return [];
-        }
-    };
-
-    const markSectionViewed = (sectionIndex) => {
-        const viewed = getViewedSections();
-        if (!viewed.includes(sectionIndex)) {
-            viewed.push(sectionIndex);
-            localStorage.setItem('viewedPracticeSections', JSON.stringify(viewed));
-        }
-    };
-
-    const renderPracticeProgress = () => {
-        if (!practiceProgressText) return;
-        const viewed = getViewedSections().filter(i => i >= 0 && i < TOTAL_SECTIONS);
-        const percent = Math.round((viewed.length / TOTAL_SECTIONS) * 100);
-        practiceProgressText.textContent = `${toPersianDigits(viewed.length)} از ${toPersianDigits(TOTAL_SECTIONS)} بخش مطالعه شده`;
-        practiceProgressPercent.textContent = `${toPersianDigits(percent)}٪`;
-        practiceProgressFill.style.width = `${percent}%`;
-    };
 
     const helpModal = document.getElementById('help-modal');
     const showHelpModalBtn = document.getElementById('show-help-modal-btn');
     const feeModal = document.getElementById('fee-modal');
     const feeToggleBtn = document.getElementById('fee-toggle-btn');
     const feeYearsList = document.getElementById('fee-years-list');
-    const feeModalBody = document.querySelector('.fee-modal-body');
-    if (feeModalBody) {
-        let feeScrollHideTimer;
-        feeModalBody.addEventListener('scroll', () => {
-            feeModalBody.classList.add('is-scrolling');
-            clearTimeout(feeScrollHideTimer);
-            feeScrollHideTimer = setTimeout(() => feeModalBody.classList.remove('is-scrolling'), 700);
+    document.querySelectorAll('.modal-body').forEach(body => {
+        let scrollHideTimer;
+        body.addEventListener('scroll', () => {
+            body.classList.add('is-scrolling');
+            clearTimeout(scrollHideTimer);
+            scrollHideTimer = setTimeout(() => body.classList.remove('is-scrolling'), 700);
         });
-    }
+    });
     const confirmModal = document.getElementById('confirm-modal');
     const confirmFinishBtn = document.getElementById('confirm-finish-btn');
     const cancelFinishBtn = document.getElementById('cancel-finish-btn');
@@ -199,7 +169,6 @@ const showSection = (sectionId) => {
         practiceQuestionsContainer.innerHTML = '';
         const oldBtn = document.querySelector('#practice-setup .show-questions-btn');
         if (oldBtn) oldBtn.remove();
-        renderPracticeProgress();
     } else if (sectionId === 'quiz') {
         createTabs(quizTabsContainer, TOTAL_SECTIONS, 'quiz');
         quizSetupSection.classList.remove('hidden');
@@ -250,9 +219,6 @@ const handleTabClick = (clickedBtn, type) => {
         btn.dataset.tabIndex = index;
         btn.textContent = text;
         btn.style.setProperty('--i', itemCounter++);
-        if (type === 'practice' && getViewedSections().includes(index - 1)) {
-            btn.classList.add('is-viewed');
-        }
         btn.addEventListener('click', (e) => {
             e.stopPropagation();
             toggleBtn.querySelector('.dropdown-label').textContent = text;
@@ -308,9 +274,6 @@ const renderShowQuestionsButton = () => {
         }
         const sectionIndex = parseInt(activeTab.dataset.tabIndex) - 1;
         renderPracticeQuestions(allSections[sectionIndex], sectionIndex);
-        markSectionViewed(sectionIndex);
-        renderPracticeProgress();
-        activeTab.classList.add('is-viewed');
         e.currentTarget.style.display = 'none';
     });
     setupContainer.appendChild(showBtn);
