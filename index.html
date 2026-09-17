@@ -66,13 +66,6 @@
         <span class="setup-icon-badge" data-icon="practice"></span>
         <h2>بخش مورد نظر خود را انتخاب کنید</h2>
         <p class="setup-subtitle">۲۰ بخش، شامل ده‌ها نمونه سوال دفترچه آیین‌نامه راهنمایی و رانندگی</p>
-        <div id="practice-progress" class="practice-progress">
-            <div class="practice-progress-label">
-                <span id="practice-progress-text">۰ از ۲۰ بخش مطالعه شده</span>
-                <span id="practice-progress-percent">۰٪</span>
-            </div>
-            <div class="practice-progress-track"><div class="practice-progress-fill" id="practice-progress-fill"></div></div>
-        </div>
         <div class="tabs-container" id="practice-tabs">
             </div>
     </div>
@@ -151,13 +144,14 @@
     <div id="results-modal" class="modal-overlay hidden">
     <div class="modal-content">
         <button class="close-modal" data-icon="close" aria-label="بستن"></button>
-        
-        <div id="result-message"></div>
+        <div class="modal-body">
+            <div id="result-message"></div>
 
-        <h2>نتایج آزمون</h2>
-        <p id="result-meta" class="result-meta hidden"></p>
-        <div class="chart-container" id="chart-container"></div>
-        <p id="result-summary"></p>
+            <h2>نتایج آزمون</h2>
+            <p id="result-meta" class="result-meta hidden"></p>
+            <div class="chart-container" id="chart-container"></div>
+            <p id="result-summary"></p>
+        </div>
     </div>
 </div>
 
@@ -179,7 +173,7 @@
 <div id="fee-modal" class="modal-overlay hidden">
     <div class="modal-content fee-modal-content">
         <button class="close-modal" data-icon="close" aria-label="بستن"></button>
-        <div class="fee-modal-body">
+        <div class="modal-body">
             <span class="setup-icon-badge help-modal-badge" data-icon="wallet"></span>
             <h2>هزینه سالانه ثبت‌نام</h2>
             <p class="fee-about">این بخش روند تقریبی هزینه ثبت‌نام آزمون آیین‌نامه پایه ۳ را از سال ۱۳۹۰ تا ۱۴۰۵ نشان می‌دهد تا مقایسه هزینه سال‌به‌سال ساده‌تر شود.</p>
@@ -203,20 +197,22 @@
 <div id="help-modal" class="modal-overlay hidden">
     <div class="modal-content">
         <button class="close-modal" data-icon="close" aria-label="بستن"></button>
-        <span class="setup-icon-badge help-modal-badge" data-icon="help"></span>
-        <h2>راهنمای قبولی در آزمون</h2>
-        <p>برای قبولی در آزمون اصلی آیین‌نامه راهنمایی و رانندگی، شما مجاز به داشتن حداکثر "<b>۴ پاسخ غلط</b>" هستید.</p>
-        <ul>
-            <li style="--i:0">
-                <strong>قبولی:</strong>
-                <span>۴ اشتباه یا کمتر</span>
-            </li>
-            <li style="--i:1">
-                <strong>مردودی:</strong>
-                <span>بیش از ۴ اشتباه</span>
-            </li>
-        </ul>
-        <p>این قانون در تمام آزمون‌های این سایت شبیه‌سازی شده است تا شما با آمادگی کامل در آزمون اصلی شرکت کنید.</p>
+        <div class="modal-body">
+            <span class="setup-icon-badge help-modal-badge" data-icon="help"></span>
+            <h2>راهنمای قبولی در آزمون</h2>
+            <p>برای قبولی در آزمون اصلی آیین‌نامه راهنمایی و رانندگی، شما مجاز به داشتن حداکثر "<b>۴ پاسخ غلط</b>" هستید.</p>
+            <ul>
+                <li style="--i:0">
+                    <strong>قبولی:</strong>
+                    <span>۴ اشتباه یا کمتر</span>
+                </li>
+                <li style="--i:1">
+                    <strong>مردودی:</strong>
+                    <span>بیش از ۴ اشتباه</span>
+                </li>
+            </ul>
+            <p>این قانون در تمام آزمون‌های این سایت شبیه‌سازی شده است تا شما با آمادگی کامل در آزمون اصلی شرکت کنید.</p>
+        </div>
     </div>
 </div>
     
