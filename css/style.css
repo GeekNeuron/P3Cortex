@@ -428,35 +428,6 @@ main {
 .setup-card .tabs-container {
     margin-top: 0.4rem;
 }
-.practice-progress {
-    width: 100%;
-    max-width: 320px;
-    margin-bottom: 1rem;
-}
-.practice-progress-label {
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.78rem;
-    color: var(--text-secondary);
-    margin-bottom: 0.4rem;
-}
-#practice-progress-percent {
-    font-weight: 700;
-    color: var(--primary);
-}
-.practice-progress-track {
-    height: 7px;
-    border-radius: 99px;
-    background-color: var(--bg-surface-2);
-    overflow: hidden;
-}
-.practice-progress-fill {
-    height: 100%;
-    width: 0%;
-    border-radius: 99px;
-    background: var(--gradient-primary);
-    transition: width 0.6s var(--ease-spring);
-}
 #quiz-history-section h2, #saved-section h2 {
     font-size: 1.15rem;
     font-weight: 600;
@@ -569,23 +540,6 @@ main {
     background: var(--gradient-primary);
     color: #fff !important;
 }
-.dropdown-menu .tab-btn.is-viewed {
-    position: relative;
-}
-.dropdown-menu .tab-btn.is-viewed::after {
-    content: '✓';
-    position: absolute;
-    left: 0.9rem;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--success-color);
-    font-weight: 700;
-    font-size: 0.85rem;
-}
-.dropdown-menu .tab-btn.is-viewed.active::after {
-    color: #fff;
-}
-
 .dropdown-menu-inner::-webkit-scrollbar { width: 6px; }
 .dropdown-menu-inner::-webkit-scrollbar-track { background: transparent; }
 .dropdown-menu-inner::-webkit-scrollbar-thumb {
@@ -930,11 +884,40 @@ main {
     width: 100%;
     max-width: 500px;
     max-height: 85vh;
-    overflow-y: auto;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
     position: relative;
     box-shadow: var(--shadow-lg);
     transform: scale(0.9) translateY(10px);
     transition: transform 0.35s var(--ease-spring);
+}
+.modal-body {
+    overflow-y: auto;
+    min-height: 0;
+    flex: 1 1 auto;
+    padding-top: 0.4rem;
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+}
+.modal-body:hover,
+.modal-body.is-scrolling {
+    scrollbar-color: var(--border-color) transparent;
+}
+.modal-body::-webkit-scrollbar { width: 6px; }
+.modal-body::-webkit-scrollbar-track { background: transparent; }
+.modal-body::-webkit-scrollbar-thumb {
+    background-color: transparent;
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+}
+.modal-body:hover::-webkit-scrollbar-thumb,
+.modal-body.is-scrolling::-webkit-scrollbar-thumb {
+    background-color: var(--border-color);
+}
+.modal-body.is-scrolling::-webkit-scrollbar-thumb:hover,
+.modal-body:hover::-webkit-scrollbar-thumb:hover {
+    background-color: var(--primary);
 }
 .modal-overlay:not(.hidden) .modal-content {
     transform: scale(1) translateY(0);
@@ -1045,35 +1028,6 @@ main {
 .fee-modal-content {
     max-width: 460px;
     text-align: center;
-    max-height: 85vh;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-}
-.fee-modal-body {
-    overflow-y: auto;
-    padding-top: 0.4rem;
-    scrollbar-width: thin;
-    scrollbar-color: transparent transparent;
-}
-.fee-modal-body:hover,
-.fee-modal-body.is-scrolling {
-    scrollbar-color: var(--border-color) transparent;
-}
-.fee-modal-body::-webkit-scrollbar { width: 6px; }
-.fee-modal-body::-webkit-scrollbar-track { background: transparent; }
-.fee-modal-body::-webkit-scrollbar-thumb {
-    background-color: transparent;
-    border-radius: 10px;
-    transition: background-color 0.3s ease;
-}
-.fee-modal-body:hover::-webkit-scrollbar-thumb,
-.fee-modal-body.is-scrolling::-webkit-scrollbar-thumb {
-    background-color: var(--border-color);
-}
-.fee-modal-body.is-scrolling::-webkit-scrollbar-thumb:hover,
-.fee-modal-body:hover::-webkit-scrollbar-thumb:hover {
-    background-color: var(--primary);
 }
 .fee-about {
     color: var(--text-secondary);
@@ -1131,12 +1085,7 @@ main {
     padding-left: 0.3rem;
     margin-right: -0.3rem;
 }
-.modal-content::-webkit-scrollbar { width: 7px; }
-.modal-content::-webkit-scrollbar-track { background: transparent; }
-.modal-content::-webkit-scrollbar-thumb {
-    background-color: var(--border-color);
-    border-radius: 10px;
-}
+
 .fee-year-row {
     display: flex;
     align-items: center;
@@ -1362,7 +1311,8 @@ footer {
     padding: 2.2rem 1rem;
     margin-top: 2rem;
     color: var(--text-secondary);
-    font-size: 0.9rem;
+    font-size: 0.8rem;
+    font-weight: 700;
 }
 footer p { direction: ltr; }
 
@@ -1391,4 +1341,5 @@ footer p { direction: ltr; }
     .nav-btn { padding: 0.6rem 0.9rem; font-size: 0.88rem; }
     .nav-btn .icon-text-container span:last-child { display: none; }
     main { margin: 1.2rem auto; }
+    footer { font-size: 0.68rem; padding: 1.6rem 1rem; }
 }
