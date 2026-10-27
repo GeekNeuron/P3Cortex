@@ -4,10 +4,10 @@
     "question": "کدام تابلو به مفهوم پارکینگ مخصوص افراد معلول می‌باشد؟",
     "optionType": "image",
     "options": [
-      "images/ans_img/20.01.01.png",
-      "images/ans_img/20.01.02.png",
-      "images/ans_img/20.01.03.png",
-      "images/ans_img/20.01.04.png"
+      "images/ans_img/20.01.01.svg",
+      "images/ans_img/20.01.02.svg",
+      "images/ans_img/20.01.03.svg",
+      "images/ans_img/20.01.04.svg"
     ],
     "answer": 2,
     "image": null
@@ -23,7 +23,7 @@
       "عبور پیاده ممنوع"
     ],
     "answer": 0,
-    "image": "images/q_img/20.02.01.png"
+    "image": "images/q_img/20.02.01.svg"
   },
   {
     "id": 3,
@@ -36,7 +36,7 @@
       "پایان تمام محدودیت‌ها"
     ],
     "answer": 0,
-    "image": "images/q_img/20.03.01.png"
+    "image": "images/q_img/20.03.01.svg"
   },
   {
     "id": 4,
@@ -49,7 +49,7 @@
       "منطقه توقف ممنوع"
     ],
     "answer": 1,
-    "image": "images/q_img/20.04.01.png"
+    "image": "images/q_img/20.04.01.svg"
   },
   {
     "id": 5,
@@ -62,17 +62,17 @@
       "رعایت فاصله کمتر از ۶۰ متر ممنوع"
     ],
     "answer": 2,
-    "image": "images/q_img/20.05.01.png"
+    "image": "images/q_img/20.05.01.svg"
   },
   {
     "id": 6,
     "question": "کدامیک از تابلوهای زیر به معنای پارکینگ می‌باشد؟",
     "optionType": "image",
     "options": [
-      "images/ans_img/20.06.01.png",
-      "images/ans_img/20.06.02.png",
-      "images/ans_img/20.06.03.png",
-      "images/ans_img/20.06.04.png"
+      "images/ans_img/20.06.01.svg",
+      "images/ans_img/20.06.02.svg",
+      "images/ans_img/20.06.03.svg",
+      "images/ans_img/20.06.04.svg"
     ],
     "answer": 2,
     "image": null
@@ -88,7 +88,7 @@
       "تمام موارد"
     ],
     "answer": 3,
-    "image": "images/q_img/20.07.01.png"
+    "image": "images/q_img/20.07.01.svg"
   },
   {
     "id": 8,
@@ -153,7 +153,7 @@
       "راننده دارای نقص عضو"
     ],
     "answer": 2,
-    "image": "images/q_img/20.12.01.png"
+    "image": "images/q_img/20.12.01.svg"
   },
   {
     "id": 13,
@@ -309,7 +309,7 @@
       "سیستم سوخت رسانی"
     ],
     "answer": 2,
-    "image": "images/q_img/20.24.01.png"
+    "image": "images/q_img/20.24.01.svg"
   },
   {
     "id": 25,
@@ -335,7 +335,7 @@
       "با افزایش سرعت تقاطع را تخلیه نمایند."
     ],
     "answer": 1,
-    "image": "images/q_img/20.26.01.png"
+    "image": "images/q_img/20.26.01.svg"
   },
   {
     "id": 27,
@@ -348,7 +348,7 @@
       "به تابلوی رعایت حق تقدم نزدیک می‌شوید."
     ],
     "answer": 0,
-    "image": "images/q_img/20.27.01.png"
+    "image": "images/q_img/20.27.01.svg"
   },
   {
     "id": 28,
@@ -361,7 +361,7 @@
       "قرمز، سبز، آبی"
     ],
     "answer": 0,
-    "image": "images/q_img/20.28.01.png"
+    "image": "images/q_img/20.28.01.svg"
   },
   {
     "id": 29,
@@ -374,7 +374,7 @@
       "پیچ به راست"
     ],
     "answer": 2,
-    "image": "images/q_img/20.29.01.png"
+    "image": "images/q_img/20.29.01.svg"
   },
   {
     "id": 30,
@@ -387,6 +387,6 @@
       "پایان تونل"
     ],
     "answer": 1,
-    "image": "images/q_img/20.30.01.png"
+    "image": "images/q_img/20.30.01.svg"
   }
 ]

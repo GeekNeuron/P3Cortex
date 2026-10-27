@@ -4,10 +4,10 @@
     "question": "عنوان کدام تابلو راه یک طرفه می‌باشد؟",
     "optionType": "image",
     "options": [
-      "images/ans_img/19.01.01.png",
-      "images/ans_img/19.01.02.png",
-      "images/ans_img/19.01.03.png",
-      "images/ans_img/19.01.04.png"
+      "images/ans_img/19.01.01.svg",
+      "images/ans_img/19.01.02.svg",
+      "images/ans_img/19.01.03.svg",
+      "images/ans_img/19.01.04.svg"
     ],
     "answer": 0,
     "image": null
@@ -23,7 +23,7 @@
       "برآمدگی"
     ],
     "answer": 0,
-    "image": "images/q_img/19.02.01.png"
+    "image": "images/q_img/19.02.01.svg"
   },
   {
     "id": 3,
@@ -36,7 +36,7 @@
       "عبور وسایل نقلیه موتوری ممنوع"
     ],
     "answer": 2,
-    "image": "images/q_img/19.03.01.png"
+    "image": "images/q_img/19.03.01.svg"
   },
   {
     "id": 4,
@@ -49,7 +49,7 @@
       "عبور کلیه وسائط نقلیه ممنوع"
     ],
     "answer": 2,
-    "image": "images/q_img/19.04.01.png"
+    "image": "images/q_img/19.04.01.svg"
   },
   {
     "id": 5,
@@ -62,17 +62,17 @@
       "مسیر توصیه شده برای وسایل سنگین"
     ],
     "answer": 0,
-    "image": "images/q_img/19.05.01.png"
+    "image": "images/q_img/19.05.01.svg"
   },
   {
     "id": 6,
     "question": "کدامیک از تابلوهای زیر به معنای محدوده توقف ممنوع در طول شبانه روز می‌باشد؟",
     "optionType": "image",
     "options": [
-      "images/ans_img/19.06.01.png",
-      "images/ans_img/19.06.02.png",
-      "images/ans_img/19.06.03.png",
-      "images/ans_img/19.06.04.png"
+      "images/ans_img/19.06.01.svg",
+      "images/ans_img/19.06.02.svg",
+      "images/ans_img/19.06.03.svg",
+      "images/ans_img/19.06.04.svg"
     ],
     "answer": 1,
     "image": null
@@ -88,7 +88,7 @@
       "رانندگان باید از سرعت خود کاسته و با احتیاط و رعایت حق تقدم وارد راه اصلی شوند."
     ],
     "answer": 1,
-    "image": "images/q_img/19.07.01.png"
+    "image": "images/q_img/19.07.01.svg"
   },
   {
     "id": 8,
@@ -147,10 +147,10 @@
     "question": "کدام تابلو به مفهوم پارکینگ مخصوص افراد معلول می‌باشد؟",
     "optionType": "image",
     "options": [
-      "images/ans_img/19.12.01.png",
-      "images/ans_img/19.12.02.png",
-      "images/ans_img/19.12.03.png",
-      "images/ans_img/19.12.04.png"
+      "images/ans_img/19.12.01.svg",
+      "images/ans_img/19.12.02.svg",
+      "images/ans_img/19.12.03.svg",
+      "images/ans_img/19.12.04.svg"
     ],
     "answer": 2,
     "image": null
@@ -192,7 +192,7 @@
       "مستقیم و در مسیر مجاز حرکت می‌کند."
     ],
     "answer": 0,
-    "image": "images/q_img/19.15.01.png"
+    "image": "images/q_img/19.15.01.svg"
   },
   {
     "id": 16,
@@ -296,7 +296,7 @@
       "نحوه حرکت در سرازیری"
     ],
     "answer": 0,
-    "image": "images/q_img/19.23.01.png"
+    "image": "images/q_img/19.23.01.svg"
   },
   {
     "id": 24,
@@ -309,7 +309,7 @@
       "۶ سیلندر"
     ],
     "answer": 2,
-    "image": "images/q_img/19.24.01.png"
+    "image": "images/q_img/19.24.01.svg"
   },
   {
     "id": 25,
@@ -335,7 +335,7 @@
       "تا رسیدن اورژانس یا پلیس صبر نمایند."
     ],
     "answer": 0,
-    "image": "images/q_img/19.26.01.png"
+    "image": "images/q_img/19.26.01.svg"
   },
   {
     "id": 27,
@@ -361,7 +361,7 @@
       "پیچ‌های پی در پی، اولین پیچ به راست"
     ],
     "answer": 3,
-    "image": "images/q_img/19.28.01.png"
+    "image": "images/q_img/19.28.01.svg"
   },
   {
     "id": 29,
@@ -374,7 +374,7 @@
       "سبز، زرد، خودروی امدادی"
     ],
     "answer": 2,
-    "image": "images/q_img/19.29.01.png"
+    "image": "images/q_img/19.29.01.svg"
   },
   {
     "id": 30,

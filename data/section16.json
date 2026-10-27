@@ -4,10 +4,10 @@
     "question": "کدام تابلو بیانگر فقط عبور دوچرخه می‌باشد؟",
     "optionType": "image",
     "options": [
-      "images/ans_img/16.01.01.png",
-      "images/ans_img/16.01.02.png",
-      "images/ans_img/16.01.03.png",
-      "images/ans_img/16.01.04.png"
+      "images/ans_img/16.01.01.svg",
+      "images/ans_img/16.01.02.svg",
+      "images/ans_img/16.01.03.svg",
+      "images/ans_img/16.01.04.svg"
     ],
     "answer": 3,
     "image": null
@@ -23,7 +23,7 @@
       "ریزش سنگ"
     ],
     "answer": 3,
-    "image": "images/q_img/16.02.01.png"
+    "image": "images/q_img/16.02.01.svg"
   },
   {
     "id": 3,
@@ -36,7 +36,7 @@
       "تقاطع راه آهن بدون راهبند"
     ],
     "answer": 2,
-    "image": "images/q_img/16.03.01.png"
+    "image": "images/q_img/16.03.01.svg"
   },
   {
     "id": 4,
@@ -49,7 +49,7 @@
       "توقف ممنوع"
     ],
     "answer": 0,
-    "image": "images/q_img/16.04.01.png"
+    "image": "images/q_img/16.04.01.svg"
   },
   {
     "id": 5,
@@ -62,7 +62,7 @@
       "استراحتگاه کاروان"
     ],
     "answer": 1,
-    "image": "images/q_img/16.05.01.png"
+    "image": "images/q_img/16.05.01.svg"
   },
   {
     "id": 6,
@@ -75,7 +75,7 @@
       "مسیر قطار شهری"
     ],
     "answer": 1,
-    "image": "images/q_img/16.06.01.png"
+    "image": "images/q_img/16.06.01.svg"
   },
   {
     "id": 7,
@@ -88,7 +88,7 @@
       "پارک طبقاتی"
     ],
     "answer": 1,
-    "image": "images/q_img/16.07.01.png"
+    "image": "images/q_img/16.07.01.svg"
   },
   {
     "id": 8,
@@ -244,7 +244,7 @@
       "فقط خودروی قهوه‌ای مجاز به حرکت می‌باشد"
     ],
     "answer": 0,
-    "image": "images/q_img/16.19.01.png"
+    "image": "images/q_img/16.19.01.svg"
   },
   {
     "id": 20,
@@ -309,7 +309,7 @@
       "دسته دنده، ترمز دستی و پدال گاز"
     ],
     "answer": 1,
-    "image": "images/q_img/16.24.01.png"
+    "image": "images/q_img/16.24.01.svg"
   },
   {
     "id": 25,
@@ -335,7 +335,7 @@
       "با مشاهده این چراغ راهنمایی رانندگان نباید به تقاطع یا گذرگاه عابر پیاده وارد شوند."
     ],
     "answer": 0,
-    "image": "images/q_img/16.26.01.png"
+    "image": "images/q_img/16.26.01.svg"
   },
   {
     "id": 27,
@@ -361,7 +361,7 @@
       "خودرویی که در مسیر مستقیم حرکت می‌کند"
     ],
     "answer": 2,
-    "image": "images/q_img/16.28.01.png"
+    "image": "images/q_img/16.28.01.svg"
   },
   {
     "id": 29,
@@ -374,7 +374,7 @@
       "پیچ‌های پی در پی، اولین پیچ به راست"
     ],
     "answer": 3,
-    "image": "images/q_img/16.29.01.png"
+    "image": "images/q_img/16.29.01.svg"
   },
   {
     "id": 30,
@@ -387,6 +387,6 @@
       "گردش به چپ ممنوع"
     ],
     "answer": 3,
-    "image": "images/q_img/16.30.01.png"
+    "image": "images/q_img/16.30.01.svg"
   }
 ]

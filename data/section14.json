@@ -4,10 +4,10 @@
     "question": "کدام تابلو بیانگر پایان منطقه توقف ممنوع می‌باشد؟",
     "optionType": "image",
     "options": [
-      "images/ans_img/14.01.01.png",
-      "images/ans_img/14.01.02.png",
-      "images/ans_img/14.01.03.png",
-      "images/ans_img/14.01.04.png"
+      "images/ans_img/14.01.01.svg",
+      "images/ans_img/14.01.02.svg",
+      "images/ans_img/14.01.03.svg",
+      "images/ans_img/14.01.04.svg"
     ],
     "answer": 1,
     "image": null
@@ -23,7 +23,7 @@
       "شانه خطرناک"
     ],
     "answer": 2,
-    "image": "images/q_img/14.02.01.png"
+    "image": "images/q_img/14.02.01.svg"
   },
   {
     "id": 3,
@@ -36,7 +36,7 @@
       "تقاطع راه آهن با راهبند"
     ],
     "answer": 3,
-    "image": "images/q_img/14.03.01.png"
+    "image": "images/q_img/14.03.01.svg"
   },
   {
     "id": 4,
@@ -49,7 +49,7 @@
       "خودرو طویل"
     ],
     "answer": 0,
-    "image": "images/q_img/14.04.01.png"
+    "image": "images/q_img/14.04.01.svg"
   },
   {
     "id": 5,
@@ -62,7 +62,7 @@
       "عبور اطفال"
     ],
     "answer": 1,
-    "image": "images/q_img/14.05.01.png"
+    "image": "images/q_img/14.05.01.svg"
   },
   {
     "id": 6,
@@ -75,7 +75,7 @@
       "رعایت فاصله کمتر از ۱۰ متر ممنوع"
     ],
     "answer": 1,
-    "image": "images/q_img/14.06.01.png"
+    "image": "images/q_img/14.06.01.svg"
   },
   {
     "id": 7,
@@ -88,7 +88,7 @@
       "هیچ کدام"
     ],
     "answer": 1,
-    "image": "images/q_img/14.07.01.png"
+    "image": "images/q_img/14.07.01.svg"
   },
   {
     "id": 8,
@@ -244,7 +244,7 @@
       "ابتدا ۱ و ۲ با هم سپس ۳"
     ],
     "answer": 3,
-    "image": "images/q_img/14.19.01.png"
+    "image": "images/q_img/14.19.01.svg"
   },
   {
     "id": 20,
@@ -296,17 +296,17 @@
       "سطح روشنایی چراغ‌ها"
     ],
     "answer": 1,
-    "image": "images/q_img/14.23.01.png"
+    "image": "images/q_img/14.23.01.svg"
   },
   {
     "id": 24,
     "question": "کدام یک به معنای راننده معلول است؟",
     "optionType": "image",
     "options": [
-      "images/ans_img/14.24.01.png",
-      "images/ans_img/14.24.02.png",
-      "images/ans_img/14.24.03.png",
-      "images/ans_img/14.24.04.png"
+      "images/ans_img/14.24.01.svg",
+      "images/ans_img/14.24.02.svg",
+      "images/ans_img/14.24.03.svg",
+      "images/ans_img/14.24.04.svg"
     ],
     "answer": 1,
     "image": null
@@ -342,10 +342,10 @@
     "question": "کدامیک از تابلوهای زیر به معنای پایان سبقت ممنوع می‌باشد؟",
     "optionType": "image",
     "options": [
-      "images/ans_img/14.27.01.png",
-      "images/ans_img/14.27.02.png",
-      "images/ans_img/14.27.03.png",
-      "images/ans_img/14.27.04.png"
+      "images/ans_img/14.27.01.svg",
+      "images/ans_img/14.27.02.svg",
+      "images/ans_img/14.27.03.svg",
+      "images/ans_img/14.27.04.svg"
     ],
     "answer": 2,
     "image": null
@@ -361,7 +361,7 @@
       "مسیر کامیون حامل کالای تجاری"
     ],
     "answer": 0,
-    "image": "images/q_img/14.28.01.png"
+    "image": "images/q_img/14.28.01.svg"
   },
   {
     "id": 29,
@@ -374,7 +374,7 @@
       "صرفاً می‌توان به سمت راست حرکت نمود."
     ],
     "answer": 1,
-    "image": "images/q_img/14.29.01.png"
+    "image": "images/q_img/14.29.01.svg"
   },
   {
     "id": 30,
@@ -387,6 +387,6 @@
       "سبز، آبی، نارنجی، زرد"
     ],
     "answer": 3,
-    "image": "images/q_img/14.30.01.png"
+    "image": "images/q_img/14.30.01.svg"
   }
 ]

@@ -4,10 +4,10 @@
     "question": "کدام تابلو بیانگر این است که عبور فقط عبور راست مجاز می‌باشد؟",
     "optionType": "image",
     "options": [
-      "images/ans_img/13.01.01.png",
-      "images/ans_img/13.01.02.png",
-      "images/ans_img/13.01.03.png",
-      "images/ans_img/13.01.04.png"
+      "images/ans_img/13.01.01.svg",
+      "images/ans_img/13.01.02.svg",
+      "images/ans_img/13.01.03.svg",
+      "images/ans_img/13.01.04.svg"
     ],
     "answer": 1,
     "image": null
@@ -23,7 +23,7 @@
       "سربالایی خطرناک"
     ],
     "answer": 1,
-    "image": "images/q_img/13.02.01.png"
+    "image": "images/q_img/13.02.01.svg"
   },
   {
     "id": 3,
@@ -36,7 +36,7 @@
       "به تابلو خطر نزدیک می‌شوید"
     ],
     "answer": 2,
-    "image": "images/q_img/13.03.01.png"
+    "image": "images/q_img/13.03.01.svg"
   },
   {
     "id": 4,
@@ -49,7 +49,7 @@
       "پیچ به راست بدون محدودیت"
     ],
     "answer": 0,
-    "image": "images/q_img/13.04.01.png"
+    "image": "images/q_img/13.04.01.svg"
   },
   {
     "id": 5,
@@ -62,7 +62,7 @@
       "تعمیرگاه"
     ],
     "answer": 3,
-    "image": "images/q_img/13.05.01.png"
+    "image": "images/q_img/13.05.01.svg"
   },
   {
     "id": 6,
@@ -75,7 +75,7 @@
       "حاشیه نمای دوطرفه"
     ],
     "answer": 2,
-    "image": "images/q_img/13.06.01.png"
+    "image": "images/q_img/13.06.01.svg"
   },
   {
     "id": 7,
@@ -88,7 +88,7 @@
       "خطوط هاشور"
     ],
     "answer": 1,
-    "image": "images/q_img/13.07.01.png"
+    "image": "images/q_img/13.07.01.svg"
   },
   {
     "id": 8,
@@ -101,7 +101,7 @@
       "موارد ۲ و ۳"
     ],
     "answer": 3,
-    "image": "images/q_img/13.08.01.png"
+    "image": "images/q_img/13.08.01.svg"
   },
   {
     "id": 9,
@@ -296,17 +296,17 @@
       "استفاده از نور پایین در فواصل کمتر از ۱۵۰ متر با خودروی جلویی"
     ],
     "answer": 3,
-    "image": "images/q_img/13.23.01.png"
+    "image": "images/q_img/13.23.01.svg"
   },
   {
     "id": 24,
     "question": "کدام یک به معنای راننده معلول است؟",
     "optionType": "image",
     "options": [
-      "images/ans_img/13.24.01.png",
-      "images/ans_img/13.24.02.png",
-      "images/ans_img/13.24.03.png",
-      "images/ans_img/13.24.04.png"
+      "images/ans_img/13.24.01.svg",
+      "images/ans_img/13.24.02.svg",
+      "images/ans_img/13.24.03.svg",
+      "images/ans_img/13.24.04.svg"
     ],
     "answer": 2,
     "image": null
@@ -348,7 +348,7 @@
       "نارنجی، زرد، آبی"
     ],
     "answer": 3,
-    "image": "images/q_img/13.27.01.png"
+    "image": "images/q_img/13.27.01.svg"
   },
   {
     "id": 28,
@@ -374,7 +374,7 @@
       "ممکن است دوچرخه سوار ناگهان توقف نماید."
     ],
     "answer": 1,
-    "image": "images/q_img/13.29.01.png"
+    "image": "images/q_img/13.29.01.svg"
   },
   {
     "id": 30,

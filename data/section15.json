@@ -4,10 +4,10 @@
     "question": "کدام تابلو بیانگر مسیر کامیون حامل کالای خطرناک نمی‌باشد؟",
     "optionType": "image",
     "options": [
-      "images/ans_img/15.01.01.png",
-      "images/ans_img/15.01.02.png",
-      "images/ans_img/15.01.03.png",
-      "images/ans_img/15.01.04.png"
+      "images/ans_img/15.01.01.svg",
+      "images/ans_img/15.01.02.svg",
+      "images/ans_img/15.01.03.svg",
+      "images/ans_img/15.01.04.svg"
     ],
     "answer": 1,
     "image": null
@@ -23,7 +23,7 @@
       "جانبازان و معلولین"
     ],
     "answer": 2,
-    "image": "images/q_img/15.02.01.png"
+    "image": "images/q_img/15.02.01.svg"
   },
   {
     "id": 3,
@@ -36,7 +36,7 @@
       "جهت عبور در میدان"
     ],
     "answer": 2,
-    "image": "images/q_img/15.03.01.png"
+    "image": "images/q_img/15.03.01.svg"
   },
   {
     "id": 4,
@@ -49,7 +49,7 @@
       "منطقه بوق زدن آزاد"
     ],
     "answer": 0,
-    "image": "images/q_img/15.04.01.png"
+    "image": "images/q_img/15.04.01.svg"
   },
   {
     "id": 5,
@@ -62,7 +62,7 @@
       "شروع محل پیاده روی"
     ],
     "answer": 3,
-    "image": "images/q_img/15.05.01.png"
+    "image": "images/q_img/15.05.01.svg"
   },
   {
     "id": 6,
@@ -75,7 +75,7 @@
       "تقاطع فرعی با اصلی در قوس"
     ],
     "answer": 3,
-    "image": "images/q_img/15.06.01.png"
+    "image": "images/q_img/15.06.01.svg"
   },
   {
     "id": 7,
@@ -88,7 +88,7 @@
       "عبور چرخ دستی ممنوع"
     ],
     "answer": 3,
-    "image": "images/q_img/15.07.01.png"
+    "image": "images/q_img/15.07.01.svg"
   },
   {
     "id": 8,
@@ -101,7 +101,7 @@
       "ورود ممنوع"
     ],
     "answer": 0,
-    "image": "images/q_img/15.08.01.png"
+    "image": "images/q_img/15.08.01.svg"
   },
   {
     "id": 9,
@@ -192,7 +192,7 @@
       "سبز آبی نارنجی زرد"
     ],
     "answer": 2,
-    "image": "images/q_img/15.15.01.png"
+    "image": "images/q_img/15.15.01.svg"
   },
   {
     "id": 16,
@@ -231,7 +231,7 @@
       "۲۵ هزار کیلومتر"
     ],
     "answer": 1,
-    "image": "images/q_img/15.18.01.png"
+    "image": "images/q_img/15.18.01.svg"
   },
   {
     "id": 19,
@@ -257,7 +257,7 @@
       "تصفیه آب رادیاتور"
     ],
     "answer": 0,
-    "image": "images/q_img/15.20.01.png"
+    "image": "images/q_img/15.20.01.svg"
   },
   {
     "id": 21,
@@ -309,7 +309,7 @@
       "پارک مستقیم"
     ],
     "answer": 2,
-    "image": "images/q_img/15.24.01.png"
+    "image": "images/q_img/15.24.01.svg"
   },
   {
     "id": 25,
@@ -335,7 +335,7 @@
       "وسیله‌ای که به سمت چپ گردش می‌کند."
     ],
     "answer": 2,
-    "image": "images/q_img/15.26.01.png"
+    "image": "images/q_img/15.26.01.svg"
   },
   {
     "id": 27,
@@ -348,7 +348,7 @@
       "تقاطع فرعی و اصلی"
     ],
     "answer": 2,
-    "image": "images/q_img/15.27.01.png"
+    "image": "images/q_img/15.27.01.svg"
   },
   {
     "id": 28,
@@ -361,7 +361,7 @@
       "موارد ۲ و ۳ صحیح می‌باشند."
     ],
     "answer": 1,
-    "image": "images/q_img/15.28.01.png"
+    "image": "images/q_img/15.28.01.svg"
   },
   {
     "id": 29,

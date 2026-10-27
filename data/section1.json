@@ -4,10 +4,10 @@
     "question": "کدام تابلو درباره عبور عابر پیاده هشدار می‌دهد؟",
     "optionType": "image",
     "options": [
-      "images/ans_img/01.01.01.png",
-      "images/ans_img/01.01.02.png",
-      "images/ans_img/01.01.03.png",
-      "images/ans_img/01.01.04.png"
+      "images/ans_img/01.01.01.svg",
+      "images/ans_img/01.01.02.svg",
+      "images/ans_img/01.01.03.svg",
+      "images/ans_img/01.01.04.svg"
     ],
     "answer": 1,
     "image": null
@@ -17,10 +17,10 @@
     "question": "کدام تابلو بیانگر کاهش خطوط عبور می‌باشد؟",
     "optionType": "image",
     "options": [
-      "images/ans_img/01.02.01.png",
-      "images/ans_img/01.02.02.png",
-      "images/ans_img/01.02.03.png",
-      "images/ans_img/01.02.04.png"
+      "images/ans_img/01.02.01.svg",
+      "images/ans_img/01.02.02.svg",
+      "images/ans_img/01.02.03.svg",
+      "images/ans_img/01.02.04.svg"
     ],
     "answer": 3,
     "image": null
@@ -36,7 +36,7 @@
       "شروع محل پیاده‌روی"
     ],
     "answer": 3,
-    "image": "images/q_img/01.03.01.png"
+    "image": "images/q_img/01.03.01.svg"
   },
   {
     "id": 4,
@@ -49,7 +49,7 @@
       "هدایت مسیر با جداکننده"
     ],
     "answer": 0,
-    "image": "images/q_img/01.04.01.png"
+    "image": "images/q_img/01.04.01.svg"
   },
   {
     "id": 5,
@@ -62,7 +62,7 @@
       "عبور وسایل نقلیه با وزن بیش از ۲ تن ممنوع"
     ],
     "answer": 1,
-    "image": "images/q_img/01.05.01.png"
+    "image": "images/q_img/01.05.01.svg"
   },
   {
     "id": 6,
@@ -75,7 +75,7 @@
       "جهت عبور در میدان"
     ],
     "answer": 3,
-    "image": "images/q_img/01.06.01.png"
+    "image": "images/q_img/01.06.01.svg"
   },
   {
     "id": 7,
@@ -88,7 +88,7 @@
       "ورود سواری ممنوع"
     ],
     "answer": 1,
-    "image": "images/q_img/01.07.01.png"
+    "image": "images/q_img/01.07.01.svg"
   },
   {
     "id": 8,
@@ -101,7 +101,7 @@
       "ممنوعیت حرکت روی خطوط هاشور (اضطرار) در حاشیه راه‌ها"
     ],
     "answer": 3,
-    "image": "images/q_img/01.08.01.png"
+    "image": "images/q_img/01.08.01.svg"
   },
   {
     "id": 9,
@@ -140,7 +140,7 @@
       "صرفاً می‌توان به سمت راست حرکت نمود."
     ],
     "answer": 1,
-    "image": "images/q_img/01.11.01.png"
+    "image": "images/q_img/01.11.01.svg"
   },
   {
     "id": 12,
@@ -296,7 +296,7 @@
       "سبقت غیرمجاز"
     ],
     "answer": 1,
-    "image": "images/q_img/01.23.01.png"
+    "image": "images/q_img/01.23.01.svg"
   },
   {
     "id": 24,
@@ -309,7 +309,7 @@
       "در صورت لزوم می‌توان از روی آن سبقت گرفت."
     ],
     "answer": 0,
-    "image": "images/q_img/01.24.01.png"
+    "image": "images/q_img/01.24.01.svg"
   },
   {
     "id": 25,
@@ -374,7 +374,7 @@
       "با روشن نمودن چراغ خودرو از تقاطع عبور نمایند."
     ],
     "answer": 0,
-    "image": "images/q_img/01.29.01.png"
+    "image": "images/q_img/01.29.01.svg"
   },
   {
     "id": 30,
